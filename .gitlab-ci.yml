@@ -7,9 +7,10 @@ test:
   tags:
     - ci.inria.fr # For using shared runners
     - small       # For selecting small shared runners
-
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "push"
+# remove. will run as soon as there is an event on the BRANCH
+# ci ppelines are branch based
+  # rules:
+  #   - if: $CI_PIPELINE_SOURCE == "push"
   script:
     - pip install -r requirements.txt
     - pytest
