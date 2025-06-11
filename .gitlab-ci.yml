@@ -4,6 +4,10 @@ stages:
 test:
   stage: test
   image: python:3.13
+  tags:
+    - ci.inria.fr # For using shared runners
+    - small       # For selecting small shared runners
+
   rules:
     - if: $CI_PIPELINE_SOURCE == "push"
   script:
