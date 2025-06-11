@@ -3,12 +3,16 @@
 import dataclasses
 from cmath import exp
 from enum import Enum, auto
+import logging
 from math import cosh, sqrt, tanh
 
 import numpy as np
-from states import cmp
+from stellar.states import cmp
+
+logger = logging.getLogger(__name__)
 
 
+# target state param
 class Parameterisation(Enum):
     Fock = auto()
 
@@ -25,7 +29,9 @@ class Gaussian:
     kwargs for left (bra) and right (ket) cutoffs or just optional??
     """
 
-    def __init__(self, x: float, y: float, r: float, theta: float, method: Method, param: Parameterisation, **kwargs) -> None:
+    def __init__(
+        self, x: float, y: float, r: float, theta: float, method: Method, param: Parameterisation, **kwargs
+    ) -> None:
         self.x = x
         self.y = y
         self.r = r
@@ -42,35 +48,29 @@ class Gaussian:
                 # Quesada parameterisation
                 # sech = 1/cosh
                 # Eq. (44)
-                @property
-                def C(self) -> cmp:
-                    return exp(
-                        -(abs(self.alpha) ** 2) + self.alpha.conjugate() ** 2 * exp(1j * self.theta) * tanh(self.r)
-                    ) / sqrt(cosh(self.r))
-
+                logger.info("chosen the method recursive")
+                self.C: cmp = exp(
+                    -(abs(self.alpha) ** 2 + self.alpha.conjugate() ** 2 * exp(1j * self.theta) * tanh(self.r)) / 2
+                ) / sqrt(cosh(self.r))
+                logger.debug(f"{self.C=}")
                 # Eq. (45)
-                def mean_vector(
-                    self,
-                ) -> (
-                    np.ndarray
-                ):  # specify data type?? and size??? Might have type pb since rest is complex only not numpy cpx...
-                    return np.array(
-                        [
-                            self.alpha.conjugate() * exp(1j * self.theta) * tanh(self.r) + self.alpha,
-                            -self.alpha.conjugate() / cosh(self.r),
-                        ],
-                        dtype=np.complex128,
-                    )
+                # specify data type?? and size??? Might have type pb since rest is complex only not numpy cpx...
+                self.mean_vector: np.ndarray = np.array(
+                    [
+                        self.alpha.conjugate() * exp(1j * self.theta) * tanh(self.r) + self.alpha,
+                        -self.alpha.conjugate() / cosh(self.r),
+                    ],
+                    dtype=np.complex128,
+                )
 
                 # Eq. (46)
-                def covariance_matrix(self) -> np.ndarray:
-                    return np.array(
-                        [
-                            [exp(1j * self.theta) * tanh(self.r), -1 / cosh(self.r)],
-                            [-1 / cosh(self.r), -exp(-1j * self.theta) * tanh(self.r)],
-                        ],
-                        dtype=np.complex128,
-                    )
+                self.covariance_matrix: np.ndarray = np.array(
+                    [
+                        [exp(1j * self.theta) * tanh(self.r), -1 / cosh(self.r)],
+                        [-1 / cosh(self.r), -exp(-1j * self.theta) * tanh(self.r)],
+                    ],
+                    dtype=np.complex128,
+                )
 
             case method.direct:
                 pass
@@ -80,9 +80,18 @@ class Gaussian:
     # add target state somewhere else.
     def populate_matrix(self, bra_cutoff: int, ket_cutoff: int) -> cmp:  # G_{mn} = <m|G|n> Eq 10 Quesada
         # cutoffs are positional arguments so they have to be provided in this order!
+
+        self.matrix = np.zeros((bra_cutoff, ket_cutoff), dtype=np.complex128)
+
         match self.method:
             case Method.recursive:
                 # do the recursive computation here.
+                self.matrix[0, 0] = self.C
+                self.matrix[1, 0] = self.matrix[0, 0] * self.mean_vector[0]
+                # build first column
+                for m in range(2, bra_cutoff):
+                    self.matrix[m, 0] = (self.matrix[m - 1, 0] * self.mean_vector[0] - sqrt(m - 1) * self.matrix[m - 2, 0] * self.covariance_matrix[0, 0]) / sqrt(m)
+
                 pass
             case Method.direct:
                 raise NotImplementedError
