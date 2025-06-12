@@ -1,2 +1,4 @@
-.vscode/settings.json
+.vscode/
 *.pyc
+.hypothesis/
+.*_cache/
