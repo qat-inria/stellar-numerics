@@ -94,11 +94,11 @@ class GaussianOp:
                 self.matrix[0, 0] = self.C
 
                 # build first column with [1] Eq (30).
-                # no last term 
+                # no last term
                 for m in range(1, bra_cutoff):
-                    if m == 1: # only first term. No root since m == 1
-                        self.matrix[m, 0] = self.matrix[m - 1, 0] * self.mean_vector[0] 
-                    else: # first two terms
+                    if m == 1:  # only first term. No root since m == 1
+                        self.matrix[m, 0] = self.matrix[m - 1, 0] * self.mean_vector[0]
+                    else:  # first two terms
                         self.matrix[m, 0] = (
                             self.matrix[m - 1, 0] * self.mean_vector[0]
                             - sqrt(m - 1) * self.matrix[m - 2, 0] * self.covariance_matrix[0, 0]
@@ -121,7 +121,8 @@ class GaussianOp:
                         else:  # generic case n > 1
                             if m == 0:  # n > 1, m = 0 no second term
                                 self.matrix[m, n] = (
-                                    self.matrix[m, n - 1] * self.mean_vector[1] - sqrt(n - 1) * self.matrix[m, n - 2] * self.covariance_matrix[1, 1]
+                                    self.matrix[m, n - 1] * self.mean_vector[1]
+                                    - sqrt(n - 1) * self.matrix[m, n - 2] * self.covariance_matrix[1, 1]
                                 ) / sqrt(n)
                             else:  # n > 1, m ≥ 1 all three terms
                                 self.matrix[m, n] = (
