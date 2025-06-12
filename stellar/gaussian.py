@@ -1,12 +1,16 @@
-"""Module related to the parameterisation of gaussian unitaries"""
+"""Module related to the parameterisation of gaussian unitaries
+references
+[1] Miatto & Quesada https://arxiv.org/abs/2004.11002 (2020)
+"""
 
 import dataclasses
+import logging
 from cmath import exp
 from enum import Enum, auto
-import logging
 from math import cosh, sqrt, tanh
 
 import numpy as np
+
 from stellar.states import cmp
 
 logger = logging.getLogger(__name__)
@@ -22,8 +26,8 @@ class Method(Enum):
     recursive = auto()
 
 
-# don't use dataclass here for conditional attributes
-class Gaussian:
+# don't use dataclass here for conditional attributes?
+class GaussianOp:
     """Parameterisation of single-mode Gaussians
     we use as in https://arxiv.org/abs/2004.11002 Eq. (43) with no rotation (their phi = 0, their squeezing phase is delta)
     kwargs for left (bra) and right (ket) cutoffs or just optional??
@@ -45,15 +49,15 @@ class Gaussian:
 
         match method:
             case Method.recursive:
-                # Quesada parameterisation
+                # Parameterisation following [1]
                 # sech = 1/cosh
-                # Eq. (44)
+                # [1] Eq. (44)
                 logger.info("chosen the method recursive")
                 self.C: cmp = exp(
                     -(abs(self.alpha) ** 2 + self.alpha.conjugate() ** 2 * exp(1j * self.theta) * tanh(self.r)) / 2
                 ) / sqrt(cosh(self.r))
                 logger.debug(f"{self.C=}")
-                # Eq. (45)
+                # [1] Eq. (45)
                 # specify data type?? and size??? Might have type pb since rest is complex only not numpy cpx...
                 self.mean_vector: np.ndarray = np.array(
                     [
@@ -63,7 +67,7 @@ class Gaussian:
                     dtype=np.complex128,
                 )
 
-                # Eq. (46)
+                # [1] Eq. (46)
                 self.covariance_matrix: np.ndarray = np.array(
                     [
                         [exp(1j * self.theta) * tanh(self.r), -1 / cosh(self.r)],
@@ -78,25 +82,58 @@ class Gaussian:
     # should this be here or outside?
     # define a global table of matrix elements with dim cutoff? (equal to size of input state for m (left) and max rank for right (n))
     # add target state somewhere else.
-    def populate_matrix(self, bra_cutoff: int, ket_cutoff: int) -> cmp:  # G_{mn} = <m|G|n> Eq 10 Quesada
+    def build_matrix(self, bra_cutoff: int, ket_cutoff: int) -> None:  # or return the matrix and not as attribute?
+        # G_{mn} = <m|G|n> Eq 10 Quesada
         # cutoffs are positional arguments so they have to be provided in this order!
 
         self.matrix = np.zeros((bra_cutoff, ket_cutoff), dtype=np.complex128)
 
         match self.method:
             case Method.recursive:
-                # do the recursive computation here.
+                # [1] Eq. (27)
                 self.matrix[0, 0] = self.C
-                self.matrix[1, 0] = self.matrix[0, 0] * self.mean_vector[0]
-                # build first column
-                for m in range(2, bra_cutoff):
-                    self.matrix[m, 0] = (self.matrix[m - 1, 0] * self.mean_vector[0] - sqrt(m - 1) * self.matrix[m - 2, 0] * self.covariance_matrix[0, 0]) / sqrt(m)
 
-                pass
+                # build first column with [1] Eq (30).
+                # no last term 
+                for m in range(1, bra_cutoff):
+                    if m == 1: # only first term. No root since m == 1
+                        self.matrix[m, 0] = self.matrix[m - 1, 0] * self.mean_vector[0] 
+                    else: # first two terms
+                        self.matrix[m, 0] = (
+                            self.matrix[m - 1, 0] * self.mean_vector[0]
+                            - sqrt(m - 1) * self.matrix[m - 2, 0] * self.covariance_matrix[0, 0]
+                        ) / sqrt(m)
+
+                # build other columns using [1] Eq. (31)
+                # column loop, start from second column
+                for n in range(1, ket_cutoff):
+                    # row loop
+                    for m in range(0, bra_cutoff):
+                        if n == 1:
+                            if m == 0:  # n = 1, m = 0 only first term
+                                self.matrix[m, n] = self.matrix[m, n - 1] * self.mean_vector[1]
+                            else:  # n = 1, m ≥ 1 no last term
+                                self.matrix[m, n] = (
+                                    self.matrix[m, n - 1] * self.mean_vector[1]
+                                    - sqrt(m) * self.matrix[m - 1, n - 1] * self.covariance_matrix[1, 0]
+                                )
+
+                        else:  # generic case n > 1
+                            if m == 0:  # n > 1, m = 0 no second term
+                                self.matrix[m, n] = (
+                                    self.matrix[m, n - 1] * self.mean_vector[1] - sqrt(n - 1) * self.matrix[m, n - 2] * self.covariance_matrix[1, 1]
+                                ) / sqrt(n)
+                            else:  # n > 1, m ≥ 1 all three terms
+                                self.matrix[m, n] = (
+                                    self.matrix[m, n - 1] * self.mean_vector[1]
+                                    - sqrt(m) * self.matrix[m - 1, n - 1] * self.covariance_matrix[1, 0]
+                                    - sqrt(n - 1) * self.matrix[m, n - 2] * self.covariance_matrix[1, 1]
+                                ) / sqrt(n)
+
             case Method.direct:
                 raise NotImplementedError
 
-        return 1.0
+        return
 
     # choose specific attributes to compute depending on how the computation will be performed
     # find a way to do it condionally
