@@ -6,8 +6,8 @@ stages:
   # - deploy
 
 # common stuff and actions
-
-image: python:3.10
+# how to specify multiple python versions? matrix?
+image: python:3.13
 
 default:
   tags:

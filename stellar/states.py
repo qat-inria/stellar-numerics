@@ -4,11 +4,12 @@ from math import isclose, sqrt
 
 # alias for complex numbers
 # python ≥ 3.12 only
-# type cmp = complex | float
+type cmp = complex | float
 # else
-from typing import TypeAlias
+# from typing import TypeAlias, TYPE_CHECKING
 
-cmp: TypeAlias = complex | float
+# if TYPE_CHECKING:
+#     cmp: TypeAlias = complex | float
 
 
 @dataclasses.dataclass
