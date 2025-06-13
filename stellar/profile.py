@@ -1,6 +1,6 @@
 """Module related to the computation of the stellar profile"""
 
-from states import StateFockBasis
+from stellar.states import StateFockBasis
 
 ## Notes
 # whatever the state we try just care about it's stellar rank?? Eq. 9 https://arxiv.org/abs/2011.04320

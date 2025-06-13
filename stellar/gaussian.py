@@ -11,8 +11,6 @@ from math import cosh, sqrt, tanh
 
 import numpy as np
 
-from stellar.states import cmp
-
 logger = logging.getLogger(__name__)
 
 
@@ -33,6 +31,7 @@ class GaussianOp:
     kwargs for left (bra) and right (ket) cutoffs or just optional??
     """
 
+    C: complex
     def __init__(
         self, x: float, y: float, r: float, theta: float, method: Method, param: Parameterisation, **kwargs
     ) -> None:
@@ -53,7 +52,7 @@ class GaussianOp:
                 # sech = 1/cosh
                 # [1] Eq. (44)
                 logger.info("chosen the method recursive")
-                self.C: cmp = exp(
+                self.C = exp(
                     -(abs(self.alpha) ** 2 + self.alpha.conjugate() ** 2 * exp(1j * self.theta) * tanh(self.r)) / 2
                 ) / sqrt(cosh(self.r))
                 logger.debug(f"{self.C=}")
