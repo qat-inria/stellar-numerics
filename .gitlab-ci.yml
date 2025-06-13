@@ -7,7 +7,8 @@ stages:
 
 # common stuff and actions
 # how to specify multiple python versions? matrix?
-image: python:3.13
+image: conda/miniconda3
+# python:3.13
 
 default:
   tags:
@@ -15,15 +16,15 @@ default:
     - small # For selecting small shared runners
 
 before_script:
+  - conda create -n ci-env python=3.13
+  - conda activate ci-env
   - pip install -r requirements.txt
+  - conda install libmambapy # in case not resolved by pip
 
 test:
   stage: test
-  # tags:
-  #   - ci.inria.fr # For using shared runners
-  #   - small       # For selecting small shared runners
   # remove. will run as soon as there is an event on the BRANCH
-  # ci ppelines are branch based
+  # ci pipelines are branch based
   # rules:
   #   - if: $CI_PIPELINE_SOURCE == "push"
   script:
@@ -31,9 +32,6 @@ test:
 
 benchmark:
   stage: benchmark
-  # tags:
-  #   - ci.inria.fr # For using shared runners
-  #   - small       # For selecting small shared runners
   script:
     - asv run ALL
     - asv publish
@@ -62,6 +60,4 @@ pages:
 #     # This ensures that only pushes to the default branch will trigger
 #     # a pages deploy
 #     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
-
-
 
