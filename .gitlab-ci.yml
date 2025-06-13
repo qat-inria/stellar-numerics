@@ -16,7 +16,7 @@ default:
     - small # For selecting small shared runners
 
 before_script:
-  - conda create -n ci-env python=3.12
+  - conda create -n ci-env python=3.10
   - conda activate ci-env
   - pip install -r requirements.txt
   - conda install libmambapy # in case not resolved by pip
