@@ -3,7 +3,6 @@ from cmath import exp
 from math import cosh, sqrt, tanh, pi
 
 import numpy as np
-import pytest
 from hypothesis import given, strategies as st
 
 from stellar.gaussian import GaussianOp, Method, Parameterisation

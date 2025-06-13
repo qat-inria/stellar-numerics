@@ -3,7 +3,6 @@ references
 [1] Miatto & Quesada https://arxiv.org/abs/2004.11002 (2020)
 """
 
-import dataclasses
 import logging
 from cmath import exp
 from enum import Enum, auto
