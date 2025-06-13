@@ -8,7 +8,6 @@ stages:
 # common stuff and actions
 # how to specify multiple python versions? matrix?
 image: conda/miniconda3
-# python:3.13
 
 default:
   tags:
@@ -50,7 +49,6 @@ pages:
       - public
   only:
     - main
-
 # activate gitlab pages
 # public is created in the pages job above.
 # DOESN't WORK

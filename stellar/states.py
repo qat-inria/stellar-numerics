@@ -6,10 +6,10 @@ from math import isclose, sqrt
 # python ≥ 3.12 only
 # type cmp = complex | float
 # else
-from typing import TypeAlias, TYPE_CHECKING
+from typing import TypeAlias  # , TYPE_CHECKING
 
-if TYPE_CHECKING:
-    cmp: TypeAlias = complex | float
+# if TYPE_CHECKING:
+cmp: TypeAlias = complex | float
 
 
 @dataclasses.dataclass
@@ -17,6 +17,7 @@ class StateFockBasis:
     """Class for single-mode quantum states defines in the Fock basis"""
 
     statevector: Sequence[cmp]  # see https://docs.python.org/3/library/collections.abc.html
+    # not a type checking....
 
     def norm(self) -> float:
         return sqrt(sum(abs(ell) ** 2 for ell in self.statevector))
