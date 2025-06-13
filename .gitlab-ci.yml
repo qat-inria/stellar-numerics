@@ -35,8 +35,32 @@ benchmark:
   #   - ci.inria.fr # For using shared runners
   #   - small       # For selecting small shared runners
   script:
-    - asv run
+    - asv run ALL
     - asv publish
   artifacts:
     paths:
       - .asv/html
+
+pages:
+  stage: benchmark
+  script:
+    - mv .asv/html public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+
+# activate gitlab pages
+# public is created in the pages job above.
+create-pages:
+  pages:
+    # The folder that contains the files to be exposed at the Page URL
+    publish: public
+  rules:
+    # This ensures that only pushes to the default branch will trigger
+    # a pages deploy
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+
+
+
