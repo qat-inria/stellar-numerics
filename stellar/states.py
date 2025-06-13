@@ -3,7 +3,7 @@ from collections.abc import Sequence
 from math import isclose, sqrt
 
 # alias for complex numbers
-cmp = complex | float
+type cmp = complex | float
 
 
 @dataclasses.dataclass
