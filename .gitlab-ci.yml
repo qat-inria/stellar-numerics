@@ -8,14 +8,15 @@ stages:
 # common stuff and actions
 
 image: python:3.13
-tags:
-    - ci.inria.fr # For using shared runners
-    - small       # For selecting small shared runners
+
 before_script:
     - pip install -r requirements.txt
 
 test:
   stage: test
+  tags:
+    - ci.inria.fr # For using shared runners
+    - small       # For selecting small shared runners
 # remove. will run as soon as there is an event on the BRANCH
 # ci ppelines are branch based
   # rules:
@@ -25,6 +26,9 @@ test:
 
 benchmark:
   stage: benchmark
+  tags:
+    - ci.inria.fr # For using shared runners
+    - small       # For selecting small shared runners
   script:
     - asv run
     - asv publish
