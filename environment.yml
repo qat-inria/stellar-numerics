@@ -1,0 +1,6 @@
+name: stellar-numerics
+dependencies:
+  - python=3.10
+  - pip # required for pip-installed dependencies
+  - pip:
+    - -e .
