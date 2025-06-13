@@ -1,6 +1,6 @@
 stages:
-# test already exist by default
-# deploy too
+  # test already exist by default
+  # deploy too
   - test
   - benchmark
   # - deploy
@@ -9,16 +9,21 @@ stages:
 
 image: python:3.13
 
+default:
+  tags:
+    - ci.inria.fr # For using shared runners
+    - small # For selecting small shared runners
+
 before_script:
-    - pip install -r requirements.txt
+  - pip install -r requirements.txt
 
 test:
   stage: test
-  tags:
-    - ci.inria.fr # For using shared runners
-    - small       # For selecting small shared runners
-# remove. will run as soon as there is an event on the BRANCH
-# ci ppelines are branch based
+  # tags:
+  #   - ci.inria.fr # For using shared runners
+  #   - small       # For selecting small shared runners
+  # remove. will run as soon as there is an event on the BRANCH
+  # ci ppelines are branch based
   # rules:
   #   - if: $CI_PIPELINE_SOURCE == "push"
   script:
@@ -26,9 +31,9 @@ test:
 
 benchmark:
   stage: benchmark
-  tags:
-    - ci.inria.fr # For using shared runners
-    - small       # For selecting small shared runners
+  # tags:
+  #   - ci.inria.fr # For using shared runners
+  #   - small       # For selecting small shared runners
   script:
     - asv run
     - asv publish
