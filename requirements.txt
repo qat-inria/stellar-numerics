@@ -1,5 +1,6 @@
-ruff
-pytest
-numpy
-hypothesis
 asv
+hypothesis
+mypy
+numpy
+pytest
+ruff
