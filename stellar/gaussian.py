@@ -32,6 +32,11 @@ class GaussianOp:
     """
 
     C: complex
+
+    # specify data type?? and size??? Might have type pb since rest is complex only not numpy cpx...
+    mean_vector: np.ndarray
+    covaraince_matrix: np.ndarray
+
     def __init__(
         self, x: float, y: float, r: float, theta: float, method: Method, param: Parameterisation, **kwargs
     ) -> None:
@@ -57,8 +62,7 @@ class GaussianOp:
                 ) / sqrt(cosh(self.r))
                 logger.debug(f"{self.C=}")
                 # [1] Eq. (45)
-                # specify data type?? and size??? Might have type pb since rest is complex only not numpy cpx...
-                self.mean_vector: np.ndarray = np.array(
+                self.mean_vector = np.array(
                     [
                         self.alpha.conjugate() * exp(1j * self.theta) * tanh(self.r) + self.alpha,
                         -self.alpha.conjugate() / cosh(self.r),
@@ -67,7 +71,7 @@ class GaussianOp:
                 )
 
                 # [1] Eq. (46)
-                self.covariance_matrix: np.ndarray = np.array(
+                self.covariance_matrix = np.array(
                     [
                         [exp(1j * self.theta) * tanh(self.r), -1 / cosh(self.r)],
                         [-1 / cosh(self.r), -exp(-1j * self.theta) * tanh(self.r)],
