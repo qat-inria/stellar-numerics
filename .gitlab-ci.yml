@@ -7,7 +7,7 @@ stages:
 
 # common stuff and actions
 
-image: python:3.12
+image: python:3.10
 
 default:
   tags:
@@ -53,14 +53,15 @@ pages:
 
 # activate gitlab pages
 # public is created in the pages job above.
-create-pages:
-  pages:
-    # The folder that contains the files to be exposed at the Page URL
-    publish: public
-  rules:
-    # This ensures that only pushes to the default branch will trigger
-    # a pages deploy
-    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+# DOESN't WORK
+# create-pages:
+#   pages:
+#     # The folder that contains the files to be exposed at the Page URL
+#     publish: public
+#   rules:
+#     # This ensures that only pushes to the default branch will trigger
+#     # a pages deploy
+#     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
 
 
 
