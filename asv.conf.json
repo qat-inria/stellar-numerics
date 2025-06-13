@@ -11,7 +11,11 @@
 
     // The URL or local path of the source code repository for the
     // project being benchmarked
-    "repo": "https://gitlab.inria.fr/qat/stellar-numerics",
+
+    // local use
+    //"repo": ".", 
+    // git us
+    "repo": "git@gitlab.inria.fr:qat/stellar-numerics.git"
 
     // The Python project's subdirectory in your repo.  If missing or
     // the empty string, the project is assumed to be located at the root
@@ -54,7 +58,13 @@
     // If missing or the empty string, the tool will be automatically
     // determined by looking for tools on the PATH environment
     // variable.
-    "environment_type": "conda",
+
+    // for local use
+    // "environment_type": "existing",
+    // "python": "/Users/mgarnier/opt/anaconda3/envs/stellar/bin/python"
+
+    // for git use
+    
 
     // timeout in seconds for installing any dependencies in environment
     // defaults to 10 min

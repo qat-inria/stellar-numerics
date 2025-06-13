@@ -1,9 +1,19 @@
 stages:
+# test already exist by default
+# deploy too
   - test
+  - benchmark
+  # - deploy
+
+# common stuff and actions
+
+image: python:3.13
+
+before_script:
+    - pip install -r requirements.txt
 
 test:
   stage: test
-  image: python:3.13
   tags:
     - ci.inria.fr # For using shared runners
     - small       # For selecting small shared runners
@@ -12,5 +22,13 @@ test:
   # rules:
   #   - if: $CI_PIPELINE_SOURCE == "push"
   script:
-    - pip install -r requirements.txt
     - pytest
+
+benchmark:
+  stage: benchmark
+  script:
+    - asv run
+    - asv publish
+  artifacts:
+    paths:
+      - .asv/html
