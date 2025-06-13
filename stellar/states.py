@@ -3,7 +3,12 @@ from collections.abc import Sequence
 from math import isclose, sqrt
 
 # alias for complex numbers
-type cmp = complex | float
+# python ≥ 3.12 only
+# type cmp = complex | float
+# else
+from typing import TypeAlias
+
+cmp: TypeAlias = complex | float
 
 
 @dataclasses.dataclass
