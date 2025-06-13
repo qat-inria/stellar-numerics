@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "stellar-numerics"
 authors = [{ name = "Maxime Garnier", email = "maxime.garnier@inria.fr" }, { name = "Ulysse Chabaud", email = "ulysse.chabaud@inria.fr" }]
 maintainers = [{ name = "Maxime Garnier", email = "maxime.garnier@inria.fr" }, { name = "Ulysse Chabaud", email = "ulysse.chabaud@inria.fr" }]
-
+version = "1"
 license-files = ["LICENSE"]
 description = "stellar-rank optimisation"
 readme = "README.md"
@@ -26,7 +26,7 @@ requires-python = ">=3.10,<3.14"
 dynamic = ["dependencies"]
 
 [project.urls]
-Documentation = ""
+# Documentation = "" # Should be an URL
 "Bug Tracker" = "https://gitlab.inria.fr/qat/stellar-numerics/-/issues"
 
 [tool.setuptools.dynamic]
