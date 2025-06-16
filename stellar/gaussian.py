@@ -156,3 +156,18 @@ class GaussianOp:
 #                 pass
 #             case Parameterisation.recursive:
 #                 raise NotImplementedError("Feature not yet implemented.")
+
+
+# To be used both in tests/ and benchmarks/
+def check_gaussian_displacement(x: float, y: float) -> None:
+    """Eqs. 53 -> 55 of Quesada"""
+    disp = GaussianOp(x=x, y=y, r=0, theta=0, method=Method.recursive, param=Parameterisation.Fock)
+
+    assert disp.alpha == x + 1j * y
+    assert disp.C == exp(-(abs(disp.alpha) ** 2) / 2)
+
+    target_mean_vector = np.array([disp.alpha, -disp.alpha.conjugate()])
+    np.testing.assert_array_equal(disp.mean_vector, target_mean_vector)
+
+    target_cov_matrix = np.array([[0, -1], [-1, 0]])
+    np.testing.assert_array_equal(disp.covariance_matrix, target_cov_matrix)

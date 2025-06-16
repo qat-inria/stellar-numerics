@@ -5,29 +5,19 @@ from math import cosh, sqrt, tanh, pi
 import numpy as np
 from hypothesis import given, strategies as st
 
-from stellar.gaussian import GaussianOp, Method, Parameterisation
+from stellar.gaussian import GaussianOp, Method, Parameterisation, check_gaussian_displacement
 
 
 logger = logging.getLogger(__name__)
 
-logger.info("Startng tests")
+logger.info("Starting tests")
 
 ### NOTE use hypothesis? Yes for random args
 
 
 @given(st.floats(min_value=-5, max_value=5), st.floats(min_value=-5, max_value=5))
 def test_gaussian_displacement(x: float, y: float) -> None:
-    """Eqs. 53 -> 55 of Quesada"""
-    disp = GaussianOp(x=x, y=y, r=0, theta=0, method=Method.recursive, param=Parameterisation.Fock)
-
-    assert disp.alpha == x + 1j * y
-    assert disp.C == exp(-(abs(disp.alpha) ** 2) / 2)
-
-    target_mean_vector = np.array([disp.alpha, -disp.alpha.conjugate()])
-    np.testing.assert_array_equal(disp.mean_vector, target_mean_vector)
-
-    target_cov_matrix = np.array([[0, -1], [-1, 0]])
-    np.testing.assert_array_equal(disp.covariance_matrix, target_cov_matrix)
+    check_gaussian_displacement(x, y)
 
 
 @given(st.floats(min_value=-5, max_value=5), st.floats(min_value=0, max_value=2 * pi))

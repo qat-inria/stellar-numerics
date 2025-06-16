@@ -1,8 +1,6 @@
 name: stellar-numerics
 dependencies:
   - python=3.10
-  - conda
-  - libmambapy
   - pip # required for pip-installed dependencies
   - pip:
     - -e . # install dependencies as in pyproject.toml

@@ -1,26 +1,36 @@
 # gitlab: repo toujours en checkout
 # each job is in a fresh vm!
+include:
+  - project: "inria-ci/docker"
+    file: "/register-dockerfile/register-dockerfile.yml"
 
 stages:
   # test already exist by default
   # deploy too
   - test
   - benchmark
-  # - deploy
+  - deploy
+
+prepare:
+  before_script: []
+  rules:
+    - changes:
+        - Dockerfile
+        - environment.yml
+        - requirements.txt
+  extends: .register-dockerfile-prepare
+
+image: $image
 
 # common stuff and actions
 # how to specify multiple python versions? matrix?
-image: conda/miniconda3
-# voir image thierry. Docker shared par toutes les vm donc créer une seule fois. Look at Docker.
 default:
+  before_script:
+    - . ~/.bashrc
+    - conda activate stellar-numerics
   tags:
     - ci.inria.fr # For using shared runners
     - small # For selecting small shared runners
-  before_script:
-    - conda init bash
-    - . ~/.bashrc
-    - conda env create -f environment.yml
-    - conda activate stellar-numerics
 
 test:
   stage: test
@@ -34,20 +44,22 @@ test:
 benchmark:
   stage: benchmark
   script:
-    - asv machine --yes
-    - asv run ALL
+    - asv run --show-stderr
+    # GitLab CI only fetches a shallow clone by default
+    - git fetch origin main
+    # Creates a local main branch that tracks the remote origin/main
+    - git checkout -b main origin/main
     - asv publish
   artifacts:
     paths:
-      - .asv/html
+      - html
 
-pages: 
-  needs: [benchmark]
+pages:
+  stage: deploy
   dependencies:
-    - benchmark # par défaut en parallèle donc besoin de spécifier la dependance. Après et beosin des artefacts.
-  stage: benchmark
+    - benchmark
   script:
-    - mv .asv/html public
+    - mv html public
   artifacts:
     paths:
       - public
