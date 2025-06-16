@@ -4,4 +4,4 @@ dependencies:
   - libmambapy
   - pip # required for pip-installed dependencies
   - pip:
-    - -e .
+    - -e . # install dependencies as in pyproject.toml

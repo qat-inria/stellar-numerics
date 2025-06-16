@@ -32,6 +32,7 @@ test:
 benchmark:
   stage: benchmark
   script:
+    - asv machine --yes
     - asv run ALL
     - asv publish
   artifacts:
