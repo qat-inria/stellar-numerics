@@ -1,5 +1,6 @@
 asv
 hypothesis
+hypothesis[numpy]
 mypy
 numpy
 pytest
