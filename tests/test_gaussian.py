@@ -1,12 +1,12 @@
 import logging
 from cmath import exp
-from math import cosh, sqrt, tanh, pi
+from math import cosh, pi, sqrt, tanh
 
 import numpy as np
-from hypothesis import given, strategies as st
+from hypothesis import given
+from hypothesis import strategies as st
 
-from stellar.gaussian import GaussianOp, Method, Parameterisation, check_gaussian_displacement
-
+from stellar.gaussian import GaussianOp, GaussianParameters, Method, Parameterisation, check_gaussian_displacement
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,8 @@ def test_gaussian_displacement(x: float, y: float) -> None:
 @given(st.floats(min_value=-5, max_value=5), st.floats(min_value=0, max_value=2 * pi))
 def test_gaussian_squeeze(r: float, theta: float) -> None:
     """Eqs. 47 -> 49 of Quesada"""
-    sqz = GaussianOp(x=0, y=0, r=r, theta=theta, method=Method.recursive, param=Parameterisation.Fock)
+    gauss_params = GaussianParameters(x=0, y=0, r=r, theta=theta)
+    sqz = GaussianOp(gauss_params, method=Method.recursive, param=Parameterisation.Fock)
 
     assert sqz.C == 1 / sqrt(cosh(sqz.r))
 
@@ -36,13 +37,21 @@ def test_gaussian_squeeze(r: float, theta: float) -> None:
     np.testing.assert_array_equal(sqz.covariance_matrix, target_cov_matrix)
 
 
-@given(st.integers(min_value=1, max_value=5), st.integers(min_value=1, max_value=10))
-def test_matrix_build(left_cut, right_cut) -> None:
-    gauss = GaussianOp(x=0.3, y=0.046, r=1, theta=0.3, method=Method.recursive, param=Parameterisation.Fock)
+@given(
+    st.integers(min_value=1, max_value=5),
+    st.integers(min_value=1, max_value=10),
+    st.floats(min_value=-5, max_value=5),
+    st.floats(min_value=-5, max_value=5),
+    st.floats(min_value=-5, max_value=5),
+    st.floats(min_value=0, max_value=2 * pi),
+)
+def test_matrix_build(left_cut, right_cut, x, y, r, theta) -> None:
+    gauss_params = GaussianParameters(x=x, y=y, r=r, theta=theta)
+    gauss = GaussianOp(gauss_params, method=Method.recursive, param=Parameterisation.Fock)
 
-    gauss.build_matrix(bra_cutoff=left_cut, ket_cutoff=right_cut)
+    gauss.build_matrix_fock_basis(bra_cutoff=left_cut, ket_cutoff=right_cut)
 
-    assert gauss.matrix.shape == (left_cut, right_cut)
+    assert gauss.matrix_fock_basis.shape == (left_cut, right_cut)
 
 
 # generic test eqs 44-46?

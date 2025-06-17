@@ -2,6 +2,7 @@ asv
 hypothesis
 hypothesis[numpy]
 mypy
-numpy
 pytest
 ruff
+numpy
+scipy

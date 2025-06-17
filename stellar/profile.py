@@ -1,10 +1,48 @@
-"""Module related to the computation of the stellar profile"""
+"""Module related to the computation of the stellar profile
+References:
+[2] Chabaud et al., https://arxiv.org/pdf/2011.04320 (2020)
+[3] Chabaud et al., https://arxiv.org/abs/1907.11009 (2020)
+"""
 
+import numpy as np
+from scipy.optimize import minimize, OptimizeResult  # NOTE mypy has problems. scipy is not typed?
+
+from stellar.gaussian import GaussianOp, GaussianParameters, Method, Parameterisation
 from stellar.states import StateFockBasis
 
 ## Notes
 # whatever the state we try just care about it's stellar rank?? Eq. 9 https://arxiv.org/abs/2011.04320
 
 
-def compute_sup_fidelity(max_rank: int, target_state: StateFockBasis) -> None:
-    pass
+def compute_obj_func(x: float, y: float, r: float, theta: float, max_rank: int, target_state: StateFockBasis) -> float:
+    """function to be optimized
+    From [2] Thm 1
+    """
+    gauss_params = GaussianParameters(x=x, y=y, r=r, theta=theta)
+    g = GaussianOp(gauss_params, method=Method.recursive, param=Parameterisation.Fock)
+    g.build_matrix_fock_basis(bra_cutoff=target_state.dim, ket_cutoff=max_rank + 1)
+
+    # vectorized! result is a one dim vector of dim ket_cutoff
+    return np.sum(np.abs(target_state.statevector @ g.matrix_fock_basis) ** 2)
+
+
+# need have non custom objects as arguments for scipy minimize
+def compute_sup_fidelity(max_rank: int, target_state: StateFockBasis) -> OptimizeResult:
+    # opt
+
+    print("safe")
+    # gradient-less? Otherwise numerical gradients? or parameter-shift rule?
+    # see default in mathematica
+    # multiply by -1 to minimize
+    return minimize(
+        lambda params: -compute_obj_func(
+            x=params[0], y=params[1], r=params[2], theta=params[3], max_rank=max_rank, target_state=target_state
+        ),
+        x0=(1, 1, 1, 1),
+        method="COBYLA",
+    )
+
+
+# compute stellar_profile.
+# be smart to avoid recomputing the whole matrix for all stellar ranks for given gaussian parameters...
+# or do it in parallel?

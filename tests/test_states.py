@@ -1,12 +1,18 @@
 import logging
 from math import isclose
 
-
-from tests.strategies import complex_arrays_st, unit_norm_complex_arrays_st
+import numpy as np
 from hypothesis import given
+from hypothesis import strategies as st
 
-
-from stellar.states import StateFockBasis, Statevector
+from stellar.states import StateFockBasis, Statevector, FockStateFockBasis
+from tests.strategies import (
+    complex_arrays_st,
+    tuple_StateFockBasis_mat_left_st,
+    tuple_StateFockBasis_st,
+    unit_norm_complex_arrays_st,
+    tuple_ints_fock_cutoff_st,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -34,3 +40,28 @@ def test_normalize(data: Statevector) -> None:
     state = StateFockBasis(data)
     state.normalize()
     assert isclose(state.get_norm(), 1, abs_tol=1e-6)
+
+
+@given(tuple_StateFockBasis_st())
+def test_matmul_vectors(stateTuple) -> None:
+    state1, state2 = stateTuple
+    np.testing.assert_array_equal(state1 @ state2, state1.statevector @ state2.statevector)
+
+
+# do the same for matrix (left)
+@given(tuple_StateFockBasis_mat_left_st())
+def test_matmul_vector_mat(data) -> None:
+    state, mat = data
+    np.testing.assert_array_equal(state @ mat, state.statevector @ mat)
+    # assert on shapes?
+
+
+# not the best since only a one in last component...
+@given(tuple_ints_fock_cutoff_st())
+def test_FockStateFockBasis(data) -> None:
+    n, cutoff = data
+    state = FockStateFockBasis(n, cutoff)
+
+    print(state.statevector)
+    assert np.nonzero(state.statevector) == (np.array([n]),)
+    assert isclose(state.get_norm(), 1.0)

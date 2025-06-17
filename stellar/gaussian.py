@@ -5,6 +5,7 @@ References
 
 import logging
 from cmath import exp
+from dataclasses import dataclass
 from enum import Enum, auto
 from math import cosh, sqrt, tanh
 
@@ -23,7 +24,14 @@ class Method(Enum):
     recursive = auto()
 
 
-# don't use dataclass here for conditional attributes?
+@dataclass
+class GaussianParameters:
+    x: float
+    y: float
+    r: float
+    theta: float
+
+
 class GaussianOp:
     """Parameterisation of single-mode Gaussians
     we use as in https://arxiv.org/abs/2004.11002 Eq. (43) with no rotation (their phi = 0, their squeezing phase is delta)
@@ -31,18 +39,15 @@ class GaussianOp:
     """
 
     C: complex
-
-    # specify data type?? and size??? Might have type pb since rest is complex only not numpy cpx...
     mean_vector: np.ndarray
-    covaraince_matrix: np.ndarray
+    covariance_matrix: np.ndarray
 
-    def __init__(
-        self, x: float, y: float, r: float, theta: float, method: Method, param: Parameterisation, **kwargs
-    ) -> None:
-        self.x = x
-        self.y = y
-        self.r = r
-        self.theta = theta
+    def __init__(self, gauss_param: GaussianParameters, method: Method, param: Parameterisation, **kwargs) -> None:
+        self.x = gauss_param.x
+        self.y = gauss_param.y
+        self.r = gauss_param.r
+        self.theta = gauss_param.theta
+
         self.method = method
         if not param == Parameterisation.Fock:
             raise ValueError("Other parameterisation of the target state than Fock is not implemented.")
@@ -84,26 +89,28 @@ class GaussianOp:
     # should this be here or outside?
     # define a global table of matrix elements with dim cutoff? (equal to size of input state for m (left) and max rank for right (n))
     # add target state somewhere else.
-    def build_matrix(self, bra_cutoff: int, ket_cutoff: int) -> None:  # or return the matrix and not as attribute?
+    def build_matrix_fock_basis(
+        self, bra_cutoff: int, ket_cutoff: int
+    ) -> None:  # or return the matrix and not as attribute?
         # G_{mn} = <m|G|n> Eq 10 Quesada
         # cutoffs are positional arguments so they have to be provided in this order!
 
-        self.matrix = np.zeros((bra_cutoff, ket_cutoff), dtype=np.complex128)
+        self.matrix_fock_basis = np.zeros((bra_cutoff, ket_cutoff), dtype=np.complex128)
 
         match self.method:
             case Method.recursive:
                 # [1] Eq. (27)
-                self.matrix[0, 0] = self.C
+                self.matrix_fock_basis[0, 0] = self.C
 
                 # build first column with [1] Eq (30).
                 # no last term
                 for m in range(1, bra_cutoff):
                     if m == 1:  # only first term. No root since m == 1
-                        self.matrix[m, 0] = self.matrix[m - 1, 0] * self.mean_vector[0]
+                        self.matrix_fock_basis[m, 0] = self.matrix_fock_basis[m - 1, 0] * self.mean_vector[0]
                     else:  # first two terms
-                        self.matrix[m, 0] = (
-                            self.matrix[m - 1, 0] * self.mean_vector[0]
-                            - sqrt(m - 1) * self.matrix[m - 2, 0] * self.covariance_matrix[0, 0]
+                        self.matrix_fock_basis[m, 0] = (
+                            self.matrix_fock_basis[m - 1, 0] * self.mean_vector[0]
+                            - sqrt(m - 1) * self.matrix_fock_basis[m - 2, 0] * self.covariance_matrix[0, 0]
                         ) / sqrt(m)
 
                 # build other columns using [1] Eq. (31)
@@ -113,24 +120,24 @@ class GaussianOp:
                     for m in range(0, bra_cutoff):
                         if n == 1:
                             if m == 0:  # n = 1, m = 0 only first term
-                                self.matrix[m, n] = self.matrix[m, n - 1] * self.mean_vector[1]
+                                self.matrix_fock_basis[m, n] = self.matrix_fock_basis[m, n - 1] * self.mean_vector[1]
                             else:  # n = 1, m ≥ 1 no last term
-                                self.matrix[m, n] = (
-                                    self.matrix[m, n - 1] * self.mean_vector[1]
-                                    - sqrt(m) * self.matrix[m - 1, n - 1] * self.covariance_matrix[1, 0]
+                                self.matrix_fock_basis[m, n] = (
+                                    self.matrix_fock_basis[m, n - 1] * self.mean_vector[1]
+                                    - sqrt(m) * self.matrix_fock_basis[m - 1, n - 1] * self.covariance_matrix[1, 0]
                                 )
 
                         else:  # generic case n > 1
                             if m == 0:  # n > 1, m = 0 no second term
-                                self.matrix[m, n] = (
-                                    self.matrix[m, n - 1] * self.mean_vector[1]
-                                    - sqrt(n - 1) * self.matrix[m, n - 2] * self.covariance_matrix[1, 1]
+                                self.matrix_fock_basis[m, n] = (
+                                    self.matrix_fock_basis[m, n - 1] * self.mean_vector[1]
+                                    - sqrt(n - 1) * self.matrix_fock_basis[m, n - 2] * self.covariance_matrix[1, 1]
                                 ) / sqrt(n)
                             else:  # n > 1, m ≥ 1 all three terms
-                                self.matrix[m, n] = (
-                                    self.matrix[m, n - 1] * self.mean_vector[1]
-                                    - sqrt(m) * self.matrix[m - 1, n - 1] * self.covariance_matrix[1, 0]
-                                    - sqrt(n - 1) * self.matrix[m, n - 2] * self.covariance_matrix[1, 1]
+                                self.matrix_fock_basis[m, n] = (
+                                    self.matrix_fock_basis[m, n - 1] * self.mean_vector[1]
+                                    - sqrt(m) * self.matrix_fock_basis[m - 1, n - 1] * self.covariance_matrix[1, 0]
+                                    - sqrt(n - 1) * self.matrix_fock_basis[m, n - 2] * self.covariance_matrix[1, 1]
                                 ) / sqrt(n)
 
             case Method.direct:
@@ -161,7 +168,13 @@ class GaussianOp:
 # To be used both in tests/ and benchmarks/
 def check_gaussian_displacement(x: float, y: float) -> None:
     """Eqs. 53 -> 55 of Quesada"""
-    disp = GaussianOp(x=x, y=y, r=0, theta=0, method=Method.recursive, param=Parameterisation.Fock)
+    gauss_params = GaussianParameters(
+        x=x,
+        y=y,
+        r=0,
+        theta=0,
+    )
+    disp = GaussianOp(gauss_params, method=Method.recursive, param=Parameterisation.Fock)
 
     assert disp.alpha == x + 1j * y
     assert disp.C == exp(-(abs(disp.alpha) ** 2) / 2)
