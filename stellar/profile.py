@@ -5,10 +5,17 @@ References:
 """
 
 import numpy as np
-from scipy.optimize import minimize, OptimizeResult  # NOTE mypy has problems. scipy is not typed?
+from scipy.optimize import (
+    minimize,
+    direct,
+    basinhopping,
+    OptimizeResult,
+    Bounds,
+)  # NOTE mypy has problems. scipy is not typed?
 
 from stellar.gaussian import GaussianOp, GaussianParameters, Method, Parameterisation
 from stellar.states import StateFockBasis
+from math import pi
 
 ## Notes
 # whatever the state we try just care about it's stellar rank?? Eq. 9 https://arxiv.org/abs/2011.04320
@@ -23,23 +30,42 @@ def compute_obj_func(x: float, y: float, r: float, theta: float, max_rank: int, 
     g.build_matrix_fock_basis(bra_cutoff=target_state.dim, ket_cutoff=max_rank + 1)
 
     # vectorized! result is a one dim vector of dim ket_cutoff
-    return np.sum(np.abs(target_state.statevector @ g.matrix_fock_basis) ** 2)
+    return np.sum(np.abs(target_state.statevector.conj() @ g.matrix_fock_basis) ** 2)
 
 
 # need have non custom objects as arguments for scipy minimize
 def compute_sup_fidelity(max_rank: int, target_state: StateFockBasis) -> OptimizeResult:
     # opt
 
-    print("safe")
     # gradient-less? Otherwise numerical gradients? or parameter-shift rule?
     # see default in mathematica
     # multiply by -1 to minimize
-    return minimize(
+
+    # look at global optimization method instead!
+    # like brute force or scipy.optimize.direct
+    # or try several starting point in parallel. Performance/cost tradeoff. Dask parallel, pools?
+    # return minimize(
+    #     lambda params: -compute_obj_func(
+    #         x=params[0], y=params[1], r=params[2], theta=params[3], max_rank=max_rank, target_state=target_state
+    #     ),
+    #     x0=(0,)*4, # (0, 1, 3, .43)
+    #     method="COBYLA",
+    # )
+    # Bounds (lb, ub)
+    # return direct(
+    #     lambda params: -compute_obj_func(
+    #         x=params[0], y=params[1], r=params[2], theta=params[3], max_rank=max_rank, target_state=target_state
+    #     ), bounds = Bounds([-3., -3., -3., 0.], [3., 3., 3., 2*pi]),
+    #     maxfun=10000  # type: ignore
+    # )
+    # bad type annotation in scipy.Bounds()
+
+    # works but slower than direct which fails on rank = 1, state =|2>
+    return basinhopping(
         lambda params: -compute_obj_func(
             x=params[0], y=params[1], r=params[2], theta=params[3], max_rank=max_rank, target_state=target_state
         ),
-        x0=(1, 1, 1, 1),
-        method="COBYLA",
+        x0=(0,) * 4,
     )
 
 
