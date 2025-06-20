@@ -76,7 +76,8 @@ def test_fock_states() -> None:
         tgt_state = FockStateFockBasis(n=n, cutoff=cutoff)
         for r in range(0, 6):
             results = compute_sup_fidelity(max_rank=r, target_state=tgt_state)
-            assert isclose(results.fun, -check_results[n, r], abs_tol=1e-3)
+            # assert results.success?
+            assert isclose(results.fun, - check_results[n, r], abs_tol=1e-3)
 
 
 # assert isclose(results.fun, -3 * sqrt(3) / (4 * e), abs_tol=1e-7)

@@ -37,6 +37,13 @@ class GaussianOp:
     we use as in https://arxiv.org/abs/2004.11002 Eq. (43) with no rotation (their phi = 0, their squeezing phase is delta)
     kwargs for left (bra) and right (ket) cutoffs or just optional??
     """
+    # reuse dataclasse to avoid the init
+    # use frozen dataclass to make all attributes read-only (properties)
+    # very good!
+    # https://docs.python.org/3/library/dataclasses.html#dataclasses.__post_init__
+    # use a __post__init__
+    # use properties for attributes computed on the fly. 
+    # need see all cases we can use to modify them
 
     C: complex
     mean_vector: np.ndarray
@@ -53,8 +60,13 @@ class GaussianOp:
             raise ValueError("Other parameterisation of the target state than Fock is not implemented.")
         self.param = param
 
+        # make all of these properties to compute them on the fly hen needed
+        # move outside __init__ to make it work?
+        # think with statesÒ
+
         self.alpha = self.x + 1j * self.y
 
+        # do these need to be exposed?
         match method:
             case Method.recursive:
                 # Parameterisation following [1]

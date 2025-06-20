@@ -11,11 +11,10 @@ from scipy.optimize import (
     basinhopping,
     OptimizeResult,
     Bounds,
-)  # NOTE mypy has problems. scipy is not typed?
+)  
 
 from stellar.gaussian import GaussianOp, GaussianParameters, Method, Parameterisation
 from stellar.states import StateFockBasis
-from math import pi
 
 ## Notes
 # whatever the state we try just care about it's stellar rank?? Eq. 9 https://arxiv.org/abs/2011.04320
@@ -51,7 +50,7 @@ def compute_sup_fidelity(max_rank: int, target_state: StateFockBasis) -> Optimiz
     #     x0=(0,)*4, # (0, 1, 3, .43)
     #     method="COBYLA",
     # )
-    # Bounds (lb, ub)
+    # Bounds(lb, ub)
     # return direct(
     #     lambda params: -compute_obj_func(
     #         x=params[0], y=params[1], r=params[2], theta=params[3], max_rank=max_rank, target_state=target_state
@@ -62,11 +61,11 @@ def compute_sup_fidelity(max_rank: int, target_state: StateFockBasis) -> Optimiz
 
     # works but slower than direct which fails on rank = 1, state =|2>
     return basinhopping(
-        lambda params: -compute_obj_func(
+        lambda params: -compute_obj_func( # type: ignore
             x=params[0], y=params[1], r=params[2], theta=params[3], max_rank=max_rank, target_state=target_state
         ),
         x0=(0,) * 4,
-    )
+    ) 
 
 
 # compute stellar_profile.

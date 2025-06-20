@@ -9,6 +9,13 @@ import numpy.typing as npt
 Statevector: TypeAlias = npt.NDArray[np.complex128]
 
 
+# all states will derive from this
+# what are the shared attributes?
+# what are the shared methods??
+# THINK
+# class CVState():
+
+# move this to methods of CVState class
 class StateFockBasis:
     """Class for single-mode quantum states defines in the Fock basis"""
 
@@ -55,6 +62,7 @@ class StateFockBasis:
 
 
 # write something for Fock states
+# more FockState with basis as param
 class FockStateFockBasis(StateFockBasis):
     def __init__(self, n: int, cutoff: int):
         # cutoff redund with super dim attribute...# but needed for instantiation
