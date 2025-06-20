@@ -26,10 +26,22 @@ class Method(Enum):
 
 @dataclass
 class GaussianParameters:
+    """Dataclass containing single-mode Gaussian parameters to be used with both `GaussianStates`and `GaussianOp`.
+
+    Returns
+    -------
+    _type_
+        _description_
+    """
+
     x: float
     y: float
     r: float
     theta: float
+
+    @property
+    def alpha(self):
+        return self.x + 1j * self.y
 
 
 class GaussianOp:
@@ -37,12 +49,13 @@ class GaussianOp:
     we use as in https://arxiv.org/abs/2004.11002 Eq. (43) with no rotation (their phi = 0, their squeezing phase is delta)
     kwargs for left (bra) and right (ket) cutoffs or just optional??
     """
+
     # reuse dataclasse to avoid the init
     # use frozen dataclass to make all attributes read-only (properties)
     # very good!
     # https://docs.python.org/3/library/dataclasses.html#dataclasses.__post_init__
     # use a __post__init__
-    # use properties for attributes computed on the fly. 
+    # use properties for attributes computed on the fly.
     # need see all cases we can use to modify them
 
     C: complex
@@ -64,7 +77,7 @@ class GaussianOp:
         # move outside __init__ to make it work?
         # think with statesÒ
 
-        self.alpha = self.x + 1j * self.y
+        self.alpha = gauss_param.alpha
 
         # do these need to be exposed?
         match method:

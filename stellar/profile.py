@@ -6,12 +6,12 @@ References:
 
 import numpy as np
 from scipy.optimize import (
-    minimize,
-    direct,
+    minimize,  # noqa: F401
+    direct,    # noqa: F401
     basinhopping,
     OptimizeResult,
-    Bounds,
-)  
+    Bounds,    # noqa: F401
+)
 
 from stellar.gaussian import GaussianOp, GaussianParameters, Method, Parameterisation
 from stellar.states import StateFockBasis
@@ -61,11 +61,11 @@ def compute_sup_fidelity(max_rank: int, target_state: StateFockBasis) -> Optimiz
 
     # works but slower than direct which fails on rank = 1, state =|2>
     return basinhopping(
-        lambda params: -compute_obj_func( # type: ignore
+        lambda params: -compute_obj_func(  # type: ignore
             x=params[0], y=params[1], r=params[2], theta=params[3], max_rank=max_rank, target_state=target_state
         ),
         x0=(0,) * 4,
-    ) 
+    )
 
 
 # compute stellar_profile.

@@ -15,6 +15,7 @@ Statevector: TypeAlias = npt.NDArray[np.complex128]
 # THINK
 # class CVState():
 
+
 # move this to methods of CVState class
 class StateFockBasis:
     """Class for single-mode quantum states defines in the Fock basis"""
