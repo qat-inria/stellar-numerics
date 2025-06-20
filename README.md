@@ -3,7 +3,13 @@
 
 ## Objective
 
-## Structure
+### Conventions
+- Gaussian states
+- Gaussian operators (displacement, squeezing)
+- multimode Fock basis
+- Beam-splitters
+
+## Code Structure
 
 ## How to/Tutorial
 
