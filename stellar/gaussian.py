@@ -23,8 +23,8 @@ class Method(Enum):
     direct = auto()
     recursive = auto()
 
-
-@dataclass
+# builtin __init__ and __repr__
+@dataclass(frozen=True) # need frozen to implement __hash__ method
 class GaussianParameters:
     """Dataclass containing single-mode Gaussian parameters to be used with both `GaussianStates`and `GaussianOp`.
 

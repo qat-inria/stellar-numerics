@@ -9,8 +9,12 @@ from dataclasses import dataclass
 import numpy as np
 import numpy.typing as npt
 from stellar.gaussian import GaussianParameters
+from math import exp, sqrt, factorial
+import typing
+import functools
 
-StatevectorData: TypeAlias = npt.NDArray[np.complex128]
+# numpy arrays are homogeneous type wise
+StatevectorData: TypeAlias = npt.NDArray[np.complex128] | npt.NDArray[np.float64]
 
 
 # Single mode pure states only so far.
@@ -18,7 +22,7 @@ StatevectorData: TypeAlias = npt.NDArray[np.complex128]
 
 class Statevector:
     """Class for statevectors in the Fock basis"""
-
+    statevector : StatevectorData
     def __init__(self, data: StatevectorData) -> None:
         if not isinstance(data, np.ndarray):
             raise TypeError("Target statevector array has to be a numpy array.")
@@ -31,14 +35,15 @@ class Statevector:
         self.dim = self.statevector.size  # safe since checked that array is 1-dimensional
 
     def __repr__(self):
-        return f"StateVector({self.statevector})"
+        return f"Statevector({self.statevector})"
 
     @property
     def norm(self) -> float:
         return np.sqrt(np.sum(np.abs(self.statevector) ** 2))
 
+    # default tolerance is 1e-9. Try 1e-5.
     def is_normalized(self) -> bool:
-        return isclose(self.norm, 1)
+        return isclose(self.norm, 1, abs_tol=1e-5)
 
     def normalize(self) -> None:
         # i n place or not?
@@ -46,21 +51,124 @@ class Statevector:
             raise ValueError("Cannot normalize the zero vector.")
         self.statevector = self.statevector / self.norm
 
-
+# CVState abstrait puis concret?
 @dataclass(frozen=True)
 class CVState:
-    statevector: StatevectorData | None = None
+    statevector: Statevector | None = None
     is_gaussian: bool | None = None
 
+    # need same interface for all child classes
+    # disregard cutoff
+    # all child classes can raise an exception
+    # child classes that require a cutoff have to raise a ValueError to eep signature matching 
+    # inheritance: all method called from A have to be called from B derived from B
+    def get_statevector(self, cutoff: int | None = None) -> Statevector:
+        if self.statevector is None:
+            raise ValueError("No statevector provided.")
+        return self.statevector
 
-@dataclass(frozen=True, init=False)
+# Thierry's comments 06-27_2025 
+# frozen=True gèle aussi les champs hérités, donc le self.is_gaussian dans CVState.__init__ ne pouvait pas fonctionner
+# sur un GaussianState 
+
+# il vaut mieux ne pas appeler __init__ depuis __post_init__ : en effet, quand __post_init__ est appelé, __init__ a déjà
+# été fait une fois, donc tu l'appelles une seconde fois. Ici, c'est bénin, car __init__ ne fait rien de coûteux, mais
+# ça ne semble pas être ce qu'on veut ; je pense que le mieux est que CVState soit aussi une dataclass, car c'est aussi
+# une simple collection de champs. Une difficulté est que ces champs ont des valeurs par défaut alors que GaussianState
+# a un paramètre positionnel obligatoire (sans valeur par défaut) : dans le __init__ généré automatiquement, les
+# paramètres des dataclasses hérités vont après les paramètres des dataclasses mères, or il ne peut y avoir de paramètre
+# positionnel obligatoire après des paramètres optionnels. La solution est de définir manuellement __init__ dans
+# GaussianState.
+
+# Oops, tu as raison : je me serais attendu à ce que le __init__ généré par @dataclass dans la classe héritée appelle le
+# __init__ de la classe parent, mais ce n'est pas le cas. Donc __init__ était bien appelé qu'une seule fois.
+
+# Si on en fait une dataclass, ses champs deviennent automatiquement des paramètres dans la méthode __init__ générée, y
+# compris dans les classes héritées. Donc le __init__ généré dans GaussianState se trouvait avoir les paramètres dans
+# cet ordre : statevector, is_gaussian, params. params ne peut pas ne pas avoir de valeur par défaut si les paramètres
+# qui le précède en ont.
+
+# puisque GaussianState est gelé, il faut utiliser object.__setattr__ pour initialiser params.
+@dataclass(frozen=True, init=False) # manually define __init__ for order parameter order reasons
 class GaussianState(CVState):
-    params: GaussianParameters
-
-    def __init__(self, params: GaussianParameters, statevector: StatevectorData | None = None):
+    # one un type pour un champ au niveau de la classe
+    # dataclass fait le init en plus
+    #mypy voit pas init = False
+    params: GaussianParameters # type: ignore[misc]
+    def __init__(self, params: GaussianParameters, statevector: Statevector | None = None):
         super().__init__(statevector=statevector, is_gaussian=True)
-        object.__setattr__(self, "params", params)
+        object.__setattr__(self, "params", params) # since frozen dataclass
 
+    # want a get_statevector method for generic state (Zach's ref)
+    # but want to be able to overide it in the simplest cases if makes sense
+
+#  or use classmethodclass 
+# Book:
+#     def __init__(self, title, author):
+#         self.title = title
+#         self.author = author
+
+#     @classmethod
+#     def from_string(cls, data_str):
+#         title, author = data_str.split(" - ")
+#         return cls(title, author)
+
+@dataclass(frozen=True, init=False) # manually define __init__ to avoid many __init__ calls for differet objects
+class CoherentState(GaussianState): # type: ignore[misc]
+    amplitude: complex # type: ignore[misc]
+    def __init__(self, amplitude: complex):
+        if isinstance(amplitude, (float, int)): # type float int are subtypes but not instances
+            super().__init__(params=GaussianParameters(float(amplitude), 0, 0, 0))
+        elif isinstance(amplitude, complex):
+            super().__init__(params=GaussianParameters(amplitude.real, amplitude.imag, 0, 0))
+        else:
+            raise TypeError("Amplitude parameter has to be a float or number.")
+        object.__setattr__(self, "amplitude", amplitude) # since frozen dataclass
+
+    # try to cache it to avoid recomputing? but maybve don't want to cache it always if  computations are done... store as attribute??
+    # need sef to be hashable so GaussianParam has to be hashable so frozen dataclass
+    @functools.cache
+    @typing.override # touytes les filles
+    def get_statevector(self, cutoff: int | None = None) -> Statevector:
+        """returns the statevector of a `CoherentState` object.
+
+        Parameters
+        ----------
+        cutoff : int
+            single-mode Fock space cutoff i.e. the highest Fock number reached
+
+        Returns
+        -------
+        res : Statevector
+            output statevector as a :class:`stellar.cvstates.Statevector` object.
+
+        Raises
+        ------
+        TypeError
+            if the parameter `cutoff`is not an integer.
+        TypeError
+            if the parameter `cutoff` is not a strictly positive integer.
+
+        Notes
+        -----
+        The statevector is computed as
+
+        .. math:: X(e^{j\omega } ) = x(n)e^{ - j\omega n}
+        """
+        if not isinstance(cutoff, int):
+            raise TypeError("The Fock space cutoff has to be an integer.")
+        if not cutoff > 0:
+            raise TypeError("The Fock space cutoff has to be freater than zero.")
+        
+        data = exp(-abs(self.amplitude) ** 2 / 2) * np.array([self.amplitude ** n / sqrt(factorial(n)) for n in range(cutoff + 1)])
+        
+        return Statevector(data)
+    
+    # compute it with min cutoff to satisfy precision requirement?
+    # do I want a statevector attribute like other CVState? Guess so. Property?
+    # @property
+    # def statevector(self) -> float:
+    #     return self.getget_statevector
 
 # # move this to methods of CVState class
 # class StateFockBasis:
@@ -83,7 +191,7 @@ class GaussianState(CVState):
 #     # The @overload decorator from the typing module is used for static type checking, not runtime dispatch. It allows you to hint multiple signatures for a function to type checkers, but you must provide a single implementation:
 #     # Here, the type checker understands both signatures, but at runtime, only the single implementation is used.
 
-#     def __matmul__(self, other: StateFockBasis | Statevector) -> complex | StateFockBasis | Statevector:
+#     def __matmul__(self, other: StateFockBasis | Statevector) ->  | StateFockBasis | Statevector:
 #         # numpy matmul is inplace or not?
 #         if isinstance(other, StateFockBasis):
 #             return np.matmul(self.statevector, other.statevector)
