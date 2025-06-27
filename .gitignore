@@ -6,3 +6,4 @@
 /results
 *~
 *.egg-info/
+*.mmd

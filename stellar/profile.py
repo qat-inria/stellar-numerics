@@ -71,3 +71,6 @@ def compute_sup_fidelity(max_rank: int, target_state: StateFockBasis) -> Optimiz
 # compute stellar_profile.
 # be smart to avoid recomputing the whole matrix for all stellar ranks for given gaussian parameters...
 # or do it in parallel?
+
+
+# TODO reproduce results on cat states in UC's thesis p. 71
