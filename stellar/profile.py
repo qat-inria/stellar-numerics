@@ -7,10 +7,10 @@ References:
 import numpy as np
 from scipy.optimize import (
     minimize,  # noqa: F401
-    direct,    # noqa: F401
+    direct,  # noqa: F401
     basinhopping,
     OptimizeResult,
-    Bounds,    # noqa: F401
+    Bounds,  # noqa: F401
 )
 
 from stellar.gaussian import GaussianOp, GaussianParameters, Method, Parameterisation

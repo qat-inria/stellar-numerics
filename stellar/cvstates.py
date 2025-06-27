@@ -5,13 +5,12 @@ from __future__ import annotations
 from math import isclose
 from typing import TypeAlias
 
-from attr import dataclass
+from dataclasses import dataclass
 import numpy as np
 import numpy.typing as npt
 from stellar.gaussian import GaussianParameters
 
 StatevectorData: TypeAlias = npt.NDArray[np.complex128]
-
 
 
 # Single mode pure states only so far.
@@ -64,12 +63,13 @@ class CVState:
         return self.statevector
 
 
-@dataclass(frozen = True)
+@dataclass(frozen=True)
 class GaussianState(CVState):
     params: GaussianParameters
+
     def __post_init__(self) -> None:
         print("calling super")
-        super().__init__(is_gaussian = True)
+        super().__init__(is_gaussian=True)
 
 
 # # move this to methods of CVState class

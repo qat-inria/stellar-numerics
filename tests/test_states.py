@@ -3,7 +3,6 @@ from math import isclose
 
 import numpy as np
 from hypothesis import given
-from hypothesis import strategies as st
 
 from stellar.states import StateFockBasis, Statevector, FockStateFockBasis
 from tests.strategies import (

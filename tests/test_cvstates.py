@@ -1,18 +1,11 @@
 import logging
-from math import isclose
 
-import numpy as np
 from hypothesis import given
-from hypothesis import strategies as st
 
 from stellar.cvstates import CVState, GaussianState, StatevectorData
 from stellar.gaussian import GaussianParameters
 from tests.strategies import (
     complex_arrays_st,
-    tuple_ints_fock_cutoff_st,
-    tuple_StateFockBasis_mat_left_st,
-    tuple_StateFockBasis_st,
-    unit_norm_complex_arrays_st,
 )
 
 logger = logging.getLogger(__name__)
@@ -26,14 +19,15 @@ def test_cvstate_init_success(data: StatevectorData) -> None:
     assert state.is_gaussian is None
     assert state.statevector is not None
 
+
 def test_cvstate_init_nodata() -> None:
-    state = CVState(is_gaussian = True)
+    state = CVState(is_gaussian=True)
     print(state.is_gaussian)
     assert state.is_gaussian
 
 
 def test_gstate_init_success() -> None:
-    gstate = GaussianState(GaussianParameters(1., 2., 2.5, 0.37))
+    gstate = GaussianState(GaussianParameters(1.0, 2.0, 2.5, 0.37))
     print(isinstance(gstate, GaussianState), isinstance(gstate, CVState))
     assert isinstance(gstate, GaussianState)
     assert isinstance(gstate, CVState)
