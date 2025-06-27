@@ -47,29 +47,19 @@ class Statevector:
         self.statevector = self.statevector / self.norm
 
 
-class CVState:
-    # input as a Fock statevector
-    # some won't go through a fock statevector
-    def __init__(self, statevector: StatevectorData | None = None, is_gaussian: bool | None = None) -> None:
-        # set is_gaussian by hand
-        self.is_gaussian = is_gaussian
-        # if input provided use it
-        if statevector is not None:
-            self.statevector = statevector
-
-    # ok for generic CV states but will be overridden by child classes
-    # think how to not make that too long
-    def get_statevector(self) -> StatevectorData:
-        return self.statevector
-
-
 @dataclass(frozen=True)
+class CVState:
+    statevector: StatevectorData | None = None
+    is_gaussian: bool | None = None
+
+
+@dataclass(frozen=True, init=False)
 class GaussianState(CVState):
     params: GaussianParameters
 
-    def __post_init__(self) -> None:
-        print("calling super")
-        super().__init__(is_gaussian=True)
+    def __init__(self, params: GaussianParameters, statevector: StatevectorData | None = None):
+        super().__init__(statevector=statevector, is_gaussian=True)
+        object.__setattr__(self, "params", params)
 
 
 # # move this to methods of CVState class
