@@ -10,7 +10,7 @@ import numpy as np
 import numpy.typing as npt
 from stellar.gaussian import GaussianParameters
 from math import exp, sqrt, factorial
-import typing
+import typing_extensions # for overriding >+3.12 introduced in typing module
 import functools
 
 # numpy arrays are homogeneous type wise
@@ -128,7 +128,7 @@ class CoherentState(GaussianState): # type: ignore[misc]
     # try to cache it to avoid recomputing? but maybve don't want to cache it always if  computations are done... store as attribute??
     # need sef to be hashable so GaussianParam has to be hashable so frozen dataclass
     @functools.cache
-    @typing.override # touytes les filles
+    @typing_extensions.override # toutes les filles qui implémentent get_statevector to check same
     def get_statevector(self, cutoff: int | None = None) -> Statevector:
         """returns the statevector of a `CoherentState` object.
 
