@@ -27,7 +27,7 @@ class Method(Enum):
 @dataclass(frozen=True) # need frozen to implement __hash__ method
 class GaussianParameters:
     """Dataclass containing single-mode Gaussian parameters to be used with both `GaussianStates`and `GaussianOp`.
-
+NOTE r has to be positive? Or deal separately
     Returns
     -------
     _type_
@@ -117,7 +117,7 @@ class GaussianOp:
     def build_matrix_fock_basis(
         self, bra_cutoff: int, ket_cutoff: int
     ) -> None:  # or return the matrix and not as attribute?
-        # G_{mn} = <m|G|n> Eq 10 Quesada
+        # G_{mn} = <m|G|n> Eq 10 Quesada [1]
         # cutoffs are positional arguments so they have to be provided in this order!
 
         self.matrix_fock_basis = np.zeros((bra_cutoff, ket_cutoff), dtype=np.complex128)
