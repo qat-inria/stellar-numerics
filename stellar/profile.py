@@ -4,13 +4,16 @@ References:
 [3] Chabaud et al., https://arxiv.org/abs/1907.11009 (2020)
 """
 
+from math import pi as π
+from typing import Any
+
 import numpy as np
 from scipy.optimize import (
-    minimize,  # noqa: F401
-    direct,  # noqa: F401
-    basinhopping,
-    OptimizeResult,
     Bounds,  # noqa: F401
+    OptimizeResult,
+    basinhopping,
+    direct,  # noqa: F401
+    minimize,  # noqa: F401
 )
 
 from stellar.gaussian import GaussianOp, GaussianParameters, Method, Parameterisation
@@ -59,12 +62,21 @@ def compute_sup_fidelity(max_rank: int, target_state: StateFockBasis) -> Optimiz
     # )
     # bad type annotation in scipy.Bounds()
 
+    # specify all bounds and limit squeezing to large but not to large to avoid overflow
+    bounds = Bounds([-np.inf, -np.inf, 0, 0], [np.inf, np.inf, 50, 2 * π])
+
+    # no typing for this object either in scipy or scipy-stubs
+    minimizer_kwargs: dict[str, Any] = {
+        # "method": "L-BFGS-B",
+        "bounds": bounds
+    }
     # works but slower than direct which fails on rank = 1, state =|2>
     return basinhopping(
         lambda params: -compute_obj_func(  # type: ignore
             x=params[0], y=params[1], r=params[2], theta=params[3], max_rank=max_rank, target_state=target_state
         ),
         x0=(0,) * 4,
+        minimizer_kwargs=minimizer_kwargs,  # type: ignore
     )
 
 
@@ -74,3 +86,15 @@ def compute_sup_fidelity(max_rank: int, target_state: StateFockBasis) -> Optimiz
 
 
 # TODO reproduce results on cat states in UC's thesis p. 71
+
+
+# bounds = Bounds([0, -5], [10, 2])
+
+# minimizer_kwargs = {
+#     "method": "L-BFGS-B",
+#     "bounds": bounds
+# }
+
+# x0 = [5, 0]  # Initial guess within the bounds
+
+# result = basinhopping(objective, x0, minimizer_kwargs=minimizer_kwargs)

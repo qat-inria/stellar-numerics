@@ -7,7 +7,7 @@ import logging
 from cmath import exp
 from dataclasses import dataclass
 from enum import Enum, auto
-from math import cosh, sqrt, tanh, pi
+from math import cosh, sqrt, tanh
 
 import numpy as np
 
@@ -48,8 +48,8 @@ class GaussianParameters:
         if not isinstance(self.r, (float, int)):
             raise TypeError("Parameter 'r' has to be a float.")
         ## NOTE TODO doesn't work so far since need to add constraints in the optimisation algorithm
-        # if not self.r >= 0:
-        #     raise TypeError("Parameter 'r' has to be a non-negative.")
+        if not self.r >= 0:
+            raise ValueError("Parameter 'r' has to be non-negative.")
         if not isinstance(self.theta, (float, int)):
             raise TypeError("Parameter 'theta' has to be a float.")
 
@@ -85,10 +85,11 @@ class GaussianOp:
         self.y = gauss_param.y
         # manual fix for positive squeezing
         # TODO remove when fixed
-        self.r = abs(gauss_param.r)
+        self.r = gauss_param.r
         self.theta = gauss_param.theta
-        if self.r < 0:
-            self.theta = gauss_param.theta + pi
+        # self.r = abs(gauss_param.r)
+        # if self.r < 0:
+        #     self.theta = gauss_param.theta + pi
 
         self.method = method
         if not param == Parameterisation.Fock:

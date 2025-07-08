@@ -3,6 +3,7 @@ from cmath import exp
 from math import cosh, pi, sqrt, tanh
 
 import numpy as np
+import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 
@@ -12,7 +13,10 @@ logger = logging.getLogger(__name__)
 
 logger.info("Starting tests")
 
-### NOTE use hypothesis? Yes for random args
+
+def test_gaussian_init_fail_sqz() -> None:
+    with pytest.raises(ValueError):
+        GaussianParameters(x=0, y=0, r=-5, theta=0.1)
 
 
 @given(st.floats(min_value=-5, max_value=5), st.floats(min_value=-5, max_value=5))
@@ -20,7 +24,7 @@ def test_gaussian_displacement(x: float, y: float) -> None:
     check_gaussian_displacement(x, y)
 
 
-@given(st.floats(min_value=-5, max_value=5), st.floats(min_value=0, max_value=2 * pi))
+@given(st.floats(min_value=0, max_value=5), st.floats(min_value=0, max_value=2 * pi))
 def test_gaussian_squeeze(r: float, theta: float) -> None:
     """Eqs. 47 -> 49 of Quesada"""
     gauss_params = GaussianParameters(x=0, y=0, r=r, theta=theta)
@@ -42,7 +46,7 @@ def test_gaussian_squeeze(r: float, theta: float) -> None:
     st.integers(min_value=1, max_value=10),
     st.floats(min_value=-5, max_value=5),
     st.floats(min_value=-5, max_value=5),
-    st.floats(min_value=-5, max_value=5),
+    st.floats(min_value=0, max_value=5),
     st.floats(min_value=0, max_value=2 * pi),
 )
 def test_matrix_build(left_cut, right_cut, x, y, r, theta) -> None:
