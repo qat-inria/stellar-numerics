@@ -140,7 +140,7 @@ class GaussianState(CVState):
 
         thxi = -cmath.exp(-1j * self.params.theta) * tanh(self.params.r)
         hermite_arg = (
-            cmath.sqrt(- thxi / 2)
+           cmath.exp(-1j * self.params.theta / 2) * sqrt(tanh(self.params.r) / 2)
             * (self.params.alpha.conjugate() - self.params.alpha / thxi)
         )
 
@@ -152,7 +152,7 @@ class GaussianState(CVState):
 
         data = np.array(
             [
-                cmath.sqrt((-thxi) ** k / (2**k * factorial(k) * cosh(self.params.r)))
+                (-thxi) ** (k /2) / sqrt(2**k * factorial(k) * cosh(self.params.r))
                 * cmath.exp(
                     thxi
                     * self.params.alpha.conjugate()

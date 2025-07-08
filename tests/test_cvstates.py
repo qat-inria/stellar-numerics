@@ -84,16 +84,16 @@ def test_coh_gauss_statevector() -> None:
     np.testing.assert_array_almost_equal(gstate.get_statevector(cutoff=cutoff).statevector, cohstate.get_statevector(cutoff=cutoff).statevector, decimal = 2)
     
 
-
+# use hypothesis over complex numbers and make cutoff large enough!
 def test_sqzv_gauss_statevector() -> None:
     # works for real squeezing (r positive, phase 0) cutoff 20
     # problems as soon as there is a phase (r negative doesn't work)
     # not too high squeezing otherwise huge cutoff!
     # doesn't work with a squeezing phase ... 
-    sqzamp = 1
+    sqzamp = 0.5 +0.3j
     gsqzstate = GaussianState(GaussianParameters(0, 0, abs(sqzamp), -cmath.phase(sqzamp)))
     sqzvstate = SqueezedVacuumState(sqzamp)
-    cutoff = 40
+    cutoff = 20 
     print("gaussian")
     gsqz_statevec = gsqzstate.get_statevector(cutoff=cutoff).statevector
     print(gsqz_statevec)
