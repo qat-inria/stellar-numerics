@@ -226,7 +226,7 @@ class CoherentState(GaussianState):  # type: ignore[misc]
         -----
         The statevector is computed as
 
-        .. math:: \vert \alpha \rangle = e^{- \abs{\alpha}^2 / 2}\sum_{n = 0}\frac{\alpha^n}{n!} \vert n \rangle
+        .. math:: \vert \alpha \rangle = e^{- \abs{\alpha}^2 / 2}\\sum_{n = 0}\frac{\alpha^n}{n!} \vert n \rangle
         """
         if not isinstance(cutoff, int):
             raise TypeError("The Fock space cutoff has to be an integer.")

@@ -7,7 +7,7 @@ import logging
 from cmath import exp
 from dataclasses import dataclass
 from enum import Enum, auto
-from math import cosh, sqrt, tanh
+from math import cosh, sqrt, tanh, pi
 
 import numpy as np
 
@@ -83,8 +83,12 @@ class GaussianOp:
     def __init__(self, gauss_param: GaussianParameters, method: Method, param: Parameterisation, **kwargs) -> None:
         self.x = gauss_param.x
         self.y = gauss_param.y
-        self.r = gauss_param.r
+        # manual fix for positive squeezing
+        # TODO remove when fixed
+        self.r = abs(gauss_param.r)
         self.theta = gauss_param.theta
+        if self.r < 0:
+            self.theta = gauss_param.theta + pi
 
         self.method = method
         if not param == Parameterisation.Fock:
