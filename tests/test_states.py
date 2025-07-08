@@ -37,6 +37,7 @@ def test_norm(data: Statevector) -> None:
 @given(complex_arrays_st())
 def test_normalize(data: Statevector) -> None:
     state = StateFockBasis(data)
+    print("get norm", state.get_norm())
     state.normalize()
     assert isclose(state.get_norm(), 1, abs_tol=1e-6)
 

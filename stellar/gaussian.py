@@ -40,6 +40,19 @@ class GaussianParameters:
     r: float
     theta: float
 
+    def __post_init__(self):
+        if not isinstance(self.x, (float, int)):
+            raise TypeError("Parameter 'x' has to be a float.")
+        if not isinstance(self.y, (float, int)):
+            raise TypeError("Parameter 'y' has to be a float.")
+        if not isinstance(self.r, (float, int)):
+            raise TypeError("Parameter 'r' has to be a float.")
+        ## NOTE TODO doesn't work so far since need to add constraints in the optimisation algorithm
+        # if not self.r >= 0:
+        #     raise TypeError("Parameter 'r' has to be a non-negative.")
+        if not isinstance(self.theta, (float, int)):
+            raise TypeError("Parameter 'theta' has to be a float.")
+
     @property
     def displacement(self) -> complex:  # TODO: change to displacement
         return self.x + 1j * self.y

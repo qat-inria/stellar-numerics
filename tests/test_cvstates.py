@@ -69,8 +69,8 @@ def test_cohstate_init_fail() -> None:
 
 
 def test_coh_gauss_statevector() -> None:
-    # doesn't work with a squeezing phase ...
-    gstate = GaussianState(GaussianParameters(1.0, 0.3, 0.0000001, 0.0))
+    # works with a squeezing phase ...
+    gstate = GaussianState(GaussianParameters(1.0, 0.3, 0.0000001, 1.5))
     cohstate = CoherentState(1 + 0.3j)
     cutoff = 10
     print("gaussian")
@@ -102,7 +102,7 @@ def test_coh_gauss_statevector() -> None:
     np.testing.assert_array_almost_equal(
         gstate.get_statevector(cutoff=cutoff).statevector,
         cohstate.get_statevector(cutoff=cutoff).statevector,
-        decimal=2,
+        decimal=7,
     )
 
 
