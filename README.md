@@ -2,6 +2,13 @@
 
 
 ## Objective
+Solve for fidelity/stellar profiles
+
+$$\sup_{\rho \in \mathcal S_k} F(\rho, \ket{\psi}) = \sup_{\Phi \in \mathcal S_k^{\text{pure}}} F(\Phi, \psi) =
+\sup_{\hat{G}} {\rm Tr}[\underbrace{\hat{\Pi}_k}_{=\sum_{n=0}^k |n\times n|} \hat G^\dagger\ket\psi\bra\psi G]
+$$
+
+For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k \bra l$ with ${\hat W}$ Hermitian.
 
 ### Conventions
 - Gaussian states
