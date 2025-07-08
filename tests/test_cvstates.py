@@ -12,6 +12,7 @@ from tests.strategies import (
 )
 import cmath
 from math import isclose
+
 logger = logging.getLogger(__name__)
 
 logger.info("Starting CV state tests")
@@ -68,8 +69,8 @@ def test_cohstate_init_fail() -> None:
 
 
 def test_coh_gauss_statevector() -> None:
-    # doesn't work with a squeezing phase ... 
-    gstate = GaussianState(GaussianParameters(1.0, 0.3, 0.0000001, 0.))
+    # doesn't work with a squeezing phase ...
+    gstate = GaussianState(GaussianParameters(1.0, 0.3, 0.0000001, 0.0))
     cohstate = CoherentState(1 + 0.3j)
     cutoff = 10
     print("gaussian")
@@ -78,22 +79,43 @@ def test_coh_gauss_statevector() -> None:
     print("coh")
     print(cohstate.get_statevector(cutoff=cutoff).statevector)
 
-    print("fid", np.abs(np.dot(gstate.get_statevector(cutoff=cutoff).statevector.conjugate(), cohstate.get_statevector(cutoff=cutoff).statevector)))
-    
-    assert isclose(np.abs(np.dot(gstate.get_statevector(cutoff=cutoff).statevector.conjugate(), cohstate.get_statevector(cutoff=cutoff).statevector)), 1, abs_tol=1e-7)
-    np.testing.assert_array_almost_equal(gstate.get_statevector(cutoff=cutoff).statevector, cohstate.get_statevector(cutoff=cutoff).statevector, decimal = 2)
-    
+    print(
+        "fid",
+        np.abs(
+            np.dot(
+                gstate.get_statevector(cutoff=cutoff).statevector.conjugate(),
+                cohstate.get_statevector(cutoff=cutoff).statevector,
+            )
+        ),
+    )
+
+    assert isclose(
+        np.abs(
+            np.dot(
+                gstate.get_statevector(cutoff=cutoff).statevector.conjugate(),
+                cohstate.get_statevector(cutoff=cutoff).statevector,
+            )
+        ),
+        1,
+        abs_tol=1e-7,
+    )
+    np.testing.assert_array_almost_equal(
+        gstate.get_statevector(cutoff=cutoff).statevector,
+        cohstate.get_statevector(cutoff=cutoff).statevector,
+        decimal=2,
+    )
+
 
 # use hypothesis over complex numbers and make cutoff large enough!
 def test_sqzv_gauss_statevector() -> None:
     # works for real squeezing (r positive, phase 0) cutoff 20
     # problems as soon as there is a phase (r negative doesn't work)
     # not too high squeezing otherwise huge cutoff!
-    # doesn't work with a squeezing phase ... 
-    sqzamp = 0.5 +0.3j
+    # doesn't work with a squeezing phase ...
+    sqzamp = 0.5 + 0.3j
     gsqzstate = GaussianState(GaussianParameters(0, 0, abs(sqzamp), -cmath.phase(sqzamp)))
     sqzvstate = SqueezedVacuumState(sqzamp)
-    cutoff = 20 
+    cutoff = 20
     print("gaussian")
     gsqz_statevec = gsqzstate.get_statevector(cutoff=cutoff).statevector
     print(gsqz_statevec)
@@ -101,6 +123,20 @@ def test_sqzv_gauss_statevector() -> None:
     print("sqzv")
     print(sqz_statevec)
 
-    print("fid", np.abs(np.sum(gsqz_statevec * sqz_statevec.conjugate()))**2)
-    np.testing.assert_array_almost_equal(gsqzstate.get_statevector(cutoff=cutoff).statevector, sqzvstate.get_statevector(cutoff=cutoff).statevector, decimal = 7)
-    assert isclose(np.abs(np.sum(gsqzstate.get_statevector(cutoff=cutoff).statevector.conjugate() * sqzvstate.get_statevector(cutoff=cutoff).statevector))**2, 1, abs_tol=1e-5)
+    print("fid", np.abs(np.sum(gsqz_statevec * sqz_statevec.conjugate())) ** 2)
+    np.testing.assert_array_almost_equal(
+        gsqzstate.get_statevector(cutoff=cutoff).statevector,
+        sqzvstate.get_statevector(cutoff=cutoff).statevector,
+        decimal=7,
+    )
+    assert isclose(
+        np.abs(
+            np.sum(
+                gsqzstate.get_statevector(cutoff=cutoff).statevector.conjugate()
+                * sqzvstate.get_statevector(cutoff=cutoff).statevector
+            )
+        )
+        ** 2,
+        1,
+        abs_tol=1e-5,
+    )

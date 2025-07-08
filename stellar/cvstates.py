@@ -11,7 +11,7 @@ from typing import TypeAlias
 import numpy as np
 import numpy.typing as npt
 import typing_extensions  # for overriding >+3.12 introduced in typing module
-from numpy.polynomial.hermite import Hermite, hermval
+from numpy.polynomial.hermite import hermval
 
 from stellar.gaussian import GaussianParameters
 
@@ -140,8 +140,9 @@ class GaussianState(CVState):
 
         thxi = -cmath.exp(-1j * self.params.theta) * tanh(self.params.r)
         hermite_arg = (
-           cmath.exp(-1j * self.params.theta / 2) * sqrt(tanh(self.params.r) / 2)
-            * (self.params.alpha.conjugate() - self.params.alpha / thxi)
+            cmath.exp(-1j * self.params.theta / 2)
+            * sqrt(tanh(self.params.r) / 2)
+            * (self.params.displacement.conjugate() - self.params.displacement / thxi)
         )
 
         # Create an identity matrix: each row is coefficients for H_n(x)
@@ -152,11 +153,12 @@ class GaussianState(CVState):
 
         data = np.array(
             [
-                (-thxi) ** (k /2) / sqrt(2**k * factorial(k) * cosh(self.params.r))
+                (-thxi) ** (k / 2)
+                / sqrt(2**k * factorial(k) * cosh(self.params.r))
                 * cmath.exp(
                     thxi
-                    * self.params.alpha.conjugate()
-                    * (self.params.alpha.conjugate() - self.params.alpha / thxi)
+                    * self.params.displacement.conjugate()
+                    * (self.params.displacement.conjugate() - self.params.displacement / thxi)
                     / 2
                 )
                 * hermite_values[k]
@@ -185,7 +187,7 @@ class GaussianState(CVState):
 
 @dataclass(frozen=True, init=False)  # manually define __init__ to avoid many __init__ calls for differet objects
 class CoherentState(GaussianState):  # type: ignore[misc]
-    amplitude: complex  # type: ignore[misc] 
+    amplitude: complex  # type: ignore[misc]
 
     def __init__(self, amplitude: complex):
         if isinstance(amplitude, (float, int)):  # type float int are subtypes but not instances
@@ -236,7 +238,8 @@ class CoherentState(GaussianState):  # type: ignore[misc]
         )
 
         return Statevector(data)
-    
+
+
 @dataclass(frozen=True, init=False)  # manually define __init__ to avoid many __init__ calls for differet objects
 class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
     # amplitude = r exp(iθ)
@@ -277,7 +280,7 @@ class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
         -----
         The statevector is computed as
 
-        .. math:: \vert \\xi \rangle = 
+        .. math:: \vert \\xi \rangle =
         """
         if not isinstance(cutoff, int):
             raise TypeError("The Fock space cutoff has to be an integer.")
@@ -286,7 +289,14 @@ class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
 
         # or directly loop over even integers
         data = np.array(
-            [(- cmath.exp( 1j * cmath.phase(self.amplitude)) * tanh(abs(self.amplitude))) ** (n // 2) * sqrt(factorial(n)) / (2**(n//2) * factorial(n//2)) if n % 2 == 0 else 0 for n in range(cutoff + 1)]
+            [
+                (-cmath.exp(1j * cmath.phase(self.amplitude)) * tanh(abs(self.amplitude))) ** (n // 2)
+                * sqrt(factorial(n))
+                / (2 ** (n // 2) * factorial(n // 2))
+                if n % 2 == 0
+                else 0
+                for n in range(cutoff + 1)
+            ]
         ) / sqrt(cosh(abs(self.amplitude)))
 
         return Statevector(data)

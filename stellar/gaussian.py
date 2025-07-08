@@ -23,15 +23,16 @@ class Method(Enum):
     direct = auto()
     recursive = auto()
 
+
 # builtin __init__ and __repr__
-@dataclass(frozen=True) # need frozen to implement __hash__ method
+@dataclass(frozen=True)  # need frozen to implement __hash__ method
 class GaussianParameters:
     """Dataclass containing single-mode Gaussian parameters to be used with both `GaussianStates`and `GaussianOp`.
-NOTE r has to be positive? Or deal separately
-    Returns
-    -------
-    _type_
-        _description_
+    NOTE r has to be positive? Or deal separately
+        Returns
+        -------
+        _type_
+            _description_
     """
 
     x: float
@@ -40,8 +41,12 @@ NOTE r has to be positive? Or deal separately
     theta: float
 
     @property
-    def alpha(self):
+    def displacement(self) -> complex:  # TODO: change to displacement
         return self.x + 1j * self.y
+
+    @property
+    def squeezing(self) -> complex:
+        return self.r * exp(1j * self.theta)
 
 
 class GaussianOp:
@@ -77,7 +82,7 @@ class GaussianOp:
         # move outside __init__ to make it work?
         # think with statesÒ
 
-        self.alpha = gauss_param.alpha
+        self.alpha = gauss_param.displacement
 
         # do these need to be exposed?
         match method:
