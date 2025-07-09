@@ -8,7 +8,7 @@ $$\sup_{\rho \in \mathcal S_k} F(\rho, \ket{\psi}) = \sup_{\Phi \in \mathcal S_k
 \sup_{\hat{G}} {\rm Tr}[\underbrace{\hat{\Pi}_k}_{=\sum_{n=0}^k |n\times n|} \hat G^\dagger\ket\psi\bra\psi G]
 $$
 
-For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k \bra l$ with ${\hat W}$ Hermitian.
+For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k \bra l$ with ${\hat W}$ Hermitian. An example: ${\hat W} = a \ket \psi \bra \psi + b \ket\varphi \bra \varphi$ with $\langle \varphi \vert \psi \rangle = 0$ and $a,b \in \mathbb{R}$ (not necessarily positive!!).
 
 ### Conventions
 - Gaussian states
