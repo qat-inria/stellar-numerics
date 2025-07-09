@@ -1,16 +1,17 @@
 # stellar-numerics
 
-
 ## Objective
+
 Solve for fidelity/stellar profiles
 
 $$\sup_{\rho \in \mathcal S_k} F(\rho, \ket{\psi}) = \sup_{\Phi \in \mathcal S_k^{\text{pure}}} F(\Phi, \psi) =
 \sup_{\hat{G}} {\rm Tr}[\underbrace{\hat{\Pi}_k}_{=\sum_{n=0}^k |n\times n|} \hat G^\dagger\ket\psi\bra\psi G]
 $$
 
-For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k \bra l$ with ${\hat W}$ Hermitian. An example: ${\hat W} = a \ket \psi \bra \psi + b \ket\varphi \bra \varphi$ with $\langle \varphi \vert \psi \rangle = 0$ and $a,b \in \mathbb{R}$ (not necessarily positive!!).
+For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k \bra l$ with ${\hat W}$ Hermitian. An example: ${\hat W} = a \ket \psi \bra \psi + b \ket\varphi \bra \varphi$ with $\langle \varphi \vert \psi \rangle = 0$ and $a,b \in \mathbb{R}$ (not necessarily positive!!). Or truncated parity operator $(-1)^{\hat n} =  |0><0|-|1><1|+|2><2|-...$
 
 ### Conventions
+
 - Gaussian states
 - Gaussian operators (displacement, squeezing)
   - single mode convention [1, 4, draft] $G(\gamma, \xi) \coloneqq {\hat D}(\gamma){\hat S}(\xi)$ (oppo to [CMG20, C+20])
@@ -33,7 +34,8 @@ For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k
 - Project idea: Ulysse Chabaud
 - Qode: Maxime Garnier & Thierry Martinez
 - QATnowledgements: Zacharie van Herstraeten
-- 
+-
+
 ## References
 
 - [1, FQ21] [F. Miatto & N. Quesada, Fast Optimization of Parametrized Quantum Optical Circuits. *Quantum* **4**, 366 (2020)](https://doi.org/10.22331/q-2020-11-30-366). Or [preprint](https://arxiv.org/abs/2004.11002).
