@@ -82,7 +82,7 @@ class DensityMatrix:
         return f"DensityMatrix({self.densitymatrix})"
 
     @property
-    def norm(self) -> float:
+    def norm(self) -> float | complex:
         return np.trace(self.densitymatrix)
     
     @property
@@ -94,8 +94,8 @@ class DensityMatrix:
     # default tolerance is 1e-9. Try 1e-5.
     def is_normalized(self) -> bool:
 
-        norm = self.norm
-        if not isclose(np.real_if_close(norm).imag, 0):
+        norm : complex = self.norm
+        if not isclose(np.real_if_close(norm).imag, 0): # TODO deal with this type thing
             raise ValueError("Norm cannot be cast to real so the density matrix is probably not hermitian.")
         return isclose(np.real_if_close(norm), 1, abs_tol=1e-5)
 
