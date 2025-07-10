@@ -93,17 +93,14 @@ class DensityMatrix:
 
     # default tolerance is 1e-9. Try 1e-5.
     def is_normalized(self) -> bool:
-
-        norm : complex = self.norm
-        if not isclose(np.real_if_close(norm).imag, 0): # TODO deal with this type thing
+        if not isclose(self.norm.imag, 0): # TODO deal with this type thing
             raise ValueError("Norm cannot be cast to real so the density matrix is probably not hermitian.")
-        return isclose(np.real_if_close(norm), 1, abs_tol=1e-5)
+        return isclose(np.real_if_close(self.norm), 1, abs_tol=1e-5)
 
     def normalize(self) -> None:
-        # i n place or not?
-        if isclose(self.norm, 0):
+        if np.isclose(self.norm, 0):
             raise ValueError("Cannot normalize the zero matrix.")
-        self.densitymatrix = self.densitymatrix / self.norm
+        self.densitymatrix = self.densitymatrix / self.norm # TODO type stuff here
 
 # CVState abstrait puis concret?
 @dataclass(frozen=True)
@@ -124,11 +121,11 @@ class CVState:
     # since all states have get_statevector method
     # this should be fine
     def get_densitymatrix(self, cutoff: int | None = None) -> DensityMatrix:
-        # this should work?
+        # NOTE this should work?
         # if self.statevector is None:
         #     raise ValueError("No statevector provided.")
         return DensityMatrix(np.outer(self.get_statevector(cutoff=cutoff).statevector.conjugate(), self.get_statevector(cutoff=cutoff).statevector))
-
+        # TODO type stuff here
 
 # Thierry's comments 06-27_2025
 # frozen=True gèle aussi les champs hérités, donc le self.is_gaussian dans CVState.__init__ ne pouvait pas fonctionner

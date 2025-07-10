@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 from hypothesis import given
 from hypothesis import strategies as st
-
+from tests.strategies import tuple_ints_fock_cutoff_st
 from stellar.cvstates import (
     CoherentState,
     CVState,
@@ -159,13 +159,19 @@ def test_Fock(n) -> None:
     assert not state.is_gaussian
 
 # tests for density matrices from states
-def test_DM_fock() -> None:
-    state = FockState(n=2)
-    dm = state.get_densitymatrix(cutoff = 3)
+@given(tuple_ints_fock_cutoff_st())
+def test_DM_fock(data) -> None:
+    n, cutoff = data
+    state = FockState(n = n)
+    dm = state.get_densitymatrix(cutoff = cutoff)
+    print(f"{dm=}")
     assert isinstance(dm, DensityMatrix)
     assert isclose(np.real_if_close(dm.norm), 1)
-    assert dm.dims == (3, 3)
+    assert dm.is_normalized # TODO type stuff here
+    assert dm.dims == (cutoff,) * 2
     assert isclose(np.real_if_close(dm.purity), 1)
+    assert isclose(dm.densitymatrix[n, n].imag, 0)
+    assert isclose(np.real_if_close(dm.densitymatrix[n, n]), 1)
 
 
 # test DensityMatrix
