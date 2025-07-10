@@ -16,9 +16,10 @@ from numpy.polynomial.hermite import hermval
 from stellar.gaussian import GaussianParameters
 
 # numpy arrays are homogeneous type wise
+# no knowledge of the number of dimensions
 StatevectorData: TypeAlias = npt.NDArray[np.complex128] | npt.NDArray[np.float64]
 
-
+# make statevector a property of the state??
 # Single mode pure states only so far.
 
 
@@ -32,7 +33,7 @@ class Statevector:
             raise TypeError("Target statevector array has to be a numpy array.")
         if not data.ndim == 1:
             raise ValueError(
-                "Target statevector array has to be one dimensional. Since the module only supports single-mode pure states."
+                "Target statevector array has to be one dimensional."
             )
 
         self.statevector = data
@@ -55,6 +56,54 @@ class Statevector:
             raise ValueError("Cannot normalize the zero vector.")
         self.statevector = self.statevector / self.norm
 
+class DensityMatrix:
+    """Class for statevectors in the Fock basis"""
+    # same type as statevector since no way to type annotate number of dimensions
+    densitymatrix: StatevectorData
+
+    def __init__(self, data: StatevectorData) -> None:
+        if not isinstance(data, np.ndarray):
+            raise TypeError("Target densitymatrix array has to be a numpy array.")
+        if not data.ndim == 2:
+            raise ValueError(
+                "Target density matrix array has to be a matrix."
+            )
+        if not data.shape[0] == data.shape[1]:
+            raise ValueError(
+                "Target density matrix array has to be a square matrix."
+            )
+        
+        # check psdness? and hermiticity
+
+        self.densitymatrix = data
+        self.dims = self.densitymatrix.shape  # safe since checked that array is 1-dimensional
+
+    def __repr__(self):
+        return f"DensityMatrix({self.densitymatrix})"
+
+    @property
+    def norm(self) -> float:
+        return np.trace(self.densitymatrix)
+    
+    @property
+    def purity(self) -> float:
+        if not self.is_normalized():
+            self.normalize()
+        return np.trace(self.densitymatrix @ self.densitymatrix)
+
+    # default tolerance is 1e-9. Try 1e-5.
+    def is_normalized(self) -> bool:
+
+        norm = self.norm
+        if not isclose(np.real_if_close(norm).imag, 0):
+            raise ValueError("Norm cannot be cast to real so the density matrix is probably not hermitian.")
+        return isclose(np.real_if_close(norm), 1, abs_tol=1e-5)
+
+    def normalize(self) -> None:
+        # i n place or not?
+        if isclose(self.norm, 0):
+            raise ValueError("Cannot normalize the zero matrix.")
+        self.densitymatrix = self.densitymatrix / self.norm
 
 # CVState abstrait puis concret?
 @dataclass(frozen=True)
@@ -71,6 +120,14 @@ class CVState:
         if self.statevector is None:
             raise ValueError("No statevector provided.")
         return self.statevector
+
+    # since all states have get_statevector method
+    # this should be fine
+    def get_densitymatrix(self, cutoff: int | None = None) -> DensityMatrix:
+        # this should work?
+        # if self.statevector is None:
+        #     raise ValueError("No statevector provided.")
+        return DensityMatrix(np.outer(self.get_statevector(cutoff=cutoff).statevector.conjugate(), self.get_statevector(cutoff=cutoff).statevector))
 
 
 # Thierry's comments 06-27_2025
@@ -103,6 +160,7 @@ class GaussianState(CVState):
     # mypy voit pas init = False
     params: GaussianParameters  # type: ignore[misc]
 
+    # TODO can allow input gaussian by statevec or not? Not sure it really makes sense...
     def __init__(self, params: GaussianParameters, statevector: Statevector | None = None):
         super().__init__(statevector=statevector, is_gaussian=True)
         object.__setattr__(self, "params", params)  # since frozen dataclass
@@ -171,6 +229,55 @@ class GaussianState(CVState):
 
     # want a get_statevector method for generic state (Zach's ref)
     # but want to be able to overide it in the simplest cases if makes sense
+
+
+@dataclass(frozen=True, init=False)  # manually define __init__ for order parameter order reasons
+class FockState(CVState):
+    n: int  # type: ignore
+
+    def __init__(self, n: int):
+        if not isinstance(n, int):
+            raise TypeError("The Fock number has to be an integer.")
+        if n == 0:
+            super().__init__(statevector=None, is_gaussian=True)
+        else:
+            super().__init__(statevector=None, is_gaussian=False)
+        object.__setattr__(self, "n", n)  # since frozen dataclass
+
+    @functools.cache
+    @typing_extensions.override
+    def get_statevector(self, cutoff: int | None = None) -> Statevector:
+        """returns the statevector of a `FockState` object.
+
+        Parameters
+        ----------
+        cutoff : int
+            single-mode Fock space cutoff i.e. the highest Fock number reached
+
+        Returns
+        -------
+        res : Statevector
+            output statevector as a :class:`stellar.cvstates.Statevector` object.
+
+        Raises
+        ------
+        TypeError
+            if the parameter `cutoff`is not an integer.
+        TypeError
+            if the parameter `cutoff` is not a strictly positive integer.
+        """
+        if not isinstance(cutoff, int):
+            raise TypeError("The Fock space cutoff has to be an integer.")
+        if not cutoff > 0:
+            raise TypeError("The Fock space cutoff has to be greater than zero.")
+
+        # When you declare a NumPy array, you declare it with a type, 
+        # and if you append anything to that array, it will be converted to that type
+        # Numpy arrays are homogeneous
+        data = np.zeros(cutoff, dtype=np.complex128)
+        data[self.n] = 1
+
+        return Statevector(data)
 
 
 #  or use classmethodclass
@@ -301,12 +408,6 @@ class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
 
         return Statevector(data)
 
-    # compute it with min cutoff to satisfy precision requirement?
-    # do I want a statevector attribute like other CVState? Guess so. Property?
-    # @property
-    # def statevector(self) -> float:
-    #     return self.getget_statevector
-
 
 # # move this to methods of CVState class
 # class StateFockBasis:
@@ -353,72 +454,3 @@ class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
 #             raise ValueError("Cannot normalize the zero vector.")
 #         self.statevector = self.statevector / self.get_norm()
 
-
-# # write something for Fock states
-# # more FockState with basis as param
-# class FockStateFockBasis(StateFockBasis):
-#     def __init__(self, n: int, cutoff: int):
-#         # cutoff redund with super dim attribute...# but needed for instantiation
-
-#         # cutoff data validation
-
-#         if not isinstance(cutoff, int):
-#             raise TypeError("The Fock space dimension cutoff has to be a integer.")
-#         if not 0 <= cutoff:
-#             raise ValueError("The Fock space dimension cutoff has to be positive or 0.")
-
-#         # n data validation
-#         if not isinstance(n, int):
-#             raise TypeError("The Fock state photon number has to be an integer.")
-#         if not 0 <= n <= cutoff:
-#             raise ValueError("The Fock state photon number has to be positive or 0.")
-
-#         self.n = n  # Fock state number
-#         # don't make cutoff an attribute. dim is already there in parent class.
-
-#         arr = np.zeros((cutoff,), dtype=np.complex128)
-#         arr[n] = 1
-#         super().__init__(arr)
-
-
-# class Base:
-#     def __init__(self):
-#         self.shared_attr = "initial value"
-
-# class ChildA(Base):
-#     def __init__(self):
-#         super().__init__()
-
-# class ChildB(Base):
-#     def __init__(self):
-#         super().__init__()
-
-# a = ChildA()
-# b = ChildB()
-# print(a.shared_attr)  # Output: initial value
-# print(b.shared_attr)  # Output: initial value
-
-# class Base:
-#     def greet(self):
-#         print("Hello from Base")
-
-# class ChildA(Base):
-#     def greet(self):
-#         print("Hello from ChildA")  # This overrides Base.greet
-
-# class ChildB(Base):
-#     pass  # Inherits greet() from Base
-
-# a = ChildA()
-# b = ChildB()
-
-# a.greet()  # Output: Hello from ChildA
-# b.greet()  # Output: Hello from Base
-
-# class ChildA(Base):
-#     def greet(self):
-#         super().greet()  # Calls Base.greet()
-#         print("...and hello from ChildA")
-
-# This means that instances of the child class are also considered instances of the parent class.
-# For example, if we have a parent class Data_Professional and a child class Data_Scientist, an instance of Data_Scientist will be an instance of Data_Professional as well.

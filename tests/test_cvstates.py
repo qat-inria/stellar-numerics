@@ -1,17 +1,26 @@
+import cmath
 import logging
+from math import isclose
 
 import numpy as np
 import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 
-from stellar.cvstates import CoherentState, CVState, GaussianState, SqueezedVacuumState, StatevectorData, Statevector
+from stellar.cvstates import (
+    CoherentState,
+    CVState,
+    FockState,
+    GaussianState,
+    SqueezedVacuumState,
+    Statevector,
+    DensityMatrix,
+    StatevectorData,
+)
 from stellar.gaussian import GaussianParameters
 from tests.strategies import (
     complex_arrays_st,
 )
-import cmath
-from math import isclose
 
 logger = logging.getLogger(__name__)
 
@@ -140,3 +149,23 @@ def test_sqzv_gauss_statevector() -> None:
         1,
         abs_tol=1e-5,
     )
+
+@given(st.integers(min_value=1))
+def test_Fock(n) -> None:
+    state0 = FockState(0)
+    state = FockState(n=n)
+
+    assert state0.is_gaussian
+    assert not state.is_gaussian
+
+# tests for density matrices from states
+def test_DM_fock() -> None:
+    state = FockState(n=2)
+    dm = state.get_densitymatrix(cutoff = 3)
+    assert isinstance(dm, DensityMatrix)
+    assert isclose(np.real_if_close(dm.norm), 1)
+    assert dm.dims == (3, 3)
+    assert isclose(np.real_if_close(dm.purity), 1)
+
+
+# test DensityMatrix
