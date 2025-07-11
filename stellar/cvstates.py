@@ -404,7 +404,7 @@ LCGaussianData: TypeAlias = Sequence[tuple[complex | float, CVState]]
 
 
 @dataclass(frozen=True, init=False)
-class LCGaussian(CVState):
+class LCGaussianState(CVState):
     """ "A class for handling superpositions of Gaussian states like cat states"
 
     Parameters
@@ -421,6 +421,9 @@ class LCGaussian(CVState):
         # redifine equality for GaussianStates == equality of GaussianParameters
         # define equality of GaussianParameters
         # skip that for now
+
+        # coefficients have to be normalized
+        # extract coeff and state lists separately?
         super().__init__(statevector=None, is_gaussian=False)
         object.__setattr__(self, "data", data)
 
@@ -436,6 +439,8 @@ class LCGaussian(CVState):
             raise TypeError("All states in a LCGaussianState have to be GaussianState objects.")
 
         # add check normalisation and normalize
+        if not isclose(sqrt(sum([abs(coeff) ** 2 for coeff, _ in self.data])), 1):
+            raise ValueError("The provided coefficients are not normalised.")
 
     @functools.cache
     @typing_extensions.override  # toutes les filles qui implémentent get_statevector to check same signature

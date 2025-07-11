@@ -1,10 +1,12 @@
 from math import isclose
+from math import pi as π
 
 import hypothesis.extra.numpy as hn
 import numpy as np
 import numpy.typing as npt
 from hypothesis import strategies as st
 
+from stellar.gaussian import GaussianParameters
 from stellar.states import StateFockBasis
 
 
@@ -99,3 +101,13 @@ def tuple_ints_fock_cutoff_st(draw, min_size=1, max_size=20) -> tuple[int, int]:
     n = draw(st.integers(min_value=0, max_value=cutoff - 1))
 
     return n, cutoff
+
+
+@st.composite
+def gaussian_parameters_st(draw) -> GaussianParameters:  # tuple[float, float, float, float]:
+    x = draw(st.floats(min_value=-10, max_value=10))
+    y = draw(st.floats(min_value=-10, max_value=10))
+    r = draw(st.floats(min_value=0, max_value=20))
+    theta = draw(st.floats(min_value=0, max_value=2 * π))
+    # apparently cannot cast to custum GaussianParameter
+    return GaussianParameters(x=x, y=y, r=r, theta=theta)

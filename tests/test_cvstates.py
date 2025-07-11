@@ -1,6 +1,6 @@
 import cmath
 import logging
-from math import isclose
+from math import isclose, sqrt
 
 import numpy as np
 import pytest
@@ -13,15 +13,13 @@ from stellar.cvstates import (
     DensityMatrix,
     FockState,
     GaussianState,
+    LCGaussianState,
     SqueezedVacuumState,
     Statevector,
     StatevectorData,
 )
 from stellar.gaussian import GaussianParameters
-from tests.strategies import (
-    complex_arrays_st,
-    tuple_ints_fock_cutoff_st,
-)
+from tests.strategies import complex_arrays_st, tuple_ints_fock_cutoff_st, gaussian_parameters_st
 
 logger = logging.getLogger(__name__)
 
@@ -181,7 +179,42 @@ def test_DM_fock(data) -> None:
 
 
 # tests LCGaussian
-@given(st.integers(min_value=1))
-def test_LCGAussian_init_false(n) -> None:
+# only one state
+@given(gaussian_parameters_st())
+def test_LCGAussian_init_false_one(params) -> None:
     with pytest.raises(TypeError):
-        CoherentState([1, FockState[n]])  # type: ignore
+        LCGaussianState([1, GaussianState(params=params)])
+
+
+# more than length one and non gaussian states
+@given(st.integers(min_value=1))
+def test_LCGAussian_init_false_ngauss(n) -> None:
+    # need at least 2 non-gaussian to catch that error
+    # otherwise get length-1 error
+    with pytest.raises(TypeError):
+        LCGaussianState([(1, FockState[n]), (1, FockState[n + 1])])
+
+
+@given(gaussian_parameters_st(), gaussian_parameters_st())
+def test_LCGAussian_init_false_nnormed(params1, params2) -> None:
+    # need at least 2
+    with pytest.raises(ValueError):
+        LCGaussianState([(1, GaussianState(params=params1)), (1, GaussianState(params=params2))])
+
+
+# success
+@given(gaussian_parameters_st(), gaussian_parameters_st())
+def test_LCGaussian_success(params1, params2) -> None:
+    g1 = GaussianState(params=params1)
+    g2 = GaussianState(params=params2)
+
+    LCGaussianState([(1 / sqrt(2), g1), (1 / sqrt(2), g2)])
+
+
+# success statevec
+@given(gaussian_parameters_st(), gaussian_parameters_st())
+def test_LCGaussian_statevec(params1, params2) -> None:
+    g1 = GaussianState(params=params1)
+    g2 = GaussianState(params=params2)
+
+    state = LCGaussianState([(1 / sqrt(2), g1), (1 / sqrt(2), g2)])
