@@ -131,7 +131,7 @@ def test_sqzv_gauss_statevector() -> None:
     sqz_statevec = sqzvstate.get_statevector(cutoff=cutoff).statevector
     print("sqzv")
     print(sqz_statevec)
-
+    assert sqzvstate.is_gaussian
     print("fid", np.abs(np.sum(gsqz_statevec * sqz_statevec.conjugate())) ** 2)
     np.testing.assert_array_almost_equal(
         gsqzstate.get_statevector(cutoff=cutoff).statevector,

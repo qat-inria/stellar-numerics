@@ -6,7 +6,7 @@ import cmath
 import functools
 from dataclasses import dataclass
 from math import cosh, exp, factorial, isclose, sqrt, tanh
-from typing import TypeAlias
+from typing import Sequence, TypeAlias
 
 import numpy as np
 import numpy.typing as npt
@@ -17,6 +17,7 @@ from stellar.gaussian import GaussianParameters
 
 # numpy arrays are homogeneous type wise
 # no knowledge of the number of dimensions
+# so works for both DensityMatrix and Statevector
 StatevectorData: TypeAlias = npt.NDArray[np.complex128] | npt.NDArray[np.float64]
 
 # make statevector a property of the state??
@@ -32,9 +33,7 @@ class Statevector:
         if not isinstance(data, np.ndarray):
             raise TypeError("Target statevector array has to be a numpy array.")
         if not data.ndim == 1:
-            raise ValueError(
-                "Target statevector array has to be one dimensional."
-            )
+            raise ValueError("Target statevector array has to be one dimensional.")
 
         self.statevector = data
         self.dim = self.statevector.size  # safe since checked that array is 1-dimensional
@@ -56,8 +55,10 @@ class Statevector:
             raise ValueError("Cannot normalize the zero vector.")
         self.statevector = self.statevector / self.norm
 
+
 class DensityMatrix:
     """Class for statevectors in the Fock basis"""
+
     # same type as statevector since no way to type annotate number of dimensions
     densitymatrix: StatevectorData
 
@@ -65,14 +66,10 @@ class DensityMatrix:
         if not isinstance(data, np.ndarray):
             raise TypeError("Target densitymatrix array has to be a numpy array.")
         if not data.ndim == 2:
-            raise ValueError(
-                "Target density matrix array has to be a matrix."
-            )
+            raise ValueError("Target density matrix array has to be a matrix.")
         if not data.shape[0] == data.shape[1]:
-            raise ValueError(
-                "Target density matrix array has to be a square matrix."
-            )
-        
+            raise ValueError("Target density matrix array has to be a square matrix.")
+
         # check psdness? and hermiticity
 
         self.densitymatrix = data
@@ -84,7 +81,7 @@ class DensityMatrix:
     @property
     def norm(self) -> float | complex:
         return np.trace(self.densitymatrix)
-    
+
     @property
     def purity(self) -> float:
         if not self.is_normalized():
@@ -93,14 +90,15 @@ class DensityMatrix:
 
     # default tolerance is 1e-9. Try 1e-5.
     def is_normalized(self) -> bool:
-        if not isclose(self.norm.imag, 0): # TODO deal with this type thing
+        if not isclose(self.norm.imag, 0):  # TODO deal with this type thing
             raise ValueError("Norm cannot be cast to real so the density matrix is probably not hermitian.")
         return isclose(np.real_if_close(self.norm), 1, abs_tol=1e-5)
 
     def normalize(self) -> None:
         if np.isclose(self.norm, 0):
             raise ValueError("Cannot normalize the zero matrix.")
-        self.densitymatrix = self.densitymatrix / self.norm # TODO type stuff here
+        self.densitymatrix = self.densitymatrix / self.norm  # TODO type stuff here
+
 
 # CVState abstrait puis concret?
 @dataclass(frozen=True)
@@ -124,8 +122,14 @@ class CVState:
         # NOTE this should work?
         # if self.statevector is None:
         #     raise ValueError("No statevector provided.")
-        return DensityMatrix(np.outer(self.get_statevector(cutoff=cutoff).statevector.conjugate(), self.get_statevector(cutoff=cutoff).statevector))
+        return DensityMatrix(
+            np.outer(
+                self.get_statevector(cutoff=cutoff).statevector.conjugate(),
+                self.get_statevector(cutoff=cutoff).statevector,
+            )
+        )
         # TODO type stuff here
+
 
 # Thierry's comments 06-27_2025
 # frozen=True gèle aussi les champs hérités, donc le self.is_gaussian dans CVState.__init__ ne pouvait pas fonctionner
@@ -186,7 +190,8 @@ class GaussianState(CVState):
 
         Notes
         -----
-        Formula has pbs if squeezing goes to zero.
+        Formula is ill-defined for zero squeezing.
+        Use a very small squeezing amplitude or :class:`stellar.cvstates.CoherentState` instead.
         """
         if not isinstance(cutoff, int):
             raise TypeError("The Fock space cutoff has to be an integer.")
@@ -268,25 +273,13 @@ class FockState(CVState):
         if not cutoff > 0:
             raise TypeError("The Fock space cutoff has to be greater than zero.")
 
-        # When you declare a NumPy array, you declare it with a type, 
+        # When you declare a NumPy array, you declare it with a type,
         # and if you append anything to that array, it will be converted to that type
         # Numpy arrays are homogeneous
         data = np.zeros(cutoff, dtype=np.complex128)
         data[self.n] = 1
 
         return Statevector(data)
-
-
-#  or use classmethodclass
-# Book:
-#     def __init__(self, title, author):
-#         self.title = title
-#         self.author = author
-
-#     @classmethod
-#     def from_string(cls, data_str):
-#         title, author = data_str.split(" - ")
-#         return cls(title, author)
 
 
 @dataclass(frozen=True, init=False)  # manually define __init__ to avoid many __init__ calls for differet objects
@@ -344,7 +337,7 @@ class CoherentState(GaussianState):  # type: ignore[misc]
         return Statevector(data)
 
 
-@dataclass(frozen=True, init=False)  # manually define __init__ to avoid many __init__ calls for differet objects
+@dataclass(frozen=True, init=False)
 class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
     # amplitude = r exp(iθ)
     amplitude: complex  # type: ignore[misc]
@@ -405,49 +398,29 @@ class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
 
         return Statevector(data)
 
+# or Mapping instead of tuple?
+LCGaussianData: TypeAlias = Sequence[tuple[complex | float, CVState]]
 
-# # move this to methods of CVState class
-# class StateFockBasis:
-#     """Class for single-mode quantum states defines in the Fock basis"""
 
-#     # assert one-d array
+@dataclass(frozen=True, init=False)
+class LCGaussian(CVState):
+    """ "A class for handling superpositions of Gaussian states like cat states"
 
-#     def __init__(self, statevector: Statevector) -> None:
-#         if not isinstance(statevector, np.ndarray):
-#             raise TypeError("Target statevector array has to be a numpy array.")
-#         if not statevector.ndim == 1:
-#             raise ValueError("Target statevector array has to be one dimensional.")
+    Parameters
+    ----------
+    GaussianState : _type_
+        _description_
+    """
 
-#         self.statevector: Statevector = statevector
-#         self.dim: int = self.statevector.size  # safe since checked that array is 1-dimensional
-#         # self.norm : float = self.get_norm()
+    data: LCGaussianData # type: ignore
 
-#     # use overload? or dispatch?
-#     # https://stackoverflow.com/questions/6434482/python-function-overloading
-#     # The @overload decorator from the typing module is used for static type checking, not runtime dispatch. It allows you to hint multiple signatures for a function to type checkers, but you must provide a single implementation:
-#     # Here, the type checker understands both signatures, but at runtime, only the single implementation is used.
+    def __init__(self, data: LCGaussianData) -> None:
+        # default to non Gaussian 
+        super().__init__(statevector=None, is_gaussian=False)
+        object.__setattr__(self, "data", data)
 
-#     def __matmul__(self, other: StateFockBasis | Statevector) ->  | StateFockBasis | Statevector:
-#         # numpy matmul is inplace or not?
-#         if isinstance(other, StateFockBasis):
-#             return np.matmul(self.statevector, other.statevector)
-#         elif isinstance(other, np.ndarray):
-#             return np.matmul(self.statevector, other)
-
-#     def __repr__(self):
-#         return f"StateFockBasis({self.statevector})"
-
-#     def get_norm(self) -> float:
-#         # print("norm ", np.sqrt(np.sum(np.abs(self.statevector) ** 2)))
-#         # print("state ", self.statevector)
-#         return np.sqrt(np.sum(np.abs(self.statevector) ** 2))
-
-#     def is_normalized(self) -> bool:
-#         return isclose(self.get_norm(), 1)
-
-#     def normalize(self) -> None:
-#         # i n place or not?
-#         if isclose(self.get_norm(), 0):
-#             raise ValueError("Cannot normalize the zero vector.")
-#         self.statevector = self.statevector / self.get_norm()
-
+        if len(data) == 1:
+            raise ValueError(
+                "A linear combination of a single Gaussian state is a Gaussian state, so use a `GaussianState`object instead."
+            )
+        pass
