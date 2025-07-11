@@ -429,6 +429,7 @@ class LCGaussian(CVState):
                 "A linear combination of a single Gaussian state is a Gaussian state, so use a `GaussianState`object instead."
             )
         # TODO tune so that FockState(0) is ok. Or use GaussianState with (0,) * 4 params
+        # but ill defined statevec-wise I guess. Deal with that case.
         if not all(
             [isinstance(state, GaussianState) for _, state in data]
         ):  # Fock 0 should be included (both Gaussian and Fock)
