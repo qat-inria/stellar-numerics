@@ -70,7 +70,7 @@ class DensityMatrix:
         if not data.shape[0] == data.shape[1]:
             raise ValueError("Target density matrix array has to be a square matrix.")
 
-        # check psdness? and hermiticity
+        # check psdness and hermiticity?
 
         self.densitymatrix = data
         self.dims = self.densitymatrix.shape  # safe since checked that array is 1-dimensional
@@ -90,14 +90,14 @@ class DensityMatrix:
 
     # default tolerance is 1e-9. Try 1e-5.
     def is_normalized(self) -> bool:
-        if not isclose(self.norm.imag, 0):  # TODO deal with this type thing
+        if not isclose(self.norm.imag, 0): 
             raise ValueError("Norm cannot be cast to real so the density matrix is probably not hermitian.")
         return isclose(np.real_if_close(self.norm), 1, abs_tol=1e-5)
 
     def normalize(self) -> None:
         if np.isclose(self.norm, 0):
             raise ValueError("Cannot normalize the zero matrix.")
-        self.densitymatrix = self.densitymatrix / self.norm  # TODO type stuff here
+        self.densitymatrix = (self.densitymatrix / self.norm).astype(np.complex128) # type de scalaire pas tableau. pas infer type complex128/float ou cpx
 
 
 # CVState abstrait puis concret?
@@ -126,8 +126,8 @@ class CVState:
             np.outer(
                 self.get_statevector(cutoff=cutoff).statevector.conjugate(),
                 self.get_statevector(cutoff=cutoff).statevector,
-            )
-        )
+            ).astype(np.complex128) # pas un cast. outer ne guarantie pas la précision du complexe mais type oui
+        ) # typing.cast python : impose au typeur de croire que 'est d'un type donné
         # TODO type stuff here
 
 
