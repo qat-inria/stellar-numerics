@@ -6,20 +6,21 @@ import numpy as np
 import pytest
 from hypothesis import given
 from hypothesis import strategies as st
-from tests.strategies import tuple_ints_fock_cutoff_st
+
 from stellar.cvstates import (
     CoherentState,
     CVState,
+    DensityMatrix,
     FockState,
     GaussianState,
     SqueezedVacuumState,
     Statevector,
-    DensityMatrix,
     StatevectorData,
 )
 from stellar.gaussian import GaussianParameters
 from tests.strategies import (
     complex_arrays_st,
+    tuple_ints_fock_cutoff_st,
 )
 
 logger = logging.getLogger(__name__)
@@ -125,14 +126,14 @@ def test_sqzv_gauss_statevector() -> None:
     gsqzstate = GaussianState(GaussianParameters(0, 0, abs(sqzamp), -cmath.phase(sqzamp)))
     sqzvstate = SqueezedVacuumState(sqzamp)
     cutoff = 20
-    print("gaussian")
-    gsqz_statevec = gsqzstate.get_statevector(cutoff=cutoff).statevector
-    print(gsqz_statevec)
-    sqz_statevec = sqzvstate.get_statevector(cutoff=cutoff).statevector
-    print("sqzv")
-    print(sqz_statevec)
+    # print("gaussian")
+    # gsqz_statevec = gsqzstate.get_statevector(cutoff=cutoff).statevector
+    # print(gsqz_statevec)
+    # sqz_statevec = sqzvstate.get_statevector(cutoff=cutoff).statevector
+    # print("sqzv")
+    # print(sqz_statevec)
     assert sqzvstate.is_gaussian
-    print("fid", np.abs(np.sum(gsqz_statevec * sqz_statevec.conjugate())) ** 2)
+    # print("fid", np.abs(np.sum(gsqz_statevec * sqz_statevec.conjugate())) ** 2)
     np.testing.assert_array_almost_equal(
         gsqzstate.get_statevector(cutoff=cutoff).statevector,
         sqzvstate.get_statevector(cutoff=cutoff).statevector,
@@ -150,6 +151,7 @@ def test_sqzv_gauss_statevector() -> None:
         abs_tol=1e-5,
     )
 
+
 @given(st.integers(min_value=1))
 def test_Fock(n) -> None:
     state0 = FockState(0)
@@ -158,16 +160,17 @@ def test_Fock(n) -> None:
     assert state0.is_gaussian
     assert not state.is_gaussian
 
+
 # tests for density matrices from states
 @given(tuple_ints_fock_cutoff_st())
 def test_DM_fock(data) -> None:
     n, cutoff = data
-    state = FockState(n = n)
-    dm = state.get_densitymatrix(cutoff = cutoff)
+    state = FockState(n=n)
+    dm = state.get_densitymatrix(cutoff=cutoff)
     print(f"{dm=}")
     assert isinstance(dm, DensityMatrix)
     assert isclose(np.real_if_close(dm.norm), 1)
-    assert dm.is_normalized # TODO type stuff here
+    assert dm.is_normalized  # TODO type stuff here
     assert dm.dims == (cutoff,) * 2
     assert isclose(np.real_if_close(dm.purity), 1)
     assert isclose(dm.densitymatrix[n, n].imag, 0)
@@ -175,3 +178,10 @@ def test_DM_fock(data) -> None:
 
 
 # test DensityMatrix
+
+
+# tests LCGaussian
+@given(st.integers(min_value=1))
+def test_LCGAussian_init_false(n) -> None:
+    with pytest.raises(TypeError):
+        CoherentState([1, FockState[n]])  # type: ignore

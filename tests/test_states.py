@@ -55,6 +55,7 @@ def test_matmul_vector_mat(data) -> None:
     np.testing.assert_array_equal(state @ mat, state.statevector @ mat)
     # assert on shapes?
 
+
 @given(tuple_ints_fock_cutoff_st())
 def test_FockStateFockBasis(data) -> None:
     n, cutoff = data

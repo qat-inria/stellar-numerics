@@ -398,6 +398,7 @@ class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
 
         return Statevector(data)
 
+
 # or Mapping instead of tuple?
 LCGaussianData: TypeAlias = Sequence[tuple[complex | float, CVState]]
 
@@ -412,10 +413,14 @@ class LCGaussian(CVState):
         _description_
     """
 
-    data: LCGaussianData # type: ignore
+    data: LCGaussianData  # type: ignore
 
     def __init__(self, data: LCGaussianData) -> None:
-        # default to non Gaussian 
+        # default to non Gaussian
+        # it is not if two states are the same in a length 2 sequence
+        # redifine equality for GaussianStates == equality of GaussianParameters
+        # define equality of GaussianParameters
+        # skip that for now
         super().__init__(statevector=None, is_gaussian=False)
         object.__setattr__(self, "data", data)
 
@@ -423,4 +428,49 @@ class LCGaussian(CVState):
             raise ValueError(
                 "A linear combination of a single Gaussian state is a Gaussian state, so use a `GaussianState`object instead."
             )
-        pass
+        # TODO tune so that FockState(0) is ok. Or use GaussianState with (0,) * 4 params
+        if not all(
+            [isinstance(state, GaussianState) for _, state in data]
+        ):  # Fock 0 should be included (both Gaussian and Fock)
+            raise TypeError("All states in a LCGaussianState have to be GaussianState objects.")
+
+        # add check normalisation and normalize
+
+    @functools.cache
+    @typing_extensions.override  # toutes les filles qui implémentent get_statevector to check same signature
+    def get_statevector(self, cutoff: int | None = None) -> Statevector:
+        """returns the statevector of a `LCGaussianState` object by looping on its elements.
+
+        Parameters
+        ----------
+        cutoff : int
+            single-mode Fock space cutoff i.e. the highest Fock number reached
+
+        Returns
+        -------
+        res : Statevector
+            output statevector as a :class:`stellar.cvstates.Statevector` object.
+
+        Raises
+        ------
+        TypeError
+            if the parameter `cutoff`is not an integer.
+        TypeError
+            if the parameter `cutoff` is not a strictly positive integer.
+
+        Notes
+        -----
+        The statevector is computed as
+
+        .. math:: \vert
+        """
+        if not isinstance(cutoff, int):
+            raise TypeError("The Fock space cutoff has to be an integer.")
+        if not cutoff > 0:
+            raise TypeError("The Fock space cutoff has to be greater than zero.")
+
+        tot_data = np.array(
+            np.sum([coef * state.get_statevector().statevector for coef, state in self.data]), dtype=np.complex128
+        )
+
+        return Statevector(tot_data)
