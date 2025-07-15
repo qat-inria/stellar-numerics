@@ -1,6 +1,6 @@
 import cmath
 import logging
-from math import isclose, sqrt
+from math import exp, factorial, isclose, sqrt
 
 import numpy as np
 import pytest
@@ -8,18 +8,20 @@ from hypothesis import given
 from hypothesis import strategies as st
 
 from stellar.cvstates import (
+    CatState,
     CoherentState,
     CVState,
     DensityMatrix,
     FockState,
     GaussianState,
+    LCGaussianData,
     LCGaussianState,
     SqueezedVacuumState,
     Statevector,
     StatevectorData,
 )
 from stellar.gaussian import GaussianParameters
-from tests.strategies import complex_arrays_st, tuple_ints_fock_cutoff_st, gaussian_parameters_st
+from tests.strategies import complex_arrays_st, gaussian_parameters_st, tuple_ints_fock_cutoff_st
 
 logger = logging.getLogger(__name__)
 
@@ -182,8 +184,8 @@ def test_DM_fock(data) -> None:
 # only one state
 @given(gaussian_parameters_st())
 def test_LCGAussian_init_false_one(params) -> None:
-    with pytest.raises(TypeError):
-        LCGaussianState([1, GaussianState(params=params)])
+    with pytest.raises(ValueError):
+        LCGaussianState(LCGaussianData(((1, GaussianState(params=params)),)))
 
 
 # more than length one and non gaussian states
@@ -192,14 +194,14 @@ def test_LCGAussian_init_false_ngauss(n) -> None:
     # need at least 2 non-gaussian to catch that error
     # otherwise get length-1 error
     with pytest.raises(TypeError):
-        LCGaussianState([(1, FockState[n]), (1, FockState[n + 1])])
+        LCGaussianState(LCGaussianData(((1, FockState(n)), (1, FockState(n + 1)),)))
 
 
-@given(gaussian_parameters_st(), gaussian_parameters_st())
-def test_LCGAussian_init_false_nnormed(params1, params2) -> None:
-    # need at least 2
-    with pytest.raises(ValueError):
-        LCGaussianState([(1, GaussianState(params=params1)), (1, GaussianState(params=params2))])
+# @given(gaussian_parameters_st(), gaussian_parameters_st())
+# def test_LCGAussian_init_false_nnormed(params1, params2) -> None:
+#     # need at least 2
+#     with pytest.raises(ValueError):
+#         LCGaussianState([(1, GaussianState(params=params1)), (1, GaussianState(params=params2))])
 
 
 # success
@@ -208,7 +210,7 @@ def test_LCGaussian_success(params1, params2) -> None:
     g1 = GaussianState(params=params1)
     g2 = GaussianState(params=params2)
 
-    LCGaussianState([(1 / sqrt(2), g1), (1 / sqrt(2), g2)])
+    LCGaussianState(LCGaussianData(((1 / sqrt(2), g1), (1 / sqrt(2), g2),)))
 
 
 # success statevec
@@ -217,4 +219,37 @@ def test_LCGaussian_statevec(params1, params2) -> None:
     g1 = GaussianState(params=params1)
     g2 = GaussianState(params=params2)
 
-    state = LCGaussianState([(1 / sqrt(2), g1), (1 / sqrt(2), g2)])
+    state = LCGaussianState(LCGaussianData(((1 / sqrt(2), g1), (1 / sqrt(2), g2),)))
+
+    # TODO test statevec construction
+
+
+# success cat state
+# @given(gaussian_parameters_st(), gaussian_parameters_st())
+# amp cutoff
+def test_cat_state_init_success() -> None:
+    amp = 0.5 + 0.3j
+    cat_plus = CatState(amp)
+    print(f"{cat_plus=}")
+
+    assert not cat_plus.is_gaussian
+    assert cat_plus.amplitude == amp
+    assert not cat_plus.parity
+
+    norm = sqrt(2 * (1 +  exp(- 2 * abs(amp) ** 2)))
+    print(f"{cat_plus.data.data}")
+    assert cat_plus.data == LCGaussianData(((1./norm, CoherentState(amp)), (1 / norm, CoherentState(- amp)),))
+
+def test_cat_state_statevec() -> None:
+    amp = 0.5 + 0.3j
+    cutoff = 5
+    cat_plus = CatState(amp)
+    
+    cat_sv = cat_plus.get_statevector(cutoff=cutoff)
+    print(f"{cat_plus=}")
+    target = exp(- abs(amp) ** 2 / 2) * np.array([2 * amp ** k / sqrt(factorial(k)) if k % 2 == 0 else 0 for k in range(0, cutoff + 1)], dtype = np.complex128) / sqrt(2 * (1 +  exp(- 2 * abs(amp) ** 2)))
+
+    np.testing.assert_array_almost_equal(
+        cat_sv.statevector,
+        target
+    )

@@ -6,7 +6,7 @@ import cmath
 import functools
 from dataclasses import dataclass
 from math import cosh, exp, factorial, isclose, sqrt, tanh
-from typing import Sequence, TypeAlias
+from typing import Iterator, Sequence, TypeAlias, cast
 
 import numpy as np
 import numpy.typing as npt
@@ -114,6 +114,7 @@ class CVState:
     def get_statevector(self, cutoff: int | None = None) -> Statevector:
         if self.statevector is None:
             raise ValueError("No statevector provided.")
+        # self.is_gaussian = cast(bool, 42) # clairement faux mais existe cas où l'inferrence ne marche pas. Eviter types trop généraux, réduire et mettre cast où on peut prouver le type.
         return self.statevector
 
     # since all states have get_statevector method
@@ -228,6 +229,11 @@ class GaussianState(CVState):
         )
 
         return Statevector(data)
+    
+    # overload __matmul__(self, other) for gaussian operations
+    # if type(other) not implemented
+    # return NotImplemented -> appel rmatmul -> echoue aussi (operateur non defini)
+    # a @ b = a.matmul(b) if fail b.rmatmul
 
     # want a get_statevector method for generic state (Zach's ref)
     # but want to be able to overide it in the simplest cases if makes sense
@@ -297,6 +303,7 @@ class CoherentState(GaussianState):  # type: ignore[misc]
 
     # try to cache it to avoid recomputing? but maybve don't want to cache it always if  computations are done... store as attribute??
     # need self to be hashable so GaussianParam has to be hashable so frozen dataclass
+    # mutable objects are not hashable!
     @functools.cache
     @typing_extensions.override  # toutes les filles qui implémentent get_statevector to check same signature
     def get_statevector(self, cutoff: int | None = None) -> Statevector:
@@ -398,9 +405,35 @@ class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
 
         return Statevector(data)
 
-
+# need to make that a frozen dataclass for same hashing issues
+# Sequence pas hashable car list mutable
 # or Mapping instead of tuple?
-LCGaussianData: TypeAlias = Sequence[tuple[complex | float, CVState]]
+# LCGaussianData: TypeAlias = Sequence[tuple[complex | float, CVState]]
+
+# rego to type alias
+@dataclass(frozen=True)
+class LCGaussianData:
+    # init automatique est magique (fait des setattr)
+    # sequence is mutable
+    data: tuple[tuple[complex, CVState], ...] # otherwise only 1 element and second branch always false
+    
+    def __post_init__(self):
+        if len(self.data) == 1:
+            raise ValueError(
+                "A linear combination of a single Gaussian state is a Gaussian state, so use a `GaussianState`object instead."
+            )
+        # TODO tune so that FockState(0) is ok. Or use GaussianState with (0,) * 4 params
+        # but ill defined statevec-wise I guess. Deal with that case.
+        if not all(
+            [isinstance(state, GaussianState) for _, state in self.data]
+        ):  # Fock 0 should be included (both Gaussian and Fock)
+            raise TypeError("All states in a LCGaussianState have to be GaussianState objects.")
+        
+        # object.__setattr__(self, "data", self.data)
+
+    def __iter__(self) -> Iterator[tuple[complex, CVState]]:
+        return iter(self.data)
+
 
 
 @dataclass(frozen=True, init=False)
@@ -427,20 +460,12 @@ class LCGaussianState(CVState):
         super().__init__(statevector=None, is_gaussian=False)
         object.__setattr__(self, "data", data)
 
-        if len(data) == 1:
-            raise ValueError(
-                "A linear combination of a single Gaussian state is a Gaussian state, so use a `GaussianState`object instead."
-            )
-        # TODO tune so that FockState(0) is ok. Or use GaussianState with (0,) * 4 params
-        # but ill defined statevec-wise I guess. Deal with that case.
-        if not all(
-            [isinstance(state, GaussianState) for _, state in data]
-        ):  # Fock 0 should be included (both Gaussian and Fock)
-            raise TypeError("All states in a LCGaussianState have to be GaussianState objects.")
+        
 
         # add check normalisation and normalize
-        if not isclose(sqrt(sum([abs(coeff) ** 2 for coeff, _ in self.data])), 1):
-            raise ValueError("The provided coefficients are not normalised.")
+        # NOTE: this doesn't make sense since the states in the superposition are not orthogonal!
+        # if not isclose(sqrt(sum([abs(coeff) ** 2 for coeff, _ in self.data])), 1):
+        #     raise ValueError("The provided coefficients are not normalised.")
 
     @functools.cache
     @typing_extensions.override  # toutes les filles qui implémentent get_statevector to check same signature
@@ -475,8 +500,35 @@ class LCGaussianState(CVState):
         if not cutoff > 0:
             raise TypeError("The Fock space cutoff has to be greater than zero.")
 
-        tot_data = np.array(
-            np.sum([coef * state.get_statevector().statevector for coef, state in self.data]), dtype=np.complex128
-        )
+        # needed convert to np.array
+        tot_data = np.sum(np.array([coef * state.get_statevector(cutoff=cutoff).statevector.astype(np.complex128) for coef, state in self.data]), axis=0)
 
         return Statevector(tot_data)
+    
+# linter doesn't see init = False
+@dataclass(frozen=True, init=False) 
+class CatState(LCGaussianState): # type: ignore[misc]
+    """ "A class for handling cat states"
+
+    Parameters
+    ----------
+    amplitude: complex amplitude of the state
+    parity: sign
+
+    Note
+    ----
+    .. math:: \\vert {\\rm cat}_\\alpha^\\pm \\rangle = \\frac{1}{\\sqrt{2(1 \\pm e^{-2\\vert\\alpha\\vert^2})}}
+
+    """
+
+    amplitude: complex  # type: ignore
+    parity: bool  # type: ignore
+    # TODO: allow for an angle instead of just bool?
+
+    def __init__(self, amplitude: complex, parity: bool = False) -> None:
+        # defaults to even parity
+        norm = sqrt(2 * (1 + (-1) ** parity * exp(- 2 * abs(amplitude) ** 2)))
+        super().__init__(data=LCGaussianData(((1./norm, CoherentState(amplitude)), ((-1) ** parity / norm, CoherentState(- amplitude)),)))
+        object.__setattr__(self, "amplitude", amplitude)
+        object.__setattr__(self, "parity", parity)
+
