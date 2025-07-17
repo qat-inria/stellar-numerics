@@ -33,6 +33,7 @@ class GaussianOp:
     """Parameterisation of single-mode Gaussians
     we use as in https://arxiv.org/abs/2004.11002 Eq. (43) with no rotation (their phi = 0, their squeezing phase is delta)
     kwargs for left (bra) and right (ket) cutoffs or just optional??
+    see also README.MD
     """
 
     # reuse dataclasse to avoid the init
@@ -104,6 +105,11 @@ class GaussianOp:
     # watch out this creates an import loop
     # # or dynamic dispatch?
     def __matmul__(self, other) -> None:  # GaussianState | LCGaussianState
+        # or add type in return
+        # how to test that? What is the returned error?
+        if not isinstance(other, (GaussianState, LCGaussianState)):
+            return NotImplemented # type: ignore
+        
         if isinstance(other, GaussianState):
             # discard the global phase
             pass
