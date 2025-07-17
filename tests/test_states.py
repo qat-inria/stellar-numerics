@@ -31,7 +31,7 @@ def test_init_success(data: Statevector) -> None:
 def test_norm(data: Statevector) -> None:
     state = StateFockBasis(data)
     print(state)
-    assert isclose(state.get_norm(), 1)
+    assert isclose(state.get_norm(), 1, abs_tol=1e-15)
 
 
 @given(complex_arrays_st())

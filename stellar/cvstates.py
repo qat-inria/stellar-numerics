@@ -13,7 +13,7 @@ import numpy.typing as npt
 import typing_extensions  # for overriding >+3.12 introduced in typing module
 from numpy.polynomial.hermite import hermval
 
-from stellar.gaussian import GaussianParameters
+from stellar.params import GaussianParameters
 
 # numpy arrays are homogeneous type wise
 # no knowledge of the number of dimensions

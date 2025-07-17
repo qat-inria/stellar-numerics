@@ -16,7 +16,8 @@ from scipy.optimize import (
     minimize,  # noqa: F401
 )
 
-from stellar.gaussian import GaussianOp, GaussianParameters, Method, Parameterisation
+from stellar.params import GaussianParameters
+from stellar.gaussian import GaussianOp, Method, Parameterisation
 from stellar.states import StateFockBasis
 
 ## Notes

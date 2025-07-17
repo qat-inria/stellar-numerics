@@ -20,7 +20,7 @@ from stellar.cvstates import (
     Statevector,
     StatevectorData,
 )
-from stellar.gaussian import GaussianParameters
+from stellar.params import GaussianParameters
 from tests.strategies import complex_arrays_st, gaussian_parameters_st, tuple_ints_fock_cutoff_st
 
 logger = logging.getLogger(__name__)

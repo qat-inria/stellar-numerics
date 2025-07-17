@@ -6,7 +6,7 @@ import numpy as np
 import numpy.typing as npt
 from hypothesis import strategies as st
 
-from stellar.gaussian import GaussianParameters
+from stellar.params import GaussianParameters
 from stellar.states import StateFockBasis
 
 
