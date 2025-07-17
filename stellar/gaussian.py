@@ -11,7 +11,7 @@ from math import cosh, sqrt, tanh
 
 import numpy as np
 
-from stellar.cvstates import GaussianState, LCGaussianState
+# from stellar.cvstates import GaussianState, LCGaussianState
 
 logger = logging.getLogger(__name__)
 
@@ -135,18 +135,18 @@ class GaussianOp:
 
             case method.direct:
                 pass
+# watch out this creates an import loop
+    # # or dynamic dispatch?
+    # def __matmul__(self, other) -> None:  # GaussianState | LCGaussianState
+    #     if isinstance(other, GaussianState):
+    #         # discard the global phase
+    #         pass
 
-    # or dynamic dispatch?
-    def __matmul__(self, other) -> None:  # GaussianState | LCGaussianState
-        if isinstance(other, GaussianState):
-            # discard the global phase
-            pass
+    #     if isinstance(other, LCGaussianState):
+    #         # keep the global phase as it becomes relative (depends on the cases)
+    #         pass
 
-        if isinstance(other, LCGaussianState):
-            # keep the global phase as it becomes relative (depends on the cases)
-            pass
-
-        pass
+    #     pass
 
     # should this be here or outside?
     # define a global table of matrix elements with dim cutoff? (equal to size of input state for m (left) and max rank for right (n))
