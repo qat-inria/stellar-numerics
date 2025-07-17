@@ -32,7 +32,7 @@ class GaussianParameters:
             raise TypeError("Parameter 'theta' has to be a float.")
 
     @property
-    def displacement(self) -> complex:  # TODO: change to displacement
+    def displacement(self) -> complex:
         return self.x + 1j * self.y
 
     @property
