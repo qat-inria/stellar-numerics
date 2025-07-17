@@ -63,7 +63,8 @@ def compute_sup_fidelity(max_rank: int, target_state: StateFockBasis) -> Optimiz
     # bad type annotation in scipy.Bounds()
 
     # specify all bounds and limit squeezing to large but not to large to avoid overflow
-    bounds = Bounds([-np.inf, -np.inf, 0, 0], [np.inf, np.inf, 50, 2 * π])
+    # and not too small squeezing since generic statevector ill-defined
+    bounds = Bounds([-np.inf, -np.inf, 1e-5, 0], [np.inf, np.inf, 50, 2 * π])
 
     # no typing for this object either in scipy or scipy-stubs
     minimizer_kwargs: dict[str, Any] = {
