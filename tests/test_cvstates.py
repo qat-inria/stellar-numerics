@@ -194,7 +194,14 @@ def test_LCGAussian_init_false_ngauss(n) -> None:
     # need at least 2 non-gaussian to catch that error
     # otherwise get length-1 error
     with pytest.raises(TypeError):
-        LCGaussianState(LCGaussianData(((1, FockState(n)), (1, FockState(n + 1)),)))
+        LCGaussianState(
+            LCGaussianData(
+                (
+                    (1, FockState(n)),
+                    (1, FockState(n + 1)),
+                )
+            )
+        )
 
 
 # @given(gaussian_parameters_st(), gaussian_parameters_st())
@@ -210,7 +217,14 @@ def test_LCGaussian_success(params1, params2) -> None:
     g1 = GaussianState(params=params1)
     g2 = GaussianState(params=params2)
 
-    LCGaussianState(LCGaussianData(((1 / sqrt(2), g1), (1 / sqrt(2), g2),)))
+    LCGaussianState(
+        LCGaussianData(
+            (
+                (1 / sqrt(2), g1),
+                (1 / sqrt(2), g2),
+            )
+        )
+    )
 
 
 # success statevec
@@ -219,7 +233,14 @@ def test_LCGaussian_statevec(params1, params2) -> None:
     g1 = GaussianState(params=params1)
     g2 = GaussianState(params=params2)
 
-    state = LCGaussianState(LCGaussianData(((1 / sqrt(2), g1), (1 / sqrt(2), g2),)))
+    state = LCGaussianState(
+        LCGaussianData(
+            (
+                (1 / sqrt(2), g1),
+                (1 / sqrt(2), g2),
+            )
+        )
+    )
 
     # TODO test statevec construction
 
@@ -236,20 +257,29 @@ def test_cat_state_init_success() -> None:
     assert cat_plus.amplitude == amp
     assert not cat_plus.parity
 
-    norm = sqrt(2 * (1 +  exp(- 2 * abs(amp) ** 2)))
+    norm = sqrt(2 * (1 + exp(-2 * abs(amp) ** 2)))
     print(f"{cat_plus.data.data}")
-    assert cat_plus.data == LCGaussianData(((1./norm, CoherentState(amp)), (1 / norm, CoherentState(- amp)),))
+    assert cat_plus.data == LCGaussianData(
+        (
+            (1.0 / norm, CoherentState(amp)),
+            (1 / norm, CoherentState(-amp)),
+        )
+    )
+
 
 def test_cat_state_statevec() -> None:
     amp = 0.5 + 0.3j
     cutoff = 5
     cat_plus = CatState(amp)
-    
+
     cat_sv = cat_plus.get_statevector(cutoff=cutoff)
     print(f"{cat_plus=}")
-    target = exp(- abs(amp) ** 2 / 2) * np.array([2 * amp ** k / sqrt(factorial(k)) if k % 2 == 0 else 0 for k in range(0, cutoff + 1)], dtype = np.complex128) / sqrt(2 * (1 +  exp(- 2 * abs(amp) ** 2)))
-
-    np.testing.assert_array_almost_equal(
-        cat_sv.statevector,
-        target
+    target = (
+        exp(-(abs(amp) ** 2) / 2)
+        * np.array(
+            [2 * amp**k / sqrt(factorial(k)) if k % 2 == 0 else 0 for k in range(0, cutoff + 1)], dtype=np.complex128
+        )
+        / sqrt(2 * (1 + exp(-2 * abs(amp) ** 2)))
     )
+
+    np.testing.assert_array_almost_equal(cat_sv.statevector, target)

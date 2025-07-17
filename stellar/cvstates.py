@@ -6,7 +6,7 @@ import cmath
 import functools
 from dataclasses import dataclass
 from math import cosh, exp, factorial, isclose, sqrt, tanh
-from typing import Iterator, Sequence, TypeAlias, cast
+from typing import Iterator, TypeAlias
 
 import numpy as np
 import numpy.typing as npt
@@ -90,14 +90,16 @@ class DensityMatrix:
 
     # default tolerance is 1e-9. Try 1e-5.
     def is_normalized(self) -> bool:
-        if not isclose(self.norm.imag, 0): 
+        if not isclose(self.norm.imag, 0):
             raise ValueError("Norm cannot be cast to real so the density matrix is probably not hermitian.")
         return isclose(np.real_if_close(self.norm), 1, abs_tol=1e-5)
 
     def normalize(self) -> None:
         if np.isclose(self.norm, 0):
             raise ValueError("Cannot normalize the zero matrix.")
-        self.densitymatrix = (self.densitymatrix / self.norm).astype(np.complex128) # type de scalaire pas tableau. pas infer type complex128/float ou cpx
+        self.densitymatrix = (self.densitymatrix / self.norm).astype(
+            np.complex128
+        )  # type de scalaire pas tableau. pas infer type complex128/float ou cpx
 
 
 # CVState abstrait puis concret?
@@ -127,8 +129,8 @@ class CVState:
             np.outer(
                 self.get_statevector(cutoff=cutoff).statevector.conjugate(),
                 self.get_statevector(cutoff=cutoff).statevector,
-            ).astype(np.complex128) # pas un cast. outer ne guarantie pas la précision du complexe mais type oui
-        ) # typing.cast python : impose au typeur de croire que 'est d'un type donné
+            ).astype(np.complex128)  # pas un cast. outer ne guarantie pas la précision du complexe mais type oui
+        )  # typing.cast python : impose au typeur de croire que 'est d'un type donné
         # TODO type stuff here
 
 
@@ -229,7 +231,7 @@ class GaussianState(CVState):
         )
 
         return Statevector(data)
-    
+
     # overload __matmul__(self, other) for gaussian operations
     # if type(other) not implemented
     # return NotImplemented -> appel rmatmul -> echoue aussi (operateur non defini)
@@ -405,18 +407,20 @@ class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
 
         return Statevector(data)
 
+
 # need to make that a frozen dataclass for same hashing issues
 # Sequence pas hashable car list mutable
 # or Mapping instead of tuple?
 # LCGaussianData: TypeAlias = Sequence[tuple[complex | float, CVState]]
+
 
 # rego to type alias
 @dataclass(frozen=True)
 class LCGaussianData:
     # init automatique est magique (fait des setattr)
     # sequence is mutable
-    data: tuple[tuple[complex, CVState], ...] # otherwise only 1 element and second branch always false
-    
+    data: tuple[tuple[complex, CVState], ...]  # otherwise only 1 element and second branch always false
+
     def __post_init__(self):
         if len(self.data) == 1:
             raise ValueError(
@@ -428,12 +432,11 @@ class LCGaussianData:
             [isinstance(state, GaussianState) for _, state in self.data]
         ):  # Fock 0 should be included (both Gaussian and Fock)
             raise TypeError("All states in a LCGaussianState have to be GaussianState objects.")
-        
+
         # object.__setattr__(self, "data", self.data)
 
     def __iter__(self) -> Iterator[tuple[complex, CVState]]:
         return iter(self.data)
-
 
 
 @dataclass(frozen=True, init=False)
@@ -459,8 +462,6 @@ class LCGaussianState(CVState):
         # extract coeff and state lists separately?
         super().__init__(statevector=None, is_gaussian=False)
         object.__setattr__(self, "data", data)
-
-        
 
         # add check normalisation and normalize
         # NOTE: this doesn't make sense since the states in the superposition are not orthogonal!
@@ -501,13 +502,22 @@ class LCGaussianState(CVState):
             raise TypeError("The Fock space cutoff has to be greater than zero.")
 
         # needed convert to np.array
-        tot_data = np.sum(np.array([coef * state.get_statevector(cutoff=cutoff).statevector.astype(np.complex128) for coef, state in self.data]), axis=0)
+        tot_data = np.sum(
+            np.array(
+                [
+                    coef * state.get_statevector(cutoff=cutoff).statevector.astype(np.complex128)
+                    for coef, state in self.data
+                ]
+            ),
+            axis=0,
+        )
 
         return Statevector(tot_data)
-    
+
+
 # linter doesn't see init = False
-@dataclass(frozen=True, init=False) 
-class CatState(LCGaussianState): # type: ignore[misc]
+@dataclass(frozen=True, init=False)
+class CatState(LCGaussianState):  # type: ignore[misc]
     """ "A class for handling cat states"
 
     Parameters
@@ -527,8 +537,14 @@ class CatState(LCGaussianState): # type: ignore[misc]
 
     def __init__(self, amplitude: complex, parity: bool = False) -> None:
         # defaults to even parity
-        norm = sqrt(2 * (1 + (-1) ** parity * exp(- 2 * abs(amplitude) ** 2)))
-        super().__init__(data=LCGaussianData(((1./norm, CoherentState(amplitude)), ((-1) ** parity / norm, CoherentState(- amplitude)),)))
+        norm = sqrt(2 * (1 + (-1) ** parity * exp(-2 * abs(amplitude) ** 2)))
+        super().__init__(
+            data=LCGaussianData(
+                (
+                    (1.0 / norm, CoherentState(amplitude)),
+                    ((-1) ** parity / norm, CoherentState(-amplitude)),
+                )
+            )
+        )
         object.__setattr__(self, "amplitude", amplitude)
         object.__setattr__(self, "parity", parity)
-
