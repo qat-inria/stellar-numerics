@@ -29,11 +29,15 @@ For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k
 
 ## To do
 
-- [ ] auto doc generation
-- [ ] add gaussian state computation
-- [ ] generate (multi) cat profiles
-- [ ] try other states
-- [ ] Go to witnesses
+- science
+  - [ ] change `LCGaussianData` back to `TypeAlias`
+  - [ ] add gaussian state computation
+  - [ ] generate (multi) cat profiles
+  - [ ] try other states
+  - [ ] Go to witnesses
+
+- software
+  - [ ] auto doc generation
 
 ## Contributions
 

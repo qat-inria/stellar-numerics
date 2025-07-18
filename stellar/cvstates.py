@@ -195,7 +195,7 @@ class GaussianState(CVState):
         -----
         Formula is ill-defined for zero squeezing.
         Use a very small squeezing amplitude or :class:`stellar.cvstates.CoherentState` instead.
-        Need to shift convention with respect to ours : xi-> xi* so theta -> - theta
+        Need to shift convention with respect to ours : xi-> xi* so theta -> - theta wrt paper
         """
         if not isinstance(cutoff, int):
             raise TypeError("The Fock space cutoff has to be an integer.")
