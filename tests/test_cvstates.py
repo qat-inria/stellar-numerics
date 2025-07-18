@@ -123,7 +123,7 @@ def test_sqzv_gauss_statevector() -> None:
     # not too high squeezing otherwise huge cutoff!
     # doesn't work with a squeezing phase ...
     sqzamp = 0.5 + 0.3j
-    gsqzstate = GaussianState(GaussianParameters(0, 0, abs(sqzamp), -cmath.phase(sqzamp)))
+    gsqzstate = GaussianState(GaussianParameters(0, 0, abs(sqzamp), cmath.phase(sqzamp)))
     sqzvstate = SqueezedVacuumState(sqzamp)
     cutoff = 20
     # print("gaussian")

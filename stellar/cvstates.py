@@ -195,15 +195,16 @@ class GaussianState(CVState):
         -----
         Formula is ill-defined for zero squeezing.
         Use a very small squeezing amplitude or :class:`stellar.cvstates.CoherentState` instead.
+        Need to shift convention with respect to ours : xi-> xi* so theta -> - theta
         """
         if not isinstance(cutoff, int):
             raise TypeError("The Fock space cutoff has to be an integer.")
         if not cutoff > 0:
             raise TypeError("The Fock space cutoff has to be greater than zero.")
 
-        thxi = -cmath.exp(-1j * self.params.theta) * tanh(self.params.r)
+        thxi = -cmath.exp(1j * self.params.theta) * tanh(self.params.r)
         hermite_arg = (
-            cmath.exp(-1j * self.params.theta / 2)
+            cmath.exp(1j * self.params.theta / 2)
             * sqrt(tanh(self.params.r) / 2)
             * (self.params.displacement.conjugate() - self.params.displacement / thxi)
         )

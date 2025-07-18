@@ -116,6 +116,7 @@ class GaussianOp:
 
         if isinstance(other, LCGaussianState):
             # keep the global phase as it becomes relative (depends on the cases)
+            # loop and call itself on GaussianState instances
             pass
 
         pass
