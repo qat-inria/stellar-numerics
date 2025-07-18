@@ -250,7 +250,7 @@ def test_LCGaussian_statevec(params1, params2) -> None:
 # amp cutoff
 @given(st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=1e-5, max_magnitude=1e5), st.booleans())
 def test_cat_state_init_success(amp, parity) -> None:
-    cat = CatState(amp, parity=parity)
+    cat = CatState(amplitude=amp, parity=parity)
 
     assert not cat.is_gaussian
     assert cat.amplitude == amp
@@ -265,20 +265,20 @@ def test_cat_state_init_success(amp, parity) -> None:
         )
     )
 
-@given(st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=1e-5, max_magnitude=1e5), st.integers(min_value=1, max_value=20))
-def test_cat_plus_state_statevec(amp, cutoff) -> None:
+@given(st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=1e-5, max_magnitude=1e5), st.booleans(), st.integers(min_value=1, max_value=20))
+def test_cat_plus_state_statevec(amp, parity, cutoff) -> None:
     # amp = 0.5 + 0.3j
     # cutoff = 5
-    cat_plus = CatState(amp)
+    cat_plus = CatState(amplitude=amp, parity=parity)
 
     cat_sv = cat_plus.get_statevector(cutoff=cutoff)
     #print(f"{cat_plus=}")
     target = (
         exp(-(abs(amp) ** 2) / 2)
         * np.array(
-            [2 * amp**k / sqrt(factorial(k)) if k % 2 == 0 else 0 for k in range(0, cutoff + 1)], dtype=np.complex128
+            [2 * amp**k / sqrt(factorial(k)) if k % 2 == int(parity) else 0 for k in range(0, cutoff + 1)], dtype=np.complex128
         )
-        / sqrt(2 * (1 + exp(-2 * abs(amp) ** 2)))
+        / sqrt(2 * (1 + +((-1) ** parity) * exp(-2 * abs(amp) ** 2)))
     )
 
     np.testing.assert_array_almost_equal(cat_sv.statevector, target)
