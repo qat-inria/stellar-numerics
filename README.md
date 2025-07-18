@@ -30,14 +30,16 @@ For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k
 ## To do
 
 - [ ] auto doc generation
-- [ ] Generalise `CVState`, `GaussianState`, ...
+- [ ] add gaussian state computation
+- [ ] generate (multi) cat profiles
+- [ ] try other states
+- [ ] Go to witnesses
 
 ## Contributions
 
 - Project idea: Ulysse Chabaud
 - Qode: Maxime Garnier & Thierry Martinez
 - QATnowledgements: Zacharie van Herstraeten
--
 
 ## References
 
