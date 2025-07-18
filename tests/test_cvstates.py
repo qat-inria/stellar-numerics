@@ -170,7 +170,7 @@ def test_DM_fock(data) -> None:
     print(f"{dm=}")
     assert isinstance(dm, DensityMatrix)
     assert isclose(np.real_if_close(dm.norm), 1)
-    assert dm.is_normalized  # TODO type stuff here
+    assert dm.is_normalized()  # TODO type stuff here
     assert dm.dims == (cutoff,) * 2
     assert isclose(np.real_if_close(dm.purity), 1)
     assert isclose(dm.densitymatrix[n, n].imag, 0)

@@ -108,8 +108,8 @@ class GaussianOp:
         # or add type in return
         # how to test that? What is the returned error?
         if not isinstance(other, (GaussianState, LCGaussianState)):
-            return NotImplemented # type: ignore
-        
+            return NotImplemented  # type: ignore
+
         if isinstance(other, GaussianState):
             # discard the global phase
             pass
