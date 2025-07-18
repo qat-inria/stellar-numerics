@@ -248,32 +248,31 @@ def test_LCGaussian_statevec(params1, params2) -> None:
 # success cat state
 # @given(gaussian_parameters_st(), gaussian_parameters_st())
 # amp cutoff
-def test_cat_state_init_success() -> None:
-    amp = 0.5 + 0.3j
-    cat_plus = CatState(amp)
-    print(f"{cat_plus=}")
+@given(st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=1e-5, max_magnitude=1e5), st.booleans())
+def test_cat_state_init_success(amp, parity) -> None:
+    cat = CatState(amp, parity=parity)
 
-    assert not cat_plus.is_gaussian
-    assert cat_plus.amplitude == amp
-    assert not cat_plus.parity
+    assert not cat.is_gaussian
+    assert cat.amplitude == amp
+    assert cat.parity == parity
 
-    norm = sqrt(2 * (1 + exp(-2 * abs(amp) ** 2)))
-    print(f"{cat_plus.data.data}")
-    assert cat_plus.data == LCGaussianData(
+    norm = sqrt(2 * (1 + +((-1) ** parity) * exp(-2 * abs(amp) ** 2)))
+
+    assert cat.data == LCGaussianData(
         (
             (1.0 / norm, CoherentState(amp)),
-            (1 / norm, CoherentState(-amp)),
+            ((-1) ** parity / norm, CoherentState(-amp)),
         )
     )
 
-
-def test_cat_state_statevec() -> None:
-    amp = 0.5 + 0.3j
-    cutoff = 5
+@given(st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=1e-5, max_magnitude=1e5), st.integers(min_value=1, max_value=20))
+def test_cat_plus_state_statevec(amp, cutoff) -> None:
+    # amp = 0.5 + 0.3j
+    # cutoff = 5
     cat_plus = CatState(amp)
 
     cat_sv = cat_plus.get_statevector(cutoff=cutoff)
-    print(f"{cat_plus=}")
+    #print(f"{cat_plus=}")
     target = (
         exp(-(abs(amp) ** 2) / 2)
         * np.array(
