@@ -4,9 +4,9 @@ References
 """
 
 import logging
-from cmath import exp
+from cmath import exp, phase
 from enum import Enum, auto
-from math import cosh, sqrt, tanh
+from math import atanh, cosh, sinh, sqrt, tanh
 
 import numpy as np
 
@@ -51,7 +51,6 @@ class GaussianOp:
     # TODO rework param and method here here.
 
     def __init__(self, gauss_param: GaussianParameters, method: Method, param: Parameterisation, **kwargs) -> None:
-        
         self.params = gauss_param
 
         self.method = method
@@ -61,7 +60,7 @@ class GaussianOp:
 
         # make all of these properties to compute them on the fly hen needed
         # move outside __init__ to make it work?
-        # think with statesÒ
+        # think with states
 
         self.alpha = gauss_param.displacement
 
@@ -73,7 +72,11 @@ class GaussianOp:
                 # [1] Eq. (44)
                 logger.info("chosen the method recursive")
                 self.C = exp(
-                    -(abs(self.alpha) ** 2 + self.alpha.conjugate() ** 2 * exp(1j * self.params.theta) * tanh(self.params.r)) / 2
+                    -(
+                        abs(self.alpha) ** 2
+                        + self.alpha.conjugate() ** 2 * exp(1j * self.params.theta) * tanh(self.params.r)
+                    )
+                    / 2
                 ) / sqrt(cosh(self.params.r))
                 logger.debug(f"{self.C=}")
                 # [1] Eq. (45)
@@ -99,7 +102,7 @@ class GaussianOp:
 
     # watch out this creates an import loop
     # # or dynamic dispatch?
-    def __matmul__(self, other) -> None:  # GaussianState | LCGaussianState
+    def __matmul__(self, other) -> GaussianState | None:  # GaussianState | LCGaussianState
         # or add type in return
         # how to test that? What is the returned error?
         if not isinstance(other, (GaussianState, LCGaussianState)):
@@ -107,18 +110,28 @@ class GaussianOp:
 
         if isinstance(other, GaussianState):
             # discard the global phase
-            self.params
-            other.params
+            new_disp = (
+                self.params.displacement
+                + other.params.displacement * cosh(self.params.r)
+                - other.params.displacement.conjugate() * exp(1j * self.params.theta) * sinh(self.params.r)
+            )
 
+            sqz_expr = (
+                exp(1j * self.params.theta) * tanh(self.params.r) + exp(1j * other.params.theta) * tanh(other.params.r)
+            ) / (1 + exp(1j * (other.params.theta - self.params.theta) * tanh(self.params.r) * tanh(other.params.r)))
 
-            pass
+            new_params = GaussianParameters(
+                x=new_disp.real, y=new_disp.imag, r=atanh(abs(sqz_expr)), theta=phase(sqz_expr)
+            )
+
+            return GaussianState(params=new_params)
 
         if isinstance(other, LCGaussianState):
             # keep the global phase as it becomes relative (depends on the cases)
             # loop and call itself on GaussianState instances
-            pass
+            return None
 
-        pass
+        return None
 
     # should this be here or outside?
     # define a global table of matrix elements with dim cutoff? (equal to size of input state for m (left) and max rank for right (n))
