@@ -6,7 +6,7 @@ import cmath
 import functools
 from dataclasses import dataclass
 from math import cosh, exp, factorial, isclose, sqrt, tanh
-from typing import Iterator, TypeAlias
+from typing import TypeAlias
 
 import numpy as np
 import numpy.typing as npt
@@ -412,32 +412,32 @@ class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
 # need to make that a frozen dataclass for same hashing issues
 # Sequence pas hashable car list mutable
 # or Mapping instead of tuple?
-# LCGaussianData: TypeAlias = Sequence[tuple[complex | float, CVState]]
+LCGaussianData: TypeAlias = tuple[tuple[complex, CVState], ...]  # need immutable (or frozenset/abstractset)
 
 
 # rego to type alias
-@dataclass(frozen=True)
-class LCGaussianData:
-    # init automatique est magique (fait des setattr)
-    # sequence is mutable
-    data: tuple[tuple[complex, CVState], ...]  # otherwise only 1 element and second branch always false
+# @dataclass(frozen=True)
+# class LCGaussianData:
+#     # init automatique est magique (fait des setattr)
+#     # sequence is mutable
+#     data: tuple[tuple[complex, CVState], ...]  # otherwise only 1 element and second branch always false
 
-    def __post_init__(self):
-        if len(self.data) == 1:
-            raise ValueError(
-                "A linear combination of a single Gaussian state is a Gaussian state, so use a `GaussianState`object instead."
-            )
-        # TODO tune so that FockState(0) is ok. Or use GaussianState with (0,) * 4 params
-        # but ill defined statevec-wise I guess. Deal with that case.
-        if not all(
-            [isinstance(state, GaussianState) for _, state in self.data]
-        ):  # Fock 0 should be included (both Gaussian and Fock)
-            raise TypeError("All states in a LCGaussianState have to be GaussianState objects.")
+#     def __post_init__(self):
+#         if len(self.data) == 1:
+#             raise ValueError(
+#                 "A linear combination of a single Gaussian state is a Gaussian state, so use a `GaussianState`object instead."
+#             )
+#         # TODO tune so that FockState(0) is ok. Or use GaussianState with (0,) * 4 params
+#         # but ill defined statevec-wise I guess. Deal with that case.
+#         if not all(
+#             [isinstance(state, GaussianState) for _, state in self.data]
+#         ):  # Fock 0 should be included (both Gaussian and Fock)
+#             raise TypeError("All states in a LCGaussianState have to be GaussianState objects.")
 
-        # object.__setattr__(self, "data", self.data)
+#         # object.__setattr__(self, "data", self.data)
 
-    def __iter__(self) -> Iterator[tuple[complex, CVState]]:
-        return iter(self.data)
+#     def __iter__(self) -> Iterator[tuple[complex, CVState]]:
+#         return iter(self.data)
 
 
 @dataclass(frozen=True, init=False)
@@ -463,6 +463,18 @@ class LCGaussianState(CVState):
         # extract coeff and state lists separately?
         super().__init__(statevector=None, is_gaussian=False)
         object.__setattr__(self, "data", data)
+
+        if len(self.data) == 1:
+            raise ValueError(
+                "A linear combination of a single Gaussian state is a Gaussian state, so use a `GaussianState`object instead."
+            )
+        
+        # TODO tune so that FockState(0) is ok. Or use GaussianState with (0,) * 4 params
+        # but ill defined statevec-wise I guess. Deal with that case.
+        if not all(
+            [isinstance(state, GaussianState) for _, state in self.data]
+        ):  # Fock 0 should be included (both Gaussian and Fock)
+            raise TypeError("All states in a LCGaussianState have to be GaussianState objects.")
 
         # add check normalisation and normalize
         # NOTE: this doesn't make sense since the states in the superposition are not orthogonal!
@@ -540,12 +552,11 @@ class CatState(LCGaussianState):  # type: ignore[misc]
         # defaults to even parity
         norm = sqrt(2 * (1 + (-1) ** parity * exp(-2 * abs(amplitude) ** 2)))
         super().__init__(
-            data=LCGaussianData(
-                (
-                    (1.0 / norm, CoherentState(amplitude)),
-                    ((-1) ** parity / norm, CoherentState(-amplitude)),
-                )
+            data=(
+                (1.0 / norm, CoherentState(amplitude)),
+                ((-1) ** parity / norm, CoherentState(-amplitude)),
             )
         )
+
         object.__setattr__(self, "amplitude", amplitude)
         object.__setattr__(self, "parity", parity)

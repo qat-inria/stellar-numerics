@@ -14,7 +14,6 @@ from stellar.cvstates import (
     DensityMatrix,
     FockState,
     GaussianState,
-    LCGaussianData,
     LCGaussianState,
     SqueezedVacuumState,
     Statevector,
@@ -183,23 +182,21 @@ def test_DM_fock(data) -> None:
 # tests LCGaussian
 # only one state
 @given(gaussian_parameters_st())
-def test_LCGAussian_init_false_one(params) -> None:
+def test_LCGaussian_init_false_one(params) -> None:
     with pytest.raises(ValueError):
-        LCGaussianState(LCGaussianData(((1, GaussianState(params=params)),)))
+        LCGaussianState(((1, GaussianState(params=params)),))
 
 
 # more than length one and non gaussian states
 @given(st.integers(min_value=1))
-def test_LCGAussian_init_false_ngauss(n) -> None:
+def test_LCGaussian_init_false_ngauss(n) -> None:
     # need at least 2 non-gaussian to catch that error
     # otherwise get length-1 error
     with pytest.raises(TypeError):
         LCGaussianState(
-            LCGaussianData(
-                (
-                    (1, FockState(n)),
-                    (1, FockState(n + 1)),
-                )
+            (
+                (1, FockState(n)),
+                (1, FockState(n + 1)),
             )
         )
 
@@ -218,11 +215,9 @@ def test_LCGaussian_success(params1, params2) -> None:
     g2 = GaussianState(params=params2)
 
     LCGaussianState(
-        LCGaussianData(
-            (
-                (1 / sqrt(2), g1),
-                (1 / sqrt(2), g2),
-            )
+        (
+            (1 / sqrt(2), g1),
+            (1 / sqrt(2), g2),
         )
     )
 
@@ -234,11 +229,9 @@ def test_LCGaussian_statevec(params1, params2) -> None:
     g2 = GaussianState(params=params2)
 
     state = LCGaussianState(
-        LCGaussianData(
-            (
-                (1 / sqrt(2), g1),
-                (1 / sqrt(2), g2),
-            )
+        (
+            (1 / sqrt(2), g1),
+            (1 / sqrt(2), g2),
         )
     )
 
@@ -258,25 +251,29 @@ def test_cat_state_init_success(amp, parity) -> None:
 
     norm = sqrt(2 * (1 + +((-1) ** parity) * exp(-2 * abs(amp) ** 2)))
 
-    assert cat.data == LCGaussianData(
-        (
-            (1.0 / norm, CoherentState(amp)),
-            ((-1) ** parity / norm, CoherentState(-amp)),
-        )
+    assert cat.data == (
+        (1.0 / norm, CoherentState(amp)),
+        ((-1) ** parity / norm, CoherentState(-amp)),
     )
 
-@given(st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=1e-5, max_magnitude=1e5), st.booleans(), st.integers(min_value=1, max_value=20))
+
+@given(
+    st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=1e-5, max_magnitude=1e5),
+    st.booleans(),
+    st.integers(min_value=1, max_value=20),
+)
 def test_cat_plus_state_statevec(amp, parity, cutoff) -> None:
     # amp = 0.5 + 0.3j
     # cutoff = 5
     cat_plus = CatState(amplitude=amp, parity=parity)
 
     cat_sv = cat_plus.get_statevector(cutoff=cutoff)
-    #print(f"{cat_plus=}")
+    # print(f"{cat_plus=}")
     target = (
         exp(-(abs(amp) ** 2) / 2)
         * np.array(
-            [2 * amp**k / sqrt(factorial(k)) if k % 2 == int(parity) else 0 for k in range(0, cutoff + 1)], dtype=np.complex128
+            [2 * amp**k / sqrt(factorial(k)) if k % 2 == int(parity) else 0 for k in range(0, cutoff + 1)],
+            dtype=np.complex128,
         )
         / sqrt(2 * (1 + +((-1) ** parity) * exp(-2 * abs(amp) ** 2)))
     )
