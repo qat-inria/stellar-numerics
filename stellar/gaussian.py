@@ -48,16 +48,11 @@ class GaussianOp:
     mean_vector: np.ndarray
     covariance_matrix: np.ndarray
 
+    # TODO rework param and method here here.
+
     def __init__(self, gauss_param: GaussianParameters, method: Method, param: Parameterisation, **kwargs) -> None:
-        self.x = gauss_param.x
-        self.y = gauss_param.y
-        # manual fix for positive squeezing
-        # TODO remove when fixed
-        self.r = gauss_param.r
-        self.theta = gauss_param.theta
-        # self.r = abs(gauss_param.r)
-        # if self.r < 0:
-        #     self.theta = gauss_param.theta + pi
+        
+        self.params = gauss_param
 
         self.method = method
         if not param == Parameterisation.Fock:
@@ -78,14 +73,14 @@ class GaussianOp:
                 # [1] Eq. (44)
                 logger.info("chosen the method recursive")
                 self.C = exp(
-                    -(abs(self.alpha) ** 2 + self.alpha.conjugate() ** 2 * exp(1j * self.theta) * tanh(self.r)) / 2
-                ) / sqrt(cosh(self.r))
+                    -(abs(self.alpha) ** 2 + self.alpha.conjugate() ** 2 * exp(1j * self.params.theta) * tanh(self.params.r)) / 2
+                ) / sqrt(cosh(self.params.r))
                 logger.debug(f"{self.C=}")
                 # [1] Eq. (45)
                 self.mean_vector = np.array(
                     [
-                        self.alpha.conjugate() * exp(1j * self.theta) * tanh(self.r) + self.alpha,
-                        -self.alpha.conjugate() / cosh(self.r),
+                        self.alpha.conjugate() * exp(1j * self.params.theta) * tanh(self.params.r) + self.alpha,
+                        -self.alpha.conjugate() / cosh(self.params.r),
                     ],
                     dtype=np.complex128,
                 )
@@ -93,8 +88,8 @@ class GaussianOp:
                 # [1] Eq. (46)
                 self.covariance_matrix = np.array(
                     [
-                        [exp(1j * self.theta) * tanh(self.r), -1 / cosh(self.r)],
-                        [-1 / cosh(self.r), -exp(-1j * self.theta) * tanh(self.r)],
+                        [exp(1j * self.params.theta) * tanh(self.params.r), -1 / cosh(self.params.r)],
+                        [-1 / cosh(self.params.r), -exp(-1j * self.params.theta) * tanh(self.params.r)],
                     ],
                     dtype=np.complex128,
                 )
@@ -112,6 +107,10 @@ class GaussianOp:
 
         if isinstance(other, GaussianState):
             # discard the global phase
+            self.params
+            other.params
+
+
             pass
 
         if isinstance(other, LCGaussianState):
