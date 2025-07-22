@@ -36,7 +36,10 @@ def test_gaussian_squeeze(r: float, theta: float) -> None:
     np.testing.assert_array_equal(sqz.mean_vector, target_mean_vector)
 
     target_cov_matrix = np.array(
-        [[exp(1j * sqz.params.theta) * tanh(sqz.params.r), -1 / cosh(sqz.params.r)], [-1 / cosh(sqz.params.r), -exp(-1j * sqz.params.theta) * tanh(sqz.params.r)]]
+        [
+            [exp(1j * sqz.params.theta) * tanh(sqz.params.r), -1 / cosh(sqz.params.r)],
+            [-1 / cosh(sqz.params.r), -exp(-1j * sqz.params.theta) * tanh(sqz.params.r)],
+        ]
     )
     np.testing.assert_array_equal(sqz.covariance_matrix, target_cov_matrix)
 

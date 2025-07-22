@@ -464,11 +464,13 @@ class LCGaussianState(CVState):
         super().__init__(statevector=None, is_gaussian=False)
         object.__setattr__(self, "data", data)
 
+        # TODO add empty tuple input handling?
+        # NOTE actually this could be useful to handle global phases in single gausian states...
         if len(self.data) == 1:
             raise ValueError(
                 "A linear combination of a single Gaussian state is a Gaussian state, so use a `GaussianState`object instead."
             )
-        
+
         # TODO tune so that FockState(0) is ok. Or use GaussianState with (0,) * 4 params
         # but ill defined statevec-wise I guess. Deal with that case.
         if not all(
