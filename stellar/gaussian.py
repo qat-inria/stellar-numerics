@@ -118,7 +118,7 @@ class GaussianOp:
 
             sqz_expr = (
                 exp(1j * self.params.theta) * tanh(self.params.r) + exp(1j * other.params.theta) * tanh(other.params.r)
-            ) / (1 + exp(1j * (other.params.theta - self.params.theta) * tanh(self.params.r) * tanh(other.params.r)))
+            ) / (1 + exp(1j * (other.params.theta - self.params.theta)) * tanh(self.params.r) * tanh(other.params.r))
 
             new_params = GaussianParameters(
                 x=new_disp.real, y=new_disp.imag, r=atanh(abs(sqz_expr)), theta=phase(sqz_expr)
