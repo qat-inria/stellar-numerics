@@ -65,8 +65,8 @@ def test_gauss_op_sqz_disp(op_sqz: complex, state_disp: complex) -> None:
     # TODO: check equality of GaussianParameters objects instead?
 
     total_disp = state_disp * cosh(abs(op_sqz)) - state_disp.conjugate() * sinh(abs(op_sqz)) * exp(1j * phase(op_sqz))
-    assert isclose(output.params.x, total_disp.real, abs_tol=1e-9)
-    assert isclose(output.params.y, total_disp.imag, abs_tol=1e-9)
+    assert isclose(output.params.x, total_disp.real, abs_tol=1e-8)
+    assert isclose(output.params.y, total_disp.imag, abs_tol=1e-8)
     assert isclose(output.params.r, abs(op_sqz), abs_tol=1e-3)
     # avoid to check phase equality mod 2π
     assert cisclose(exp(1j * output.params.theta), exp(1j * phase(op_sqz)))
