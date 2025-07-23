@@ -52,7 +52,7 @@ def test_gaussian_squeeze(r: float, theta: float) -> None:
     st.floats(min_value=0, max_value=5),
     st.floats(min_value=0, max_value=2 * pi),
 )
-def test_matrix_build(left_cut, right_cut, x, y, r, theta) -> None:
+def test_matrix_build(left_cut: int, right_cut: int, x: float, y: float, r: float, theta: float) -> None:
     gauss_params = GaussianParameters(x=x, y=y, r=r, theta=theta)
     gauss = GaussianOp(gauss_params, method=Method.recursive, param=Parameterisation.Fock)
 

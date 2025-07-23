@@ -50,7 +50,7 @@ def test_gstate_init_success() -> None:
 
 
 @given(st.complex_numbers(min_magnitude=0, max_magnitude=None))  # technically allows infinity here
-def test_cohstate_init_success(amp) -> None:
+def test_cohstate_init_success(amp: complex) -> None:
     cstate = CoherentState(amp)
     # print(cstate.is_gaussian, cstate.params, cstate.amplitude)
     assert isinstance(cstate, GaussianState)
@@ -152,7 +152,7 @@ def test_sqzv_gauss_statevector() -> None:
 
 
 @given(st.integers(min_value=1))
-def test_Fock(n) -> None:
+def test_Fock(n: int) -> None:
     state0 = FockState(0)
     state = FockState(n=n)
 
@@ -162,7 +162,7 @@ def test_Fock(n) -> None:
 
 # tests for density matrices from states
 @given(tuple_ints_fock_cutoff_st())
-def test_DM_fock(data) -> None:
+def test_DM_fock(data: tuple[int, int]) -> None:
     n, cutoff = data
     state = FockState(n=n)
     dm = state.get_densitymatrix(cutoff=cutoff)
@@ -182,14 +182,14 @@ def test_DM_fock(data) -> None:
 # tests LCGaussian
 # only one state
 @given(gaussian_parameters_st())
-def test_LCGaussian_init_false_one(params) -> None:
+def test_LCGaussian_init_false_one(params: GaussianParameters) -> None:
     with pytest.raises(ValueError):
         LCGaussianState(((1, GaussianState(params=params)),))
 
 
 # more than length one and non gaussian states
 @given(st.integers(min_value=1))
-def test_LCGaussian_init_false_ngauss(n) -> None:
+def test_LCGaussian_init_false_ngauss(n: int) -> None:
     # need at least 2 non-gaussian to catch that error
     # otherwise get length-1 error
     with pytest.raises(TypeError):
@@ -210,7 +210,7 @@ def test_LCGaussian_init_false_ngauss(n) -> None:
 
 # success
 @given(gaussian_parameters_st(), gaussian_parameters_st())
-def test_LCGaussian_success(params1, params2) -> None:
+def test_LCGaussian_success(params1: GaussianParameters, params2: GaussianParameters) -> None:
     g1 = GaussianState(params=params1)
     g2 = GaussianState(params=params2)
 
@@ -224,7 +224,7 @@ def test_LCGaussian_success(params1, params2) -> None:
 
 # success statevec
 @given(gaussian_parameters_st(), gaussian_parameters_st())
-def test_LCGaussian_statevec(params1, params2) -> None:
+def test_LCGaussian_statevec(params1: GaussianParameters, params2: GaussianParameters) -> None:
     g1 = GaussianState(params=params1)
     g2 = GaussianState(params=params2)
 
@@ -242,7 +242,7 @@ def test_LCGaussian_statevec(params1, params2) -> None:
 # @given(gaussian_parameters_st(), gaussian_parameters_st())
 # amp cutoff
 @given(st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=1e-5, max_magnitude=1e5), st.booleans())
-def test_cat_state_init_success(amp, parity) -> None:
+def test_cat_state_init_success(amp: complex, parity: bool) -> None:
     cat = CatState(amplitude=amp, parity=parity)
 
     assert not cat.is_gaussian
@@ -262,7 +262,7 @@ def test_cat_state_init_success(amp, parity) -> None:
     st.booleans(),
     st.integers(min_value=1, max_value=20),
 )
-def test_cat_plus_state_statevec(amp, parity, cutoff) -> None:
+def test_cat_plus_state_statevec(amp: complex, parity: bool, cutoff: int) -> None:
     # amp = 0.5 + 0.3j
     # cutoff = 5
     cat_plus = CatState(amplitude=amp, parity=parity)

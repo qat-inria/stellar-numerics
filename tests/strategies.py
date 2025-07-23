@@ -11,7 +11,7 @@ from stellar.states import StateFockBasis
 
 
 @st.composite
-def complex_arrays_st(draw, min_size=1, max_size=10):
+def complex_arrays_st(draw, min_size: int = 1, max_size: int = 10):
     """custom strategy to draw 1-dim complex arrays while avoiding the all-zero vector."""
     # Draw the array size
     size = draw(st.integers(min_value=min_size, max_value=max_size))
@@ -33,7 +33,7 @@ def complex_arrays_st(draw, min_size=1, max_size=10):
 
 # NOTE to refactor to avoid code duplication. But maybe it's useless.
 @st.composite
-def unit_norm_complex_arrays_st(draw, min_size=1, max_size=10):
+def unit_norm_complex_arrays_st(draw, min_size: int = 1, max_size: int = 10):
     # avoid repetition somehow?
     # arr = complex_arrays(draw, min_size=min_size, max_size=max)
 
@@ -50,7 +50,7 @@ def unit_norm_complex_arrays_st(draw, min_size=1, max_size=10):
 
 
 @st.composite
-def tuple_StateFockBasis_st(draw, min_size=1, max_size=10) -> tuple[StateFockBasis, StateFockBasis]:
+def tuple_StateFockBasis_st(draw, min_size: int = 1, max_size: int = 10) -> tuple[StateFockBasis, StateFockBasis]:
     """generate a pair of StateFockBasis objects with same size"""
     # avoid repetition somehow?
     # arr = complex_arrays(draw, min_size=min_size, max_size=max)
@@ -69,7 +69,7 @@ def tuple_StateFockBasis_st(draw, min_size=1, max_size=10) -> tuple[StateFockBas
 
 @st.composite
 def tuple_StateFockBasis_mat_left_st(
-    draw, min_size=1, max_size=10
+    draw, min_size: int = 1, max_size: int = 10
 ) -> tuple[StateFockBasis, npt.NDArray[np.complex128]]:  # no support for annotating number of dimensions
     """generate a pair of (StateFockBasis, mat) with matchin left dimensions"""
     # avoid repetition somehow?
@@ -95,7 +95,7 @@ def tuple_StateFockBasis_mat_left_st(
 
 
 @st.composite
-def tuple_ints_fock_cutoff_st(draw, min_size=1, max_size=20) -> tuple[int, int]:
+def tuple_ints_fock_cutoff_st(draw, min_size: int = 1, max_size: int = 20) -> tuple[int, int]:
     # Draw the array size
     cutoff = draw(st.integers(min_value=min_size, max_value=max_size))
     n = draw(st.integers(min_value=0, max_value=cutoff - 1))
