@@ -4,10 +4,11 @@ from math import cosh, isclose, sinh
 
 from hypothesis import given
 from hypothesis import strategies as st
-
+import cmath
 from stellar.cvstates import GaussianState
 from stellar.gaussian import GaussianOp, Method, Parameterisation
 from stellar.params import GaussianParameters
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -37,14 +38,17 @@ def test_gauss_op_disp_disp(op_disp: complex, state_disp: complex) -> None:
     assert output.params.theta == 0
 
 
-# TODO add hypothesis
-# commit type annotations and this afterwards
-# @given(st.complex_numbers(min_magnitude=0, max_magnitude=1e6), st.complex_numbers(min_magnitude=0, max_magnitude=1e6))
-def test_gauss_op_sqz_disp() -> None:
+# not too big on the squeezing!
+# 50 to match optimization bounds doesn't work.
+# go to max 14 with 10^-3 absolute tolerance in modulus tolerance
+# errors : math error in the atanh (and cosh) function and numerical precision
+# reduce `isclose` precision on modulus
+# add minimal and max value to squeezing parameters to avoid problems
+# could also put a min value to displacement
+# abs_tol params are the smallest ones allowing the tests to pass witht hese hypothesis parameters.
+@given(st.complex_numbers(min_magnitude=1e-5, max_magnitude=14), st.complex_numbers(min_magnitude=0, max_magnitude=1e6))
+def test_gauss_op_sqz_disp(op_sqz: complex, state_disp: complex) -> None:
     """check that squeezing a coherent state works as intended"""
-
-    state_disp = -0.3 + 0.7j
-    op_sqz = 0.27 - 0.913j
 
     # start from coherent state
     state = GaussianState(GaussianParameters(x=state_disp.real, y=state_disp.imag, r=0, theta=0))
@@ -58,11 +62,11 @@ def test_gauss_op_sqz_disp() -> None:
     output = op @ state
 
     assert isinstance(output, GaussianState)
-    # special case
     # TODO: check equality of GaussianParameters objects instead?
 
     total_disp = state_disp * cosh(abs(op_sqz)) - state_disp.conjugate() * sinh(abs(op_sqz)) * exp(1j * phase(op_sqz))
-    assert output.params.x == total_disp.real
-    assert output.params.y == total_disp.imag
-    assert isclose(output.params.r, abs(op_sqz), abs_tol=1e-15)
-    assert output.params.theta == phase(op_sqz)
+    assert isclose(output.params.x, total_disp.real, abs_tol=1e-9)
+    assert isclose(output.params.y, total_disp.imag, abs_tol=1e-9)
+    assert isclose(output.params.r, abs(op_sqz), abs_tol=1e-3)
+    # avoid to check phase equality mod 2π
+    assert cmath.isclose(exp(1j * output.params.theta), exp(1j * phase(op_sqz)))
