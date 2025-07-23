@@ -1,14 +1,14 @@
 import logging
 from cmath import exp, phase
+from cmath import isclose as cisclose
 from math import cosh, isclose, sinh
 
 from hypothesis import given
 from hypothesis import strategies as st
-import cmath
+
 from stellar.cvstates import GaussianState
 from stellar.gaussian import GaussianOp, Method, Parameterisation
 from stellar.params import GaussianParameters
-import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -69,4 +69,4 @@ def test_gauss_op_sqz_disp(op_sqz: complex, state_disp: complex) -> None:
     assert isclose(output.params.y, total_disp.imag, abs_tol=1e-9)
     assert isclose(output.params.r, abs(op_sqz), abs_tol=1e-3)
     # avoid to check phase equality mod 2π
-    assert cmath.isclose(exp(1j * output.params.theta), exp(1j * phase(op_sqz)))
+    assert cisclose(exp(1j * output.params.theta), exp(1j * phase(op_sqz)))
