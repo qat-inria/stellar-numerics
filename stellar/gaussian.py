@@ -102,13 +102,13 @@ class GaussianOp:
 
     # watch out this creates an import loop
     # # or dynamic dispatch?
-    def __matmul__(self, other) -> GaussianState | None:  # GaussianState | LCGaussianState
+    def __matmul__(self, other) -> GaussianState | LCGaussianState | None:  # typing issue None to make mypy happy?
         # or add type in return
         # how to test that? What is the returned error?
         if not isinstance(other, (GaussianState, LCGaussianState)):
             return NotImplemented  # type: ignore
 
-        if isinstance(other, GaussianState):
+        elif isinstance(other, GaussianState):
             # discard the global phase
             new_disp = (
                 self.params.displacement
@@ -126,12 +126,26 @@ class GaussianOp:
 
             return GaussianState(params=new_params)
 
-        if isinstance(other, LCGaussianState):
+        elif isinstance(other, LCGaussianState):
             # keep the global phase as it becomes relative (depends on the cases)
             # loop and call itself on GaussianState instances
-            return None
+            res: list[tuple[complex, GaussianState]] = []
+            for coeff, state in other:
+                # print("op sqz", self.params.r)
+                new_state_disp = state.params.displacement * cosh(
+                    self.params.r
+                ) - state.params.displacement.conjugate() * sinh(self.params.r) * exp(1j * self.params.theta)
+                # print("new disp", new_state_disp)
+                global_phase = exp(
+                    (
+                        self.params.displacement * new_state_disp.conjugate()
+                        - self.params.displacement.conjugate() * new_state_disp
+                    )
+                    / 2
+                )
+                res.append((global_phase * coeff, self @ state)) # type issues. use typing overload??
 
-        return None
+            return LCGaussianState(tuple(res))  # typing issue
 
     # should this be here or outside?
     # define a global table of matrix elements with dim cutoff? (equal to size of input state for m (left) and max rank for right (n))

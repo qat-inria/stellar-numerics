@@ -1,12 +1,13 @@
 import logging
 from cmath import exp, phase
 from cmath import isclose as cisclose
-from math import atanh, cosh, isclose, sinh, tanh
+from math import atanh, cosh, isclose, sinh, sqrt, tanh
+from typing import cast
 
 from hypothesis import given
 from hypothesis import strategies as st
 
-from stellar.cvstates import GaussianState
+from stellar.cvstates import GaussianState, LCGaussianState
 from stellar.gaussian import GaussianOp, Method, Parameterisation
 from stellar.params import GaussianParameters
 
@@ -123,3 +124,57 @@ def test_gauss_op_sqz_sqz(op_sqz: complex, state_sqz: complex) -> None:
     assert isclose(output.params.r, atanh(abs(tot_sqz_tanh)), abs_tol=1e-3)
     # avoid to check phase equality mod 2π
     assert cisclose(exp(1j * output.params.theta), exp(1j * phase(tot_sqz_tanh)))
+
+
+@given(st.complex_numbers(min_magnitude=0, max_magnitude=1e6), st.complex_numbers(min_magnitude=0, max_magnitude=1e6))
+def test_LCGaussian_op_disp_vac(op_disp: complex, state_disp: complex) -> None:
+    """check that displacing a LCGaussian of coherent states works as intended"""
+
+    # cannot do it on length one LCGaussianState
+    # allow the behaviour?
+    # so do on twice the same state
+    g1 = GaussianState(GaussianParameters(x=state_disp.real, y=state_disp.imag, r=0, theta=0))
+    g2 = GaussianState(GaussianParameters(x=state_disp.real, y=state_disp.imag, r=0, theta=0))
+
+    state = LCGaussianState(
+        (
+            (1 / sqrt(2), g1),
+            (1 / sqrt(2), g2),
+        )
+    )
+
+    op = GaussianOp(
+        GaussianParameters(x=op_disp.real, y=op_disp.imag, r=0, theta=0),
+        method=Method.recursive,
+        param=Parameterisation.Fock,
+    )
+
+    # unsafe but ok for now
+    # TODO remove when typing overload implemented/dynamic dispatch
+    output = cast(LCGaussianState, op @ state)
+
+    # print(f"{output=}")
+
+    # just need to check the global phase since matmul on GaussianState has been tested before
+
+    coeff, _ = output.data[0]
+
+    assert isinstance(output, LCGaussianState)
+
+    # no operator squeezing -> only bare displacements in global phase
+    assert cisclose(
+        coeff,
+        exp(
+            (
+                op.params.displacement * g1.params.displacement.conjugate()
+                - op.params.displacement.conjugate() * g1.params.displacement
+            )
+            / 2
+        )
+        / sqrt(2),
+    )
+    # special case with 0 operator squeezing (cosh = 1, sinh = 0)
+    # assert output.params.x == op_disp.real + state_disp.real
+    # assert output.params.y == op_disp.imag + state_disp.imag
+    # assert output.params.r == 0
+    # assert output.params.theta == 0

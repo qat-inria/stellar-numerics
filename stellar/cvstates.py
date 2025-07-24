@@ -412,7 +412,7 @@ class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
 # need to make that a frozen dataclass for same hashing issues
 # Sequence pas hashable car list mutable
 # or Mapping instead of tuple?
-LCGaussianData: TypeAlias = tuple[tuple[complex, CVState], ...]  # need immutable (or frozenset/abstractset)
+LCGaussianData: TypeAlias = tuple[tuple[complex, GaussianState], ...]  # need immutable (or frozenset/abstractset)
 
 
 # rego to type alias
@@ -483,7 +483,7 @@ class LCGaussianState(CVState):
         # if not isclose(sqrt(sum([abs(coeff) ** 2 for coeff, _ in self.data])), 1):
         #     raise ValueError("The provided coefficients are not normalised.")
 
-    def __iter__(self) -> Iterator[LCGaussianData]:
+    def __iter__(self) -> Iterator[tuple[complex, GaussianState]]:
         return iter(self.data)
 
     @functools.cache
