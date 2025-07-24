@@ -5,6 +5,7 @@ from math import cosh, isclose, sinh
 
 from hypothesis import given
 from hypothesis import strategies as st
+from tomlkit import table
 
 from stellar.cvstates import GaussianState
 from stellar.gaussian import GaussianOp, Method, Parameterisation
@@ -44,9 +45,9 @@ def test_gauss_op_disp_disp(op_disp: complex, state_disp: complex) -> None:
 # errors : math error in the atanh (and cosh) function and numerical precision
 # reduce `isclose` precision on modulus
 # add minimal and max value to squeezing parameters to avoid problems
-# could also put a min value to displacement
+# could also put a min value to displacement?
 # abs_tol params are the smallest ones allowing the tests to pass witht hese hypothesis parameters.
-@given(st.complex_numbers(min_magnitude=1e-5, max_magnitude=14), st.complex_numbers(min_magnitude=0, max_magnitude=1e6))
+@given(st.complex_numbers(min_magnitude=1e-6, max_magnitude=14), st.complex_numbers(min_magnitude=0, max_magnitude=1e6))
 def test_gauss_op_sqz_disp(op_sqz: complex, state_disp: complex) -> None:
     """check that squeezing a coherent state works as intended"""
 
@@ -70,3 +71,27 @@ def test_gauss_op_sqz_disp(op_sqz: complex, state_disp: complex) -> None:
     assert isclose(output.params.r, abs(op_sqz), abs_tol=1e-3)
     # avoid to check phase equality mod 2π
     assert cisclose(exp(1j * output.params.theta), exp(1j * phase(op_sqz)))
+
+@given(st.complex_numbers(min_magnitude=0, max_magnitude=1e6), st.complex_numbers(min_magnitude=1e-6, max_magnitude=15))
+def test_gauss_op_disp_sqz(op_disp: complex, state_sqz: complex) -> None:
+    """check that squeezing a coherent state works as intended"""
+    # op_disp = -0.3 + 2j
+    # state_sqz = 0.44 - 0.26j
+    # start from squezed vacuum state
+    state = GaussianState(GaussianParameters(x=0, y=0, r=abs(state_sqz), theta=phase(state_sqz)))
+    # and dispalce
+    op = GaussianOp(
+        GaussianParameters(x=op_disp.real, y=op_disp.imag, r=0, theta=0),
+        method=Method.recursive,
+        param=Parameterisation.Fock,
+    )
+
+    output = op @ state
+
+    assert isinstance(output, GaussianState)
+    
+    assert isclose(output.params.x, op_disp.real)
+    assert isclose(output.params.y, op_disp.imag)
+    assert isclose(output.params.r, abs(state_sqz), abs_tol=1e-3)
+    # avoid to check phase equality mod 2π
+    assert cisclose(exp(1j * output.params.theta), exp(1j * phase(state_sqz)))
