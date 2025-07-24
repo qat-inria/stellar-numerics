@@ -8,6 +8,8 @@ from cmath import exp, phase
 from enum import Enum, auto
 from math import atanh, cosh, sinh, sqrt, tanh
 
+from typing import overload
+
 import numpy as np
 
 # just type checking? Nope check fro benchmark but can remove after
@@ -102,13 +104,19 @@ class GaussianOp:
 
     # watch out this creates an import loop
     # # or dynamic dispatch?
-    def __matmul__(self, other) -> GaussianState | LCGaussianState | None:  # typing issue None to make mypy happy?
+    @overload
+    def __matmul__(self, other: GaussianState) -> GaussianState: ...
+
+    @overload
+    def __matmul__(self, other: LCGaussianState) -> LCGaussianState: ...
+
+    def __matmul__(
+        self, other: GaussianState | LCGaussianState
+    ) -> GaussianState | LCGaussianState:  # typing issue None to make mypy happy?
         # or add type in return
         # how to test that? What is the returned error?
-        if not isinstance(other, (GaussianState, LCGaussianState)):
-            return NotImplemented  # type: ignore
 
-        elif isinstance(other, GaussianState):
+        if isinstance(other, GaussianState):
             # discard the global phase
             new_disp = (
                 self.params.displacement
@@ -143,9 +151,12 @@ class GaussianOp:
                     )
                     / 2
                 )
-                res.append((global_phase * coeff, self @ state)) # type issues. use typing overload??
+                res.append((global_phase * coeff, self @ state))  # type issues. use typing overload??
 
             return LCGaussianState(tuple(res))  # typing issue
+
+        else:
+            return NotImplemented  # type: ignore
 
     # should this be here or outside?
     # define a global table of matrix elements with dim cutoff? (equal to size of input state for m (left) and max rank for right (n))
