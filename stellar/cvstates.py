@@ -6,7 +6,7 @@ import cmath
 import functools
 from dataclasses import dataclass
 from math import cosh, exp, factorial, isclose, sqrt, tanh
-from typing import TypeAlias
+from typing import Iterator, TypeAlias
 
 import numpy as np
 import numpy.typing as npt
@@ -482,6 +482,9 @@ class LCGaussianState(CVState):
         # NOTE: this doesn't make sense since the states in the superposition are not orthogonal!
         # if not isclose(sqrt(sum([abs(coeff) ** 2 for coeff, _ in self.data])), 1):
         #     raise ValueError("The provided coefficients are not normalised.")
+
+        def __iter__(self) -> Iterator[LCGaussianData]:
+            return iter(self.data)
 
     @functools.cache
     @typing_extensions.override  # toutes les filles qui implémentent get_statevector to check same signature
