@@ -120,8 +120,6 @@ class GaussianOp:
                 exp(1j * self.params.theta) * tanh(self.params.r) + exp(1j * other.params.theta) * tanh(other.params.r)
             ) / (1 + exp(1j * (other.params.theta - self.params.theta)) * tanh(self.params.r) * tanh(other.params.r))
 
-            # print("here", abs(sqz_expr))
-            # print("here", atanh(abs(sqz_expr)))
             new_params = GaussianParameters(
                 x=new_disp.real, y=new_disp.imag, r=atanh(abs(sqz_expr)), theta=phase(sqz_expr)
             )

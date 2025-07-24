@@ -1,7 +1,7 @@
 import logging
 from cmath import exp, phase
 from cmath import isclose as cisclose
-from math import cosh, isclose, sinh
+from math import atanh, cosh, isclose, sinh, tanh
 
 from hypothesis import given
 from hypothesis import strategies as st
@@ -93,3 +93,33 @@ def test_gauss_op_disp_sqz(op_disp: complex, state_sqz: complex) -> None:
     assert isclose(output.params.r, abs(state_sqz), abs_tol=1e-3)
     # avoid to check phase equality mod 2π
     assert cisclose(exp(1j * output.params.theta), exp(1j * phase(state_sqz)))
+
+
+# keep symmetric bounds
+@given(st.complex_numbers(min_magnitude=1e-6, max_magnitude=8), st.complex_numbers(min_magnitude=1e-6, max_magnitude=8))
+def test_gauss_op_sqz_sqz(op_sqz: complex, state_sqz: complex) -> None:
+    """check that squeezing a coherent state works as intended"""
+    # start from squezed vacuum state
+
+    # state_sqz = -0.2 + 0.47j
+    # op_sqz = 0.173 - 1.34j
+    state = GaussianState(GaussianParameters(x=0, y=0, r=abs(state_sqz), theta=phase(state_sqz)))
+    # and displace
+    op = GaussianOp(
+        GaussianParameters(x=0, y=0, r=abs(op_sqz), theta=phase(op_sqz)),
+        method=Method.recursive,
+        param=Parameterisation.Fock,
+    )
+
+    output = op @ state
+
+    tot_sqz_tanh = (
+        exp(1j * op.params.theta) * tanh(op.params.r) + exp(1j * state.params.theta) * tanh(state.params.r)
+    ) / (1 + exp(1j * (state.params.theta - op.params.theta)) * tanh(state.params.r) * tanh(op.params.r))
+    assert isinstance(output, GaussianState)
+
+    assert isclose(output.params.x, 0)
+    assert isclose(output.params.y, 0)
+    assert isclose(output.params.r, atanh(abs(tot_sqz_tanh)), abs_tol=1e-3)
+    # avoid to check phase equality mod 2π
+    assert cisclose(exp(1j * output.params.theta), exp(1j * phase(tot_sqz_tanh)))
