@@ -149,9 +149,8 @@ def test_LCGaussian_op_disp_vac(op_disp: complex, state_disp: complex) -> None:
         param=Parameterisation.Fock,
     )
 
-    # unsafe but ok for now
-    # TODO remove when typing overload implemented/dynamic dispatch
-    output = cast(LCGaussianState, op @ state)
+
+    output = op @ state # cast(LCGaussianState, op @ state)
 
     # print(f"{output=}")
 
