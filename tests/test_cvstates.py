@@ -160,6 +160,7 @@ def test_Fock(n: int) -> None:
     assert not state.is_gaussian
 
 
+# tests for density matrices from states
 @given(tuple_ints_fock_cutoff_st())
 def test_SV_fock(data: tuple[int, int]) -> None:
     n, cutoff = data

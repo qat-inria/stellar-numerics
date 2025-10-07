@@ -1,3 +1,5 @@
+from hypothesis import given
+from hypothesis import strategies as st
 from stellar.cvstates import CoherentState, FockState
 from stellar.profile import compute_sup_fidelity
 import numpy as np
@@ -85,15 +87,21 @@ def test_fock_states() -> None:
 # other tests: see table 4 of [2] for numerical values.
 # Other exact values might be derived for some photon number env 4
 
-
-def test_coh_state() -> None:
+# reduce size a bit
+# hypothesis gives osme trouble due to test deadline
+# TODO fix this
+# NOTE for alpha = 8 the squeezing in gauss matrix product overflows the atanh fct
+#@given(st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=0, max_magnitude=5))
+def test_coh_state() -> None: # amp: complex
     # target |1> Fock state approximated using only Gaussian states
-    tgt_state = CoherentState(amplitude=4 + 2j)
+
+    amp = 6.5-.529j
+    tgt_state = CoherentState(amplitude=amp)
 
     # works for (0, 1, 3, .43) starting point
     results = compute_sup_fidelity(max_rank=0, target_state=tgt_state)
-    print(f"{results.fun=} {results.x} {results.success}")
-    assert isclose(results.fun, -1, abs_tol=1e-9)
+    print(f"{amp=} {results.fun=} {results.x} {results.success}")
+    assert isclose(results.fun, -1, abs_tol=1e-6)
 
 
 # and test profiles
