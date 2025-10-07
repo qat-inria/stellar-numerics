@@ -90,7 +90,7 @@ def test_fock_states() -> None:
 # reduce size a bit
 # hypothesis gives osme trouble due to test deadline
 # TODO fix this
-# NOTE for alpha = 8 the squeezing in gauss matrix product overflows the atanh fct
+# BUG for alpha = 8 the squeezing in gauss matrix product overflows the atanh fct
 #@given(st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=0, max_magnitude=5))
 def test_coh_state() -> None: # amp: complex
     # target |1> Fock state approximated using only Gaussian states
