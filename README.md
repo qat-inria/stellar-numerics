@@ -21,7 +21,7 @@ For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k
   - $\vert \gamma , \xi \rangle = {\hat G}(\gamma, \xi) \, \vert 0 \rangle$
 - multimode?
   - Fock basis
-  - Beam-splitters  
+  - Beam-splitters
 
 ## Code Structure
 
@@ -30,8 +30,8 @@ For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k
 ## To do
 
 - science
-  - [ ] change `LCGaussianData` back to `TypeAlias`
-  - [ ] add gaussian state computation
+  - [x] change `LCGaussianData` back to `TypeAlias`
+  - [x] add gaussian state computation
   - [ ] generate (multi) cat profiles
   - [ ] try other states
   - [ ] Go to witnesses

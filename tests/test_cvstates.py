@@ -160,10 +160,24 @@ def test_Fock(n: int) -> None:
     assert not state.is_gaussian
 
 
+@given(tuple_ints_fock_cutoff_st())
+def test_SV_fock(data: tuple[int, int]) -> None:
+    n, cutoff = data
+    print("n", n, "cutoff", cutoff)
+    state = FockState(n=n)
+
+    sv = state.get_statevector(cutoff=cutoff)
+
+    print(sv.statevector)
+
+    assert isclose(sv.norm, 1)
+
+
 # tests for density matrices from states
 @given(tuple_ints_fock_cutoff_st())
 def test_DM_fock(data: tuple[int, int]) -> None:
     n, cutoff = data
+    print("n", n, "cutoff", cutoff)
     state = FockState(n=n)
     dm = state.get_densitymatrix(cutoff=cutoff)
     print(f"{dm=}")
@@ -197,7 +211,7 @@ def test_LCGaussian_init_false_ngauss(n: int) -> None:
             (
                 (1, FockState(n)),
                 (1, FockState(n + 1)),
-            )
+            )  # type: ignore
         )
 
 
@@ -228,7 +242,7 @@ def test_LCGaussian_statevec(params1: GaussianParameters, params2: GaussianParam
     g1 = GaussianState(params=params1)
     g2 = GaussianState(params=params2)
 
-    state = LCGaussianState(
+    LCGaussianState(
         (
             (1 / sqrt(2), g1),
             (1 / sqrt(2), g2),

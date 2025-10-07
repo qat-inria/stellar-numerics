@@ -16,32 +16,80 @@ from scipy.optimize import (
     minimize,  # noqa: F401
 )
 
+from stellar.cvstates import CVState, GaussianState, LCGaussianState
 from stellar.params import GaussianParameters
 from stellar.gaussian import GaussianOp, Method, Parameterisation
-from stellar.states import StateFockBasis
 
 ## Notes
 # whatever the state we try just care about it's stellar rank?? Eq. 9 https://arxiv.org/abs/2011.04320
 
 
-def compute_obj_func(x: float, y: float, r: float, theta: float, max_rank: int, target_state: StateFockBasis) -> float:
+def compute_obj_func(
+    x: float,
+    y: float,
+    r: float,
+    theta: float,
+    max_rank: int,
+    target_state: CVState,
+    target_cutoff: int | None = None,
+) -> float:
     """function to be optimized
     From [2] Thm 1
+
+    Parameters
+    ----------
+    x : float
+        real part of displacement
+    y : float
+        imaginary part of displacement
+    r : float
+       modulus of squeezing
+    theta : float
+        phase of squeezing
+    max_rank : int
+        stellar rank to compute
+    target_state : CVState
+        target state
+    target_cutoff : int
+        cutoff to use when computing the target state's statevector
+
+    Returns
+    -------
+    float
+        the value of the stellar robustness/fidelity
+
+    Raises
+    ------
+    NotImplementedError
+        only works using Fock statevectors so far
     """
 
     # NOTE add target state cutoff since input will be an abstract state not a concrete statevector
 
     # NOTE modify here for different target states
+
+    # This is common to all branches
     gauss_params = GaussianParameters(x=x, y=y, r=r, theta=theta)
     g = GaussianOp(gauss_params, method=Method.recursive, param=Parameterisation.Fock)
-    g.build_matrix_fock_basis(bra_cutoff=target_state.dim, ket_cutoff=max_rank + 1)
 
-    # vectorized! result is a one dim vector of dim ket_cutoff
-    return np.sum(np.abs(target_state.statevector.conj() @ g.matrix_fock_basis) ** 2)
+    if isinstance(target_state, (GaussianState, LCGaussianState)):
+        state = g @ target_state
+        # now cutoff has to be max_rank
+        return np.sum(np.abs(state.get_statevector(cutoff=max_rank + 1).statevector) ** 2)
+    # should work for all other states.
+    # NOTE Except difficult cases like position, momentum, GKP, cubic phase gate, ...
+    # TODO update with more cases when needed
+    else:
+        g.build_matrix_fock_basis(bra_cutoff=target_cutoff, ket_cutoff=max_rank + 1)
+
+        # vectorized! result is a one dim vector of dim ket_cutoff
+        return np.sum(
+            np.abs(target_state.get_statevector(cutoff=target_cutoff).statevector.conj() @ g.matrix_fock_basis) ** 2
+        )
 
 
 # need have non custom objects as arguments for scipy minimize
-def compute_sup_fidelity(max_rank: int, target_state: StateFockBasis) -> OptimizeResult:
+def compute_sup_fidelity(max_rank: int, target_state: CVState, target_cutoff: int | None = None) -> OptimizeResult:
     # opt
 
     # gradient-less? Otherwise numerical gradients? or parameter-shift rule?
@@ -79,7 +127,13 @@ def compute_sup_fidelity(max_rank: int, target_state: StateFockBasis) -> Optimiz
     # works but slower than direct which fails on rank = 1, state =|2>
     return basinhopping(
         lambda params: -compute_obj_func(  # type: ignore
-            x=params[0], y=params[1], r=params[2], theta=params[3], max_rank=max_rank, target_state=target_state
+            x=params[0],
+            y=params[1],
+            r=params[2],
+            theta=params[3],
+            max_rank=max_rank,
+            target_state=target_state,
+            target_cutoff=target_cutoff,
         ),
         x0=(0,) * 4,
         minimizer_kwargs=minimizer_kwargs,  # type: ignore

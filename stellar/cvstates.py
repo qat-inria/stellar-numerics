@@ -24,6 +24,8 @@ StatevectorData: TypeAlias = npt.NDArray[np.complex128] | npt.NDArray[np.float64
 # Single mode pure states only so far.
 
 
+# make it inherit from numpy arrays to void redefining everything
+# (like conj and so on...) but makes things fail (np.ndarray) ...
 class Statevector:
     """Class for statevectors in the Fock basis"""
 
@@ -379,8 +381,8 @@ class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
         Raises
         ------
         TypeError
-            if the parameter `cutoff`is not an integer.
-        TypeError
+            if the parameter `cutoff` is not an integer.
+        ValueError
             if the parameter `cutoff` is not a strictly positive integer.
 
         Notes
@@ -392,7 +394,7 @@ class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
         if not isinstance(cutoff, int):
             raise TypeError("The Fock space cutoff has to be an integer.")
         if not cutoff > 0:
-            raise TypeError("The Fock space cutoff has to be greater than zero.")
+            raise ValueError("The Fock space cutoff has to be greater than zero.")
 
         # or directly loop over even integers
         data = np.array(
