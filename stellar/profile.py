@@ -28,6 +28,10 @@ def compute_obj_func(x: float, y: float, r: float, theta: float, max_rank: int, 
     """function to be optimized
     From [2] Thm 1
     """
+
+    # NOTE add target state cutoff since input will be an abstract state not a concrete statevector
+
+    # NOTE modify here for different target states
     gauss_params = GaussianParameters(x=x, y=y, r=r, theta=theta)
     g = GaussianOp(gauss_params, method=Method.recursive, param=Parameterisation.Fock)
     g.build_matrix_fock_basis(bra_cutoff=target_state.dim, ket_cutoff=max_rank + 1)

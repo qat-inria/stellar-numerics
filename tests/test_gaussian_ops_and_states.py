@@ -2,7 +2,6 @@ import logging
 from cmath import exp, phase
 from cmath import isclose as cisclose
 from math import atanh, cosh, isclose, sinh, sqrt, tanh
-from typing import cast
 
 from hypothesis import given
 from hypothesis import strategies as st
