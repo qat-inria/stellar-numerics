@@ -172,6 +172,7 @@ def test_SV_fock(data: tuple[int, int]) -> None:
     print(sv.statevector)
 
     assert isclose(sv.norm, 1)
+    assert sv.dim == cutoff + 1
 
 
 # tests for density matrices from states

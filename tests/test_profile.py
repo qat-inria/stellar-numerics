@@ -98,22 +98,20 @@ def test_coh_state() -> None: # amp: complex
     amp = 6.5-.529j
     tgt_state = CoherentState(amplitude=amp)
 
-    # works for (0, 1, 3, .43) starting point
-    results = compute_sup_fidelity(max_rank=0, target_state=tgt_state)
+    results = compute_sup_fidelity(max_rank=0, target_state=tgt_state, target_cutoff=10) # , method='g'
     print(f"{amp=} {results.fun=} {results.x} {results.success}")
     assert isclose(results.fun, -1, abs_tol=1e-6)
 
 # NOTE runs. Check values
 def test_cat_state() -> None: # amp: complex
     # target |1> Fock state approximated using only Gaussian states
+    # check with other method too?
+    amp = 3 #6.5-.529j
+    tgt_state = CatState(amplitude=amp, parity=False)
 
-    amp = 6.5-.529j
-    tgt_state = CatState(amplitude=amp)
-
-    # works for (0, 1, 3, .43) starting point
-    results = compute_sup_fidelity(max_rank=3, target_state=tgt_state)
+    results = compute_sup_fidelity(max_rank=0, target_state=tgt_state, target_cutoff=10)
     print(f"{amp=} {results.fun=} {results.x} {results.success}")
     #assert isclose(results.fun, -1, abs_tol=1e-6)
-
+    assert False
 
 # and test profiles

@@ -32,6 +32,7 @@ def compute_obj_func(
     max_rank: int,
     target_state: CVState,
     target_cutoff: int | None = None,
+    method: str | None = None,
 ) -> float:
     """function to be optimized
     From [2] Thm 1
@@ -72,16 +73,18 @@ def compute_obj_func(
     gauss_params = GaussianParameters(x=x, y=y, r=r, theta=theta)
     g = GaussianOp(gauss_params, method=Method.recursive, param=Parameterisation.Fock)
 
-    if isinstance(target_state, (GaussianState, LCGaussianState)):
+    # if isinstance(target_state, (GaussianState, LCGaussianState)):
+    if method == 'g':
         state = g @ target_state
         # now cutoff has to be max_rank
         return np.sum(np.abs(state.get_statevector(cutoff=max_rank + 1).statevector) ** 2)
     # should work for all other states.
     # NOTE Except difficult cases like position, momentum, GKP, cubic phase gate, ...
     # TODO update with more cases when needed
-    else:
+    else: # TODO check here that cutoff canot be None
         g.build_matrix_fock_basis(bra_cutoff=target_cutoff, ket_cutoff=max_rank + 1)
 
+        print('here', target_state.get_statevector(cutoff=target_cutoff).dim)
         # vectorized! result is a one dim vector of dim ket_cutoff
         return np.sum(
             np.abs(target_state.get_statevector(cutoff=target_cutoff).statevector.conj() @ g.matrix_fock_basis) ** 2
@@ -89,7 +92,7 @@ def compute_obj_func(
 
 
 # need have non custom objects as arguments for scipy minimize
-def compute_sup_fidelity(max_rank: int, target_state: CVState, target_cutoff: int | None = None) -> OptimizeResult:
+def compute_sup_fidelity(max_rank: int, target_state: CVState, target_cutoff: int | None = None, method: str | None = None) -> OptimizeResult:
     # opt
 
     # gradient-less? Otherwise numerical gradients? or parameter-shift rule?
@@ -134,6 +137,7 @@ def compute_sup_fidelity(max_rank: int, target_state: CVState, target_cutoff: in
             max_rank=max_rank,
             target_state=target_state,
             target_cutoff=target_cutoff,
+            method=method
         ),
         x0=(0,) * 4,
         minimizer_kwargs=minimizer_kwargs,  # type: ignore
