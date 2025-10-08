@@ -77,14 +77,14 @@ def compute_obj_func(
     if method == 'g':
         state = g @ target_state
         # now cutoff has to be max_rank
-        return np.sum(np.abs(state.get_statevector(cutoff=max_rank + 1).statevector) ** 2)
+        return np.sum(np.abs(state.get_statevector(cutoff=max_rank).statevector) ** 2)
     # should work for all other states.
     # NOTE Except difficult cases like position, momentum, GKP, cubic phase gate, ...
     # TODO update with more cases when needed
     else: # TODO check here that cutoff canot be None
-        g.build_matrix_fock_basis(bra_cutoff=target_cutoff, ket_cutoff=max_rank + 1)
+        g.build_matrix_fock_basis(bra_cutoff=target_cutoff, ket_cutoff=max_rank)
 
-        print('here', target_state.get_statevector(cutoff=target_cutoff).dim)
+        # print('here', target_state.get_statevector(cutoff=target_cutoff).dim)
         # vectorized! result is a one dim vector of dim ket_cutoff
         return np.sum(
             np.abs(target_state.get_statevector(cutoff=target_cutoff).statevector.conj() @ g.matrix_fock_basis) ** 2

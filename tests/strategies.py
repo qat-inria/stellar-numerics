@@ -98,7 +98,7 @@ def tuple_StateFockBasis_mat_left_st(
 def tuple_ints_fock_cutoff_st(draw, min_size: int = 1, max_size: int = 20) -> tuple[int, int]:
     # Draw the array size
     cutoff = draw(st.integers(min_value=min_size, max_value=max_size))
-    n = draw(st.integers(min_value=0, max_value=cutoff - 1))
+    n = draw(st.integers(min_value=0, max_value=cutoff))
 
     return n, cutoff
 

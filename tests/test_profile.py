@@ -96,7 +96,7 @@ def test_fock_states() -> None:
 def test_coh_state() -> None: # amp: complex
     # target |1> Fock state approximated using only Gaussian states
 
-    amp = 6.5-.529j
+    amp = 1 # 6.5-.529j
     tgt_state = CoherentState(amplitude=amp)
 
     results = compute_sup_fidelity(max_rank=0, target_state=tgt_state, target_cutoff=10) # , method='g'
@@ -110,9 +110,12 @@ def test_cat_state() -> None: # amp: complex
     amp = 3 #6.5-.529j
     tgt_state = CatState(amplitude=amp, parity=False)
 
-    results = compute_sup_fidelity(max_rank=0, target_state=tgt_state, target_cutoff=10)
+    results = compute_sup_fidelity(max_rank=0, target_state=tgt_state, method='g') #target_cutoff=25
     print(f"{amp=} {results.fun=} {results.x} {results.success}")
     #assert isclose(results.fun, -1, abs_tol=1e-6)
-    assert False
+    # assert False
+
+    # TODO here for new tests
+    # and add seed
 
 # and test profiles

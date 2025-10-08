@@ -58,7 +58,7 @@ def test_matrix_build(left_cut: int, right_cut: int, x: float, y: float, r: floa
 
     gauss.build_matrix_fock_basis(bra_cutoff=left_cut, ket_cutoff=right_cut)
 
-    assert gauss.matrix_fock_basis.shape == (left_cut, right_cut)
+    assert gauss.matrix_fock_basis.shape == (left_cut + 1, right_cut + 1)
 
 
 # generic test eqs 44-46?

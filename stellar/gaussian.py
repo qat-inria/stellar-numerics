@@ -167,7 +167,7 @@ class GaussianOp:
         # G_{mn} = <m|G|n> Eq 10 Quesada [1]
         # cutoffs are positional arguments so they have to be provided in this order!
 
-        self.matrix_fock_basis = np.zeros((bra_cutoff, ket_cutoff), dtype=np.complex128)
+        self.matrix_fock_basis = np.zeros((bra_cutoff + 1, ket_cutoff + 1), dtype=np.complex128)
 
         match self.method:
             case Method.recursive:
@@ -176,7 +176,7 @@ class GaussianOp:
 
                 # build first column with [1] Eq (30).
                 # no last term
-                for m in range(1, bra_cutoff):
+                for m in range(1, bra_cutoff + 1):
                     if m == 1:  # only first term. No root since m == 1
                         self.matrix_fock_basis[m, 0] = self.matrix_fock_basis[m - 1, 0] * self.mean_vector[0]
                     else:  # first two terms
@@ -187,9 +187,9 @@ class GaussianOp:
 
                 # build other columns using [1] Eq. (31)
                 # column loop, start from second column
-                for n in range(1, ket_cutoff):
+                for n in range(1, ket_cutoff + 1):
                     # row loop
-                    for m in range(0, bra_cutoff):
+                    for m in range(0, bra_cutoff + 1):
                         if n == 1:
                             if m == 0:  # n = 1, m = 0 only first term
                                 self.matrix_fock_basis[m, n] = self.matrix_fock_basis[m, n - 1] * self.mean_vector[1]
