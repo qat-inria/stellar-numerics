@@ -19,6 +19,7 @@ For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k
   - ${\hat S}(\xi) \coloneqq e^{\frac12 (\xi^*{\hat a}^2 - \xi ({\hat a}^\dagger)^2)}$ (related by conjugation to UCDraft and - sign to [MJD96])
 - Gaussian states
   - $\vert \gamma , \xi \rangle = {\hat G}(\gamma, \xi) \, \vert 0 \rangle$
+- Fock cutoffs and ranks: highest Fock number *not* dimension
 - multimode?
   - Fock basis
   - Beam-splitters
