@@ -281,8 +281,8 @@ class FockState(CVState):
         """
         if not isinstance(cutoff, int):
             raise TypeError("The Fock space cutoff has to be an integer.")
-        if not cutoff > self.n >= 0:
-            raise ValueError("The Fock space cutoff has to be greater than zero and smaller than the cutoff.")
+        if not cutoff >= self.n >= 0:
+            raise ValueError("The Fock space cutoff has to be greater than zero and larger or equal than the Fock number.")
 
         # When you declare a NumPy array, you declare it with a type,
         # and if you append anything to that array, it will be converted to that type

@@ -64,9 +64,11 @@ def test_cohstate_init_success(amp: complex) -> None:
 # @given(st.complex_numbers(min_magnitude=0, max_magnitude=None))
 def test_cohstate_statevec() -> None:
     cstate = CoherentState(1 + 0.3j)
-    sv = cstate.get_statevector(cutoff=10)
+    cutoff = 10
+    sv = cstate.get_statevector(cutoff=cutoff)
     # print(sv.norm, sv)
     assert sv.is_normalized()
+    assert sv.dim == cutoff+1
 
 
 def test_cohstate_init_fail() -> None:
