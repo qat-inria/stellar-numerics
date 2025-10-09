@@ -92,6 +92,9 @@ def compute_obj_func(
 
 
 # need have non custom objects as arguments for scipy minimize
+# TODO wrap around optimisation parameters like niter and starting point?
+# Yes indeed good workflow. No guarantee so check for several starting points and niter.
+# function for that to check convergence?
 def compute_sup_fidelity(max_rank: int, target_state: CVState, target_cutoff: int | None = None, method: str | None = None) -> OptimizeResult:
     # opt
 
@@ -120,7 +123,7 @@ def compute_sup_fidelity(max_rank: int, target_state: CVState, target_cutoff: in
 
     # specify all bounds and limit squeezing to large but not to large to avoid overflow
     # and not too small squeezing since generic statevector ill-defined
-    bounds = Bounds([-np.inf, -np.inf, 1e-5, 0], [np.inf, np.inf, 50, 2 * π])
+    bounds = Bounds([-np.inf, -np.inf, 1e-5, 0], [np.inf, np.inf, 15, 2 * π])
 
     # no typing for this object either in scipy or scipy-stubs
     minimizer_kwargs: dict[str, Any] = {
@@ -139,7 +142,8 @@ def compute_sup_fidelity(max_rank: int, target_state: CVState, target_cutoff: in
             target_cutoff=target_cutoff,
             method=method
         ),
-        x0=(0,) * 4,
+        x0=(.1,) * 4,
+        niter=250,
         minimizer_kwargs=minimizer_kwargs,  # type: ignore
     )
 

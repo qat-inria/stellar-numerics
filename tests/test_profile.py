@@ -103,19 +103,31 @@ def test_coh_state() -> None: # amp: complex
     print(f"{amp=} {results.fun=} {results.x} {results.success}")
     assert isclose(results.fun, -1, abs_tol=1e-6)
 
-# NOTE runs. Check values
-def test_cat_state() -> None: # amp: complex
-    # target |1> Fock state approximated using only Gaussian states
-    # check with other method too?
-    amp = 3 #6.5-.529j
+def test_run_cat_state() -> None: # amp: complex
+
+    amp = 6.5-.529j
     tgt_state = CatState(amplitude=amp, parity=False)
 
-    results = compute_sup_fidelity(max_rank=0, target_state=tgt_state, method='g') #target_cutoff=25
+    results = compute_sup_fidelity(max_rank=4, target_state=tgt_state, method='g') #target_cutoff=25
     print(f"{amp=} {results.fun=} {results.x} {results.success}")
     #assert isclose(results.fun, -1, abs_tol=1e-6)
     # assert False
 
     # TODO here for new tests
-    # and add seed
+
+def test_values_cat_state() -> None: # amp: complex
+    """Check againt Rui's (Chalmers) values: [0.5, 0.615383 ,0.848799, 0.896384]. Only discrepency is for rank 0"""
+    # works with starting point (0,) * 4
+
+    amp = 3
+    tgt_state = CatState(amplitude=amp, parity=False)
+
+    values = [0.5, 0.615383, 0.848799, 0.896384]
+
+    # get a discrepency for 0: 0.4 instead of 0.5
+    for rank in range(0, 4):
+        results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, method='g')
+        assert isclose(results.fun, -values[rank], abs_tol=1e-6)
 
 # and test profiles
+# and add seed in opt
