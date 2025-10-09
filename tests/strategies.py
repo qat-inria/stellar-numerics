@@ -7,7 +7,6 @@ import numpy.typing as npt
 from hypothesis import strategies as st
 
 from stellar.params import GaussianParameters
-from stellar.states import StateFockBasis
 
 
 @st.composite
@@ -47,51 +46,6 @@ def unit_norm_complex_arrays_st(draw, min_size: int = 1, max_size: int = 10):
     new_norm = np.sqrt(np.sum(np.abs(arr) ** 2))
     arr = arr / new_norm
     return arr
-
-
-@st.composite
-def tuple_StateFockBasis_st(draw, min_size: int = 1, max_size: int = 10) -> tuple[StateFockBasis, StateFockBasis]:
-    """generate a pair of StateFockBasis objects with same size"""
-    # avoid repetition somehow?
-    # arr = complex_arrays(draw, min_size=min_size, max_size=max)
-
-    # Draw the array size
-    size = draw(st.integers(min_value=min_size, max_value=max_size))
-    # or sv_shape_st = hn.array_shapes(min_dims=1, max_dims=1, min_side=1, max_side=10)
-
-    # Draw a random complex array of fixed size
-    arr1 = draw(unit_norm_complex_arrays_st(size, size))
-
-    arr2 = draw(unit_norm_complex_arrays_st(size, size))
-
-    return StateFockBasis(arr1), StateFockBasis(arr2)
-
-
-@st.composite
-def tuple_StateFockBasis_mat_left_st(
-    draw, min_size: int = 1, max_size: int = 10
-) -> tuple[StateFockBasis, npt.NDArray[np.complex128]]:  # no support for annotating number of dimensions
-    """generate a pair of (StateFockBasis, mat) with matchin left dimensions"""
-    # avoid repetition somehow?
-    # arr = complex_arrays(draw, min_size=min_size, max_size=max)
-
-    # Draw the array size
-    size = draw(st.integers(min_value=min_size, max_value=max_size))
-    size2 = draw(st.integers(min_value=min_size, max_value=max_size))
-    # or sv_shape_st = hn.array_shapes(min_dims=1, max_dims=1, min_side=1, max_side=10)
-
-    # Draw a random complex array
-    arr = draw(unit_norm_complex_arrays_st(size, size))
-
-    mat = draw(
-        hn.arrays(
-            dtype=np.complex128,
-            shape=(size, size2),
-            elements=st.complex_numbers(allow_nan=False, allow_infinity=False, max_magnitude=1e5),
-        )
-    )
-
-    return StateFockBasis(arr), mat
 
 
 @st.composite
