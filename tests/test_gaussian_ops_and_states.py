@@ -50,8 +50,8 @@ def test_gauss_op_disp_disp(op_disp: complex, state_disp: complex) -> None:
 def test_gauss_op_sqz_disp() -> None:
     """check that squeezing a coherent state works as intended"""
 
-    op_sqz = -3.42 -.75j
-    state_disp = 2+3j
+    op_sqz = -3.42 - 0.75j
+    state_disp = 2 + 3j
 
     # start from coherent state
     state = GaussianState(GaussianParameters(x=state_disp.real, y=state_disp.imag, r=0, theta=0))

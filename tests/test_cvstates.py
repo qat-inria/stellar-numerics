@@ -314,6 +314,8 @@ def test_binomial_state_() -> None:
 
     st = BinomialState(N=2, S=1, parity=False)
 
+    # TODO define equality on Statevector object directly instead of comparing attributes?
+
     assert isclose(st.get_statevector(cutoff=6).norm, 1)
     target = np.array([0.5, 0, 0, 0, sqrt(3) / 2, 0, 0])
     np.testing.assert_array_almost_equal(st.get_statevector(cutoff=6).statevector, target)
