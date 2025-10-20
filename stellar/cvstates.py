@@ -618,18 +618,27 @@ class BinomialState(CVState):
         """
         if not isinstance(cutoff, int):
             raise TypeError("The Fock space cutoff has to be an integer.")
-        if not cutoff >= (self.N + 1) * (self.S + 1):
-            raise ValueError("The Fock space cutoff has to be greater than the maximal Fock number reached by the state.")
+        # computing the highest reached value: N + 1 or N?
+        N_parity = (self.N + 1) % 2
+        intrinsic_cutoff = self.N + 1
 
-        indices = [(2 * k + self.parity) * (self.S + 1) for k in range(0, (self.N + 2 - self.parity) // 2)]
+        if not (N_parity == self.parity):
+            intrinsic_cutoff = self.N
 
+        if not cutoff >= intrinsic_cutoff * (self.S + 1):
+            raise ValueError(f"The Fock space cutoff has to be greater than the maximal Fock number reached by the state, here {intrinsic_cutoff * (self.S + 1)}.")
+
+        indices = [(2 * k + self.parity) * (self.S + 1) for k in range(0, (self.N + 1 - self.parity) // 2 + 1)]
+        print((self.N + 2 - self.parity) // 2, list(range(0, (self.N + 2 - self.parity) // 2)))
         print(f"{indices=}")
         data = np.zeros(cutoff + 1, dtype=np.complex128)
         values = [sqrt(comb(self.N + 1, j // (self.S + 1))) for j in indices]
         print(f"{values=}")
         np.put(data, indices, values)
 
-        # TODO rewrite as full comprehension lis
+        # TODO rewrite as full list comprehension?
+
+        # TODO LCFockState useless since statevector?
 
 
         return Statevector(data / sqrt(2 ** self.N))
