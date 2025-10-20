@@ -12,7 +12,6 @@ For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k
 
 ### Conventions
 
-
 - Gaussian operators (displacement, squeezing)
   - single mode convention [1, 4, draft] ${\hat G}(\gamma, \xi) \coloneqq {\hat D}(\gamma){\hat S}(\xi)$ (oppo to [CMG20, C+20])
   - ${\hat D}(\gamma) \coloneqq e^{\gamma {\hat a} - \gamma^* {\hat a}^\dagger}$

@@ -1,5 +1,3 @@
-from hypothesis import given
-from hypothesis import strategies as st
 from stellar.cvstates import CatState, CoherentState, FockState
 from stellar.profile import compute_sup_fidelity
 import numpy as np

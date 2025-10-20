@@ -8,6 +8,7 @@ from hypothesis import given
 from hypothesis import strategies as st
 
 from stellar.cvstates import (
+    BinomialState,
     CatState,
     CoherentState,
     CVState,
@@ -299,3 +300,11 @@ def test_cat_plus_state_statevec(amp: complex, parity: bool, cutoff: int) -> Non
     )
 
     np.testing.assert_array_almost_equal(cat_sv.statevector, target)
+
+def test_binomial_state() -> None:
+
+    st = BinomialState(N = 2, S = 1, parity = False)
+    # Max exact cutoff dep's on parity-> compute it exactly
+    print(st.get_statevector(cutoff=6).statevector)
+    assert isclose(st.get_statevector(cutoff=6).norm, 1)
+    # assert False
