@@ -5,7 +5,7 @@ from __future__ import annotations
 import cmath
 import functools
 from dataclasses import dataclass
-from math import cosh, exp, factorial, isclose, sqrt, tanh
+from math import cosh, exp, factorial, isclose, sqrt, tanh, comb
 from typing import Iterator, TypeAlias
 
 import numpy as np
@@ -201,7 +201,7 @@ class GaussianState(CVState):
         """
         if not isinstance(cutoff, int):
             raise TypeError("The Fock space cutoff has to be an integer.")
-        if not cutoff >= 0: # NOTE useless now?
+        if not cutoff >= 0:  # NOTE useless now?
             raise TypeError("The Fock space cutoff has to be greater or equal than zero.")
 
         thxi = -cmath.exp(1j * self.params.theta) * tanh(self.params.r)
@@ -282,7 +282,9 @@ class FockState(CVState):
         if not isinstance(cutoff, int):
             raise TypeError("The Fock space cutoff has to be an integer.")
         if not cutoff >= self.n >= 0:
-            raise ValueError("The Fock space cutoff has to be greater than zero and larger or equal than the Fock number.")
+            raise ValueError(
+                "The Fock space cutoff has to be greater than zero and larger or equal than the Fock number."
+            )
 
         # When you declare a NumPy array, you declare it with a type,
         # and if you append anything to that array, it will be converted to that type
@@ -567,3 +569,81 @@ class CatState(LCGaussianState):  # type: ignore[misc]
 
         object.__setattr__(self, "amplitude", amplitude)
         object.__setattr__(self, "parity", parity)
+
+
+@dataclass(frozen=True, init=False)  # manually define __init__ for order parameter order reasons
+class BinomialState(CVState):
+    """After [CDraft] Eq. (F1)) and Michael et al. PHYSICAL REVIEW X 6, 031006 (2016)
+
+    Parameters
+    ----------
+    """
+
+    # todo name those parameters
+    # max order
+    N: int  # type: ignore
+    # spacing
+    S: int  # type: ignore
+    parity: bool  # type: ignore
+
+    def __init__(self, N: int, S: int, parity: bool = False):
+        if not isinstance(N, int):
+            raise TypeError("The maximal order has to be an integer.")
+        if not isinstance(S, int):
+            raise TypeError("The spacing has to be an integer.")
+        else:
+            super().__init__(statevector=None, is_gaussian=False)
+        object.__setattr__(self, "N", N)  # since frozen dataclass
+        object.__setattr__(self, "S", S)  # since frozen dataclass
+        object.__setattr__(self, "parity", parity)  # since frozen dataclass
+
+    @functools.cache
+    @typing_extensions.override
+    def get_statevector(self, cutoff: int | None = None) -> Statevector:
+        """returns the statevector of a `BinomialState` object.
+
+        Parameters
+        ----------
+        cutoff : int
+            single-mode Fock space cutoff i.e. the highest Fock number reached
+            # TODO put a default to the max. TODO default for Fockstates!
+
+        Returns
+        -------
+        res : Statevector
+            output statevector as a :class:`stellar.cvstates.Statevector` object.
+
+        Raises
+        ------
+        TypeError
+            if the parameter `cutoff`is not an integer.
+        TypeError
+            if the parameter `cutoff` is not a strictly positive integer.
+        """
+        if not isinstance(cutoff, int):
+            raise TypeError("The Fock space cutoff has to be an integer.")
+        # computing the highest reached value: N + 1 or N?
+        N_parity = (self.N + 1) % 2
+        intrinsic_cutoff = self.N + 1
+
+        if not (N_parity == self.parity):
+            intrinsic_cutoff = self.N
+
+        if not cutoff >= intrinsic_cutoff * (self.S + 1):
+            raise ValueError(
+                f"The Fock space cutoff has to be greater than the maximal Fock number reached by the state, here {intrinsic_cutoff * (self.S + 1)}."
+            )
+
+        indices = [(2 * k + self.parity) * (self.S + 1) for k in range(0, (self.N + 1 - self.parity) // 2 + 1)]
+        print((self.N + 2 - self.parity) // 2, list(range(0, (self.N + 2 - self.parity) // 2)))
+        print(f"{indices=}")
+        data = np.zeros(cutoff + 1, dtype=np.complex128)
+        values = [sqrt(comb(self.N + 1, j // (self.S + 1))) for j in indices]
+        print(f"{values=}")
+        np.put(data, indices, values)
+
+        # TODO rewrite as full list comprehension?
+
+        # TODO LCFockState useless since statevector?
+
+        return Statevector(data / sqrt(2**self.N))

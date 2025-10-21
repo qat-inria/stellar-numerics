@@ -8,6 +8,7 @@ from hypothesis import given
 from hypothesis import strategies as st
 
 from stellar.cvstates import (
+    BinomialState,
     CatState,
     CoherentState,
     CVState,
@@ -68,7 +69,7 @@ def test_cohstate_statevec() -> None:
     sv = cstate.get_statevector(cutoff=cutoff)
     # print(sv.norm, sv)
     assert sv.is_normalized()
-    assert sv.dim == cutoff+1
+    assert sv.dim == cutoff + 1
 
 
 def test_cohstate_init_fail() -> None:
@@ -299,3 +300,38 @@ def test_cat_plus_state_statevec(amp: complex, parity: bool, cutoff: int) -> Non
     )
 
     np.testing.assert_array_almost_equal(cat_sv.statevector, target)
+
+
+def test_binomial_state_() -> None:
+    """tests:
+    binomial(even, 2, 1) = 0.5 |0> + √(3)/2 |4>
+    binomial(odd, 2, 1) = √(3)/2 |2> + 1/2 |6>
+    binomial(even, 2, 2) = 0.5 |0> + √(3)/2 |6>
+    binomial(odd, 1, 2) = |3>
+    """
+
+    # TODO refactor and loop?
+
+    st = BinomialState(N=2, S=1, parity=False)
+
+    # TODO define equality on Statevector object directly instead of comparing attributes?
+
+    assert isclose(st.get_statevector(cutoff=6).norm, 1)
+    target = np.array([0.5, 0, 0, 0, sqrt(3) / 2, 0, 0])
+    np.testing.assert_array_almost_equal(st.get_statevector(cutoff=6).statevector, target)
+
+    st = BinomialState(N=2, S=1, parity=True)
+    # print(st.get_statevector(cutoff=6).statevector)
+    target = np.array([0, 0, sqrt(3) / 2, 0, 0, 0, 0.5])
+    np.testing.assert_array_almost_equal(st.get_statevector(cutoff=6).statevector, target)
+
+    st = BinomialState(N=2, S=2)
+    # print(st.get_statevector(cutoff=6).statevector)
+    target = np.array([0.5, 0, 0, 0, 0, 0, sqrt(3) / 2])
+    np.testing.assert_array_almost_equal(st.get_statevector(cutoff=6).statevector, target)
+
+    st = BinomialState(N=1, S=2, parity=True)
+    # print(st.get_statevector(cutoff=6).statevector)
+    # max Fock number is 3 but still works.
+    target = np.array([0, 0, 0, 1, 0])
+    np.testing.assert_array_almost_equal(st.get_statevector(cutoff=4).statevector, target)

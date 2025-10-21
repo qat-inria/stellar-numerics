@@ -1,6 +1,4 @@
-from hypothesis import given
-from hypothesis import strategies as st
-from stellar.cvstates import CatState, CoherentState, FockState
+from stellar.cvstates import BinomialState, CatState, CoherentState, FockState
 from stellar.profile import compute_sup_fidelity
 import numpy as np
 from math import e, isclose, sqrt
@@ -87,35 +85,37 @@ def test_fock_states() -> None:
 # other tests: see table 4 of [2] for numerical values.
 # Other exact values might be derived for some photon number env 4
 
+
 # reduce size a bit
 # hypothesis gives some trouble due to test deadline
 # TODO fix this
 # BUG for alpha = 8 the squeezing in gauss matrix product overflows the atanh fct
 # @given(st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=0, max_magnitude=5))
 # @given(st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=0, max_magnitude=5))
-def test_coh_state() -> None: # amp: complex
+def test_coh_state() -> None:  # amp: complex
     # target |1> Fock state approximated using only Gaussian states
 
-    amp = 1 # 6.5-.529j
+    amp = 1  # 6.5-.529j
     tgt_state = CoherentState(amplitude=amp)
 
-    results = compute_sup_fidelity(max_rank=0, target_state=tgt_state, target_cutoff=10) # , method='g'
+    results = compute_sup_fidelity(max_rank=0, target_state=tgt_state, target_cutoff=10)  # , method='g'
     print(f"{amp=} {results.fun=} {results.x} {results.success}")
     assert isclose(results.fun, -1, abs_tol=1e-6)
 
-def test_run_cat_state() -> None: # amp: complex
 
-    amp = 6.5-.529j
+def test_run_cat_state() -> None:  # amp: complex
+    amp = 6.5 - 0.529j
     tgt_state = CatState(amplitude=amp, parity=False)
 
-    results = compute_sup_fidelity(max_rank=4, target_state=tgt_state, method='g') #target_cutoff=25
+    results = compute_sup_fidelity(max_rank=4, target_state=tgt_state, method="g")  # target_cutoff=25
     print(f"{amp=} {results.fun=} {results.x} {results.success}")
-    #assert isclose(results.fun, -1, abs_tol=1e-6)
+    # assert isclose(results.fun, -1, abs_tol=1e-6)
     # assert False
 
     # TODO here for new tests
 
-def test_values_cat_state() -> None: # amp: complex
+
+def test_values_cat_state() -> None:  # amp: complex
     """Check againt Rui's (Chalmers) values: [0.5, 0.615383 ,0.848799, 0.896384]. Only discrepency is for rank 0"""
     # works with starting point (0,) * 4
 
@@ -124,10 +124,21 @@ def test_values_cat_state() -> None: # amp: complex
 
     values = [0.5, 0.615383, 0.848799, 0.896384]
 
-    # get a discrepency for 0: 0.4 instead of 0.5
     for rank in range(0, 4):
-        results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, method='g')
+        results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, method="g")
         assert isclose(results.fun, -values[rank], abs_tol=1e-6)
+
 
 # and test profiles
 # and add seed in opt
+
+
+def test_values_bin_e21_state() -> None:  # amp: complex
+    """check binomial stell W(even, N = 2, S = 1) state in [CDraft]"""
+    # works with starting point (0,) * 4
+
+    tgt_state = BinomialState(N=2, S=1)
+
+    for rank in range(0, 5):
+        results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, target_cutoff=6)
+        print(f"results for {rank=}: {-results.fun}")

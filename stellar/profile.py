@@ -74,14 +74,14 @@ def compute_obj_func(
     g = GaussianOp(gauss_params, method=Method.recursive, param=Parameterisation.Fock)
 
     # if isinstance(target_state, (GaussianState, LCGaussianState)):
-    if method == 'g':
+    if method == "g":
         state = g @ target_state
         # now cutoff has to be max_rank
         return np.sum(np.abs(state.get_statevector(cutoff=max_rank).statevector) ** 2)
     # should work for all other states.
     # NOTE Except difficult cases like position, momentum, GKP, cubic phase gate, ...
     # TODO update with more cases when needed
-    else: # TODO check here that cutoff canot be None
+    else:  # TODO check here that cutoff canot be None
         g.build_matrix_fock_basis(bra_cutoff=target_cutoff, ket_cutoff=max_rank)
 
         # print('here', target_state.get_statevector(cutoff=target_cutoff).dim)
@@ -95,7 +95,9 @@ def compute_obj_func(
 # TODO wrap around optimisation parameters like niter and starting point?
 # Yes indeed good workflow. No guarantee so check for several starting points and niter.
 # function for that to check convergence?
-def compute_sup_fidelity(max_rank: int, target_state: CVState, target_cutoff: int | None = None, method: str | None = None) -> OptimizeResult:
+def compute_sup_fidelity(
+    max_rank: int, target_state: CVState, target_cutoff: int | None = None, method: str | None = None
+) -> OptimizeResult:
     # opt
 
     # gradient-less? Otherwise numerical gradients? or parameter-shift rule?
@@ -140,9 +142,9 @@ def compute_sup_fidelity(max_rank: int, target_state: CVState, target_cutoff: in
             max_rank=max_rank,
             target_state=target_state,
             target_cutoff=target_cutoff,
-            method=method
+            method=method,
         ),
-        x0=(.1,) * 4,
+        x0=(0.1,) * 4,
         niter=250,
         minimizer_kwargs=minimizer_kwargs,  # type: ignore
     )
