@@ -142,4 +142,3 @@ def test_values_bin_e21_state() -> None:  # amp: complex
     for rank in range(0, 5):
         results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, target_cutoff=6)
         print(f"results for {rank=}: {-results.fun}")
-    assert False
