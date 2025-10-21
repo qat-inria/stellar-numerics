@@ -1,4 +1,4 @@
-from stellar.cvstates import CatState, CoherentState, FockState
+from stellar.cvstates import BinomialState, CatState, CoherentState, FockState
 from stellar.profile import compute_sup_fidelity
 import numpy as np
 from math import e, isclose, sqrt
@@ -124,7 +124,6 @@ def test_values_cat_state() -> None:  # amp: complex
 
     values = [0.5, 0.615383, 0.848799, 0.896384]
 
-    # get a discrepency for 0: 0.4 instead of 0.5
     for rank in range(0, 4):
         results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, method="g")
         assert isclose(results.fun, -values[rank], abs_tol=1e-6)
@@ -132,3 +131,15 @@ def test_values_cat_state() -> None:  # amp: complex
 
 # and test profiles
 # and add seed in opt
+
+
+def test_values_bin_e21_state() -> None:  # amp: complex
+    """check binomial stell W(even, N = 2, S = 1) state in [CDraft]"""
+    # works with starting point (0,) * 4
+
+    tgt_state = BinomialState(N=2, S=1)
+
+    for rank in range(0, 5):
+        results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, target_cutoff=6)
+        print(f"results for {rank=}: {-results.fun}")
+    assert False
