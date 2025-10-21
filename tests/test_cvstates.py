@@ -14,6 +14,7 @@ from stellar.cvstates import (
     CVState,
     DensityMatrix,
     FockState,
+    GKPState,
     GaussianState,
     LCGaussianState,
     SqueezedVacuumState,
@@ -335,3 +336,9 @@ def test_binomial_state_() -> None:
     # max Fock number is 3 but still works.
     target = np.array([0, 0, 0, 1, 0])
     np.testing.assert_array_almost_equal(st.get_statevector(cutoff=4).statevector, target)
+
+
+def test_GKP_init() -> None:
+
+    # check default
+    GKPState()

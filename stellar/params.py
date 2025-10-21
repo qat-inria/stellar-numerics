@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from cmath import exp
 
 
-@dataclass(frozen=True)  # need frozen to implement __hash__ method
+@dataclass(frozen=True)  # need frozen to implement __hash__ method for cachesing
 class GaussianParameters:
     """Dataclass containing single-mode Gaussian parameters to be used with both `GaussianStates`and `GaussianOp`.
     NOTE r has to be positive? Or deal separately
@@ -13,10 +13,10 @@ class GaussianParameters:
             _description_
     """
 
-    x: float
-    y: float
-    r: float
-    theta: float
+    x: float  # real part of displacement
+    y: float  # imaginary part of displacement
+    r: float  # modulus of squeezing
+    theta: float  # phase of sueezing
 
     def __post_init__(self):
         if not isinstance(self.x, (float, int)):
