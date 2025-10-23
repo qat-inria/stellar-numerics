@@ -732,8 +732,6 @@ class GKPState(LCGaussianState):  # type: ignore[misc]
             for s in range(-smax, smax + 1)
         )
 
-        norm_sq = sum(abs(coeff) ** 2 for coeff, _ in data)
-
         super().__init__(data=data)
 
         # NOTE could add attributes before...
