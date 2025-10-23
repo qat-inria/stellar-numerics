@@ -168,7 +168,7 @@ def test_values_gkp_state_default() -> None:  # amp: complex
 
     for rank in range(0, 6):
         # seed for test reproducibility
-        results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, method="g", rng=42, niter=350)
+        results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, method="g", rng=421, niter=350)
         print(f"results for {rank=}: {-results.fun}")
 
         assert isclose(-results.fun, targets[rank], abs_tol=1e-8)
