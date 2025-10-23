@@ -5,8 +5,10 @@ from __future__ import annotations
 import cmath
 import functools
 from dataclasses import dataclass
-from math import cosh, exp, factorial, isclose, sqrt, tanh, comb
+from math import ceil, cosh, exp, factorial, isclose, log, sqrt, tanh, comb
+from math import pi as π
 from typing import Iterator, TypeAlias
+
 
 import numpy as np
 import numpy.typing as npt
@@ -416,6 +418,7 @@ class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
 # need to make that a frozen dataclass for same hashing issues
 # Sequence pas hashable car list mutable
 # or Mapping instead of tuple?
+# tuple of (coeff, GaussianState) pairs
 LCGaussianData: TypeAlias = tuple[tuple[complex, GaussianState], ...]  # need immutable (or frozenset/abstractset)
 
 
@@ -592,7 +595,7 @@ class BinomialState(CVState):
         if not isinstance(S, int):
             raise TypeError("The spacing has to be an integer.")
         else:
-            super().__init__(statevector=None, is_gaussian=False)
+            super().__init__(statevector=None, is_gaussian=False)  # might raise pbs since might have only vac?
         object.__setattr__(self, "N", N)  # since frozen dataclass
         object.__setattr__(self, "S", S)  # since frozen dataclass
         object.__setattr__(self, "parity", parity)  # since frozen dataclass
@@ -647,3 +650,95 @@ class BinomialState(CVState):
         # TODO LCFockState useless since statevector?
 
         return Statevector(data / sqrt(2**self.N))
+
+
+class GKPState(LCGaussianState):  # type: ignore[misc]
+    """ "A class for handling approximate square Gottesman-Kitaev-Preskil states"
+
+    Standard approx: replace position eigenstates by their finitely-squeezed versions
+    and add a Gaussian filter enveloppe
+
+    Parameters
+    ----------
+    dimension (int): logical space dimension
+        default: 2
+
+    index (int): index of the logical state to construct
+        default: 0. Must be between 0 and dimension - 1 (inclusive)
+
+    kappa (float): Gaussian enveloppe parameter
+        default: 0.3
+
+    delta (float): variance of the squeezed state
+        default: 0.3. Must be positive (ideal GKP) and smaller than 1 (position squeezing)
+
+    tol (float): tolerance on the coefficient of the Gaussian expansion
+        default: 10^-3. Must be positive and smaller than one.
+        This is intrinsic to the state definition NOT like a cutoff for statevectors.
+
+    Note
+    ----
+    .. math::
+
+    """
+
+    # TODO rename
+    dimension: int  # type: ignore
+    index: int  # type: ignore
+    kappa: float  # type: ignore
+    delta: float  # type: ignore
+    tol: float  # type: ignore
+
+    def __init__(
+        self, dimension: int = 2, index: int = 0, kappa: float = 0.3, delta: float = 0.3, tol: float = 1e-3
+    ) -> None:
+        if not isinstance(dimension, int):
+            raise TypeError(f"Logical space dimension has to be an integer, not {type(dimension)}.")
+        if not dimension >= 2:
+            raise ValueError(f"Logical space dimension has to greater or equal than two, not {dimension}.")
+        if not isinstance(kappa, float):
+            raise TypeError(f"Enveloppe parameter κ has to be a float, not {type(kappa)}.")
+        if not isinstance(delta, float):
+            raise TypeError(f"Squeezed state width Δ has to be a float, not {type(delta)}.")
+        if not 0 < delta < 1:
+            raise ValueError(f"Squeezed state width Δ has to be a greater than 0 and smaller than 1, not {delta}.")
+        if not isinstance(tol, float):
+            raise TypeError(f"Tolerance parameter must be a float, not {type(tol)}.")
+        if not 0 < tol < 1:
+            raise ValueError(f"Tolerance parameter must be between 0 and 1 (excluded), not {tol}.")
+
+        # compute smax the cutoff in the Gaussian expansion
+        # math.log is natural log
+        # take ceil to be safe
+        smax = ceil(sqrt(-log(tol) / (π * kappa**2 * dimension)))
+        # without `tuple` this is a generator. More efficient? Don't think so the states carries it always.
+        # log is natural log, no phase needed since 0 < delta < 1 => - ln delta > 0
+
+        # TODO refactor for more efficiency
+
+        coeffs = np.array(
+            [exp(-π * kappa**2 * (dimension * s + index) ** 2 / dimension) for s in range(-smax, smax + 1)],
+            dtype=np.float128,
+        )
+        norm = sqrt(np.sum(np.abs(coeffs) ** 2))
+
+        data = tuple(
+            (
+                exp(-π * kappa**2 * (dimension * s + index) ** 2 / dimension) / norm,
+                GaussianState(
+                    GaussianParameters(x=sqrt(π / dimension) * (dimension * s + index), y=0, r=-log(delta), theta=0)
+                ),
+            )
+            for s in range(-smax, smax + 1)
+        )
+
+        norm_sq = sum(abs(coeff) ** 2 for coeff, _ in data)
+
+        super().__init__(data=data)
+
+        # NOTE could add attributes before...
+        object.__setattr__(self, "dimension", dimension)
+        object.__setattr__(self, "index", index)
+        object.__setattr__(self, "kappa", kappa)
+        object.__setattr__(self, "delta", delta)
+        object.__setattr__(self, "tol", tol)
