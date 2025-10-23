@@ -711,18 +711,28 @@ class GKPState(LCGaussianState):  # type: ignore[misc]
         # math.log is natural log
         # take ceil to be safe
         smax = ceil(sqrt(-log(tol) / (π * kappa**2 * dimension)))
-
         # without `tuple` this is a generator. More efficient? Don't think so the states carries it always.
         # log is natural log, no phase needed since 0 < delta < 1 => - ln delta > 0
+
+        # TODO refactor for more efficiency
+
+        coeffs = np.array(
+            [exp(-π * kappa**2 * (dimension * s + index) ** 2 / dimension) for s in range(-smax, smax + 1)],
+            dtype=np.float128,
+        )
+        norm = sqrt(np.sum(np.abs(coeffs) ** 2))
+
         data = tuple(
             (
-                exp(-π * kappa**2 * (dimension * s + index) ** 2 / dimension),
+                exp(-π * kappa**2 * (dimension * s + index) ** 2 / dimension) / norm,
                 GaussianState(
                     GaussianParameters(x=sqrt(π / dimension) * (dimension * s + index), y=0, r=-log(delta), theta=0)
                 ),
             )
             for s in range(-smax, smax + 1)
         )
+
+        norm_sq = sum(abs(coeff) ** 2 for coeff, _ in data)
 
         super().__init__(data=data)
 

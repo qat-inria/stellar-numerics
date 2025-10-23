@@ -1,4 +1,4 @@
-from stellar.cvstates import BinomialState, CatState, CoherentState, FockState
+from stellar.cvstates import BinomialState, CatState, CoherentState, FockState, GKPState
 from stellar.profile import compute_sup_fidelity
 import numpy as np
 from math import e, isclose, sqrt
@@ -142,3 +142,35 @@ def test_values_bin_e21_state() -> None:  # amp: complex
     for rank in range(0, 5):
         results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, target_cutoff=6)
         print(f"results for {rank=}: {-results.fun}")
+
+
+def test_values_gkp_state_default() -> None:  # amp: complex
+    """check standard GKP state (d = 2, index = 0, delta = kappa = 0.3, tol = 1e-3) in [CDraft]"""
+
+    # numerical results to test non regression
+    # niter = 250 tol = 1e-3 (smax=4)
+    # results for rank=0: 0.5998054164771279
+    # results for rank=1: 0.599805416371605
+    # results for rank=2: 0.5998054164557041
+    # results for rank=3: 0.6224691842121024
+    # results for rank=4: 0.7236673372401499
+    # results for rank=5: 0.7290038000372823
+
+    targets = [
+        0.5998054164771279,
+        0.599805416371605,
+        0.5998054164557041,
+        0.6224691842121024,
+        0.7236673372401499,
+        0.7290038000372823,
+    ]
+    tgt_state = GKPState(tol=1e-3)
+
+    for rank in range(0, 6):
+        # seed for test reproducibility
+        results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, method="g", rng=42)
+        print(f"results for {rank=}: {-results.fun}")
+
+        assert isclose(-results.fun, targets[rank], abs_tol=1e-8)
+
+    # assert False

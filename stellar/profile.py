@@ -96,7 +96,13 @@ def compute_obj_func(
 # Yes indeed good workflow. No guarantee so check for several starting points and niter.
 # function for that to check convergence?
 def compute_sup_fidelity(
-    max_rank: int, target_state: CVState, target_cutoff: int | None = None, method: str | None = None, x0: tuple[float, ...] = (0.1,) * 4, niter: int = 250, **kwargs
+    max_rank: int,
+    target_state: CVState,
+    target_cutoff: int | None = None,
+    method: str | None = None,
+    x0: tuple[float, ...] = (0.1,) * 4,
+    niter: int = 250,
+    **kwargs,
 ) -> OptimizeResult:
     # opt
 
@@ -146,8 +152,8 @@ def compute_sup_fidelity(
             method=method,
         ),
         x0=x0,
-        niter=niter,
-        **kwargs, # default niter =100
+        niter=niter,  # default niter = 100
+        **kwargs,  # other kwargs like rng (seed, or random number generator)
         minimizer_kwargs=minimizer_kwargs,  # type: ignore
     )
 

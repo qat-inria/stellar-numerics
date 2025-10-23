@@ -339,6 +339,7 @@ def test_binomial_state_() -> None:
 
 
 def test_GKP_init() -> None:
-
     # check default
     GKPState()
+
+    # check other parameters too.
