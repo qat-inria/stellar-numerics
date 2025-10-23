@@ -148,27 +148,27 @@ def test_values_gkp_state_default() -> None:  # amp: complex
     """check standard GKP state (d = 2, index = 0, delta = kappa = 0.3, tol = 1e-3) in [CDraft]"""
 
     # numerical results to test non regression
-    # niter = 250 tol = 1e-3 (smax=4)
-    # results for rank=0: 0.5998054164771279
-    # results for rank=1: 0.599805416371605
-    # results for rank=2: 0.5998054164557041
-    # results for rank=3: 0.6224691842121024
+    # niter = 350 tol = 1e-3 (smax=4)
+    # results for rank=0: 0.5998054164771314
+    # results for rank=1: 0.5998054162670581
+    # results for rank=2: 0.599805416470219
+    # results for rank=3: 0.6224691842120489
     # results for rank=4: 0.7236673372401499
-    # results for rank=5: 0.7290038000372823
+    # results for rank=5: 0.7290038000488364
 
     targets = [
-        0.5998054164771279,
-        0.599805416371605,
-        0.5998054164557041,
-        0.6224691842121024,
+        0.5998054164771314,
+        0.5998054162670581,
+        0.599805416470219,
+        0.6224691842120489,
         0.7236673372401499,
-        0.7290038000372823,
+        0.7290038000488364,
     ]
     tgt_state = GKPState(tol=1e-3)
 
     for rank in range(0, 6):
         # seed for test reproducibility
-        results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, method="g", rng=42)
+        results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, method="g", rng=42, niter=350)
         print(f"results for {rank=}: {-results.fun}")
 
         assert isclose(-results.fun, targets[rank], abs_tol=1e-8)
