@@ -1,6 +1,8 @@
 """example script for testing the convergence of an
 approximate GKP state stellar fidelity with the number of
 optimisation iteration
+rank = 3 is prone to instability in the standard GKP case.
+sols are 0.62246 or 0.599805.
 """
 
 from stellar.cvstates import GKPState
