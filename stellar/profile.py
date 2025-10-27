@@ -82,6 +82,9 @@ def compute_obj_func(
     # NOTE Except difficult cases like position, momentum, GKP, cubic phase gate, ...
     # TODO update with more cases when needed
     else:  # TODO check here that cutoff canot be None
+        if target_cutoff is None: # TODO remove that since handles by OptimParams
+            raise ValueError("cutoff cannot be None when computing in the Fock basis.")
+
         g.build_matrix_fock_basis(bra_cutoff=target_cutoff, ket_cutoff=max_rank)
 
         # print('here', target_state.get_statevector(cutoff=target_cutoff).dim)
