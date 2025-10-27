@@ -1,4 +1,5 @@
 from stellar.cvstates import BinomialState, CatState, CoherentState, FockState, GKPState
+from stellar.params import OptimisationParameters
 from stellar.profile import compute_sup_fidelity
 import numpy as np
 from math import e, isclose, sqrt
@@ -72,11 +73,11 @@ def test_fock_states() -> None:
     assert check_results.shape == (6, 6)
 
     cutoff = 7  # min is 6 for Fock state |5>
-
+    pars = OptimisationParameters(method='fock', target_cutoff=cutoff)
     for n in range(0, 6):
         tgt_state = FockState(n=n)
         for r in range(0, 6):
-            results = compute_sup_fidelity(max_rank=r, target_state=tgt_state, target_cutoff=cutoff)
+            results = compute_sup_fidelity(max_rank=r, target_state=tgt_state, optim_params=pars)
             # assert results.success?
             assert isclose(results.fun, -check_results[n, r], abs_tol=1e-3)
 

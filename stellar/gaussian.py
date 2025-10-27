@@ -30,6 +30,10 @@ class Method(Enum):
     direct = auto()
     recursive = auto()
 
+# class Method(Enum):
+#     fock = auto()
+#     gaussian = auto()
+
 
 class GaussianOp:
     """Parameterisation of single-mode Gaussians

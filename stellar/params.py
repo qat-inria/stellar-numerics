@@ -49,7 +49,7 @@ class OptimisationParameters:
     # feed that to the compute_profile fct (to write)
 
     # TODO update for mixed states? or carried by the state?
-    method: Literal["gaussian", "fock"]  # use Enums is more methods?
+    method: Literal["gaussian", "fock"]  # TODO use Enums as before
     target_cutoff: int | None
     niter: int = 250
     x0: tuple[float, ...] = (0.1,) * 4

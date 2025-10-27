@@ -17,7 +17,7 @@ from scipy.optimize import (
 )
 
 from stellar.cvstates import CVState, GaussianState, LCGaussianState
-from stellar.params import GaussianParameters
+from stellar.params import GaussianParameters, OptimisationParameters
 from stellar.gaussian import GaussianOp, Method, Parameterisation
 
 ## Notes
@@ -71,6 +71,7 @@ def compute_obj_func(
 
     # This is common to all branches
     gauss_params = GaussianParameters(x=x, y=y, r=r, theta=theta)
+    # todo rework this!!
     g = GaussianOp(gauss_params, method=Method.recursive, param=Parameterisation.Fock)
 
     # if isinstance(target_state, (GaussianState, LCGaussianState)):
@@ -101,11 +102,12 @@ def compute_obj_func(
 def compute_sup_fidelity(
     max_rank: int,
     target_state: CVState,
-    target_cutoff: int | None = None,
-    method: str | None = None,
-    x0: tuple[float, ...] = (0.1,) * 4,
-    niter: int = 250,
-    **kwargs,
+    optim_params: OptimisationParameters
+    # target_cutoff: int | None = None,
+    # method: str | None = None,
+    # x0: tuple[float, ...] = (0.1,) * 4,
+    # niter: int = 250,
+    # **kwargs, ## TODO re add kwargs later in OptimizationParameters
 ) -> OptimizeResult:
     # opt
 
@@ -151,12 +153,12 @@ def compute_sup_fidelity(
             theta=params[3],
             max_rank=max_rank,
             target_state=target_state,
-            target_cutoff=target_cutoff,
-            method=method,
+            target_cutoff=optim_params.target_cutoff,
+            method=optim_params.method,
         ),
-        x0=x0,
-        niter=niter,  # default niter = 100
-        **kwargs,  # other kwargs like rng (seed, or random number generator)
+        x0=optim_params.x0,
+        niter=optim_params.niter,  # default niter = 100
+        # **kwargs,  # other kwargs like rng (seed, or random number generator)
         minimizer_kwargs=minimizer_kwargs,  # type: ignore
     )
 

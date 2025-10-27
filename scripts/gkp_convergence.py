@@ -5,9 +5,18 @@ rank = 3 is prone to instability in the standard GKP case.
 sols are 0.62246 or 0.599805.
 """
 
+import logging
 from stellar.cvstates import GKPState
 from stellar.profile import compute_sup_fidelity
 
+# logger = logging.getLogger(__name__)
+# logging.basicConfig(filename='gkp.log', encoding='utf-8', level=logging.DEBUG)
+# logger.debug('This message should go to the log file')
+# logger.info('So should this')
+# logger.warning('And this, too')
+# logger.error('And non-ASCII stuff, too, like Øresund and Malmö')
+
+# logger.info("Starting GKP script...")
 
 if __name__ == "__main__":
 
