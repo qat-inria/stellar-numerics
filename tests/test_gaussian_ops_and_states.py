@@ -7,7 +7,7 @@ from hypothesis import given
 from hypothesis import strategies as st
 
 from stellar.cvstates import GaussianState, LCGaussianState
-from stellar.gaussian import GaussianOp, Method, Parameterisation
+from stellar.gaussian import GaussianOp
 from stellar.params import GaussianParameters
 
 logger = logging.getLogger(__name__)
@@ -22,11 +22,7 @@ def test_gauss_op_disp_disp(op_disp: complex, state_disp: complex) -> None:
     # exactly 0 squeezing since not trying to get the statevector
     state = GaussianState(GaussianParameters(x=state_disp.real, y=state_disp.imag, r=0, theta=0))
 
-    op = GaussianOp(
-        GaussianParameters(x=op_disp.real, y=op_disp.imag, r=0, theta=0),
-        method=Method.recursive,
-        param=Parameterisation.Fock,
-    )
+    op = GaussianOp(GaussianParameters(x=op_disp.real, y=op_disp.imag, r=0, theta=0))
 
     output = op @ state
 
@@ -56,11 +52,7 @@ def test_gauss_op_sqz_disp() -> None:
     # start from coherent state
     state = GaussianState(GaussianParameters(x=state_disp.real, y=state_disp.imag, r=0, theta=0))
     # and squeeze
-    op = GaussianOp(
-        GaussianParameters(x=0, y=0, r=abs(op_sqz), theta=phase(op_sqz)),
-        method=Method.recursive,
-        param=Parameterisation.Fock,
-    )
+    op = GaussianOp(GaussianParameters(x=0, y=0, r=abs(op_sqz), theta=phase(op_sqz)))
 
     output = op @ state
 
@@ -81,11 +73,7 @@ def test_gauss_op_disp_sqz(op_disp: complex, state_sqz: complex) -> None:
     # start from squezed vacuum state
     state = GaussianState(GaussianParameters(x=0, y=0, r=abs(state_sqz), theta=phase(state_sqz)))
     # and dispalce
-    op = GaussianOp(
-        GaussianParameters(x=op_disp.real, y=op_disp.imag, r=0, theta=0),
-        method=Method.recursive,
-        param=Parameterisation.Fock,
-    )
+    op = GaussianOp(GaussianParameters(x=op_disp.real, y=op_disp.imag, r=0, theta=0))
 
     output = op @ state
 
@@ -108,11 +96,7 @@ def test_gauss_op_sqz_sqz() -> None:
     op_sqz = 0.173 - 1.34j
     state = GaussianState(GaussianParameters(x=0, y=0, r=abs(state_sqz), theta=phase(state_sqz)))
     # and displace
-    op = GaussianOp(
-        GaussianParameters(x=0, y=0, r=abs(op_sqz), theta=phase(op_sqz)),
-        method=Method.recursive,
-        param=Parameterisation.Fock,
-    )
+    op = GaussianOp(GaussianParameters(x=0, y=0, r=abs(op_sqz), theta=phase(op_sqz)))
 
     output = op @ state
 
@@ -146,10 +130,7 @@ def test_LCGaussian_op_disp_vac(op_disp: complex, state_disp: complex) -> None:
     )
 
     op = GaussianOp(
-        GaussianParameters(x=op_disp.real, y=op_disp.imag, r=0, theta=0),
-        method=Method.recursive,
-        param=Parameterisation.Fock,
-    )
+        GaussianParameters(x=op_disp.real, y=op_disp.imag, r=0, theta=0))
 
     output = op @ state  # cast(LCGaussianState, op @ state)
 

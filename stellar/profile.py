@@ -17,8 +17,8 @@ from scipy.optimize import (
 )
 
 from stellar.cvstates import CVState, GaussianState, LCGaussianState
-from stellar.params import GaussianParameters, OptimisationParameters
-from stellar.gaussian import GaussianOp, Method, Parameterisation
+from stellar.params import GaussianParameters, Method, OptimisationParameters
+from stellar.gaussian import GaussianOp
 
 ## Notes
 # whatever the state we try just care about it's stellar rank?? Eq. 9 https://arxiv.org/abs/2011.04320
@@ -31,8 +31,8 @@ def compute_obj_func(
     theta: float,
     max_rank: int,
     target_state: CVState,
+    method: Method,
     target_cutoff: int | None = None,
-    method: str | None = None,
 ) -> float:
     """function to be optimized
     From [2] Thm 1
@@ -72,27 +72,29 @@ def compute_obj_func(
     # This is common to all branches
     gauss_params = GaussianParameters(x=x, y=y, r=r, theta=theta)
     # todo rework this!!
-    g = GaussianOp(gauss_params, method=Method.recursive, param=Parameterisation.Fock)
+    g = GaussianOp(gauss_params)
 
-    # if isinstance(target_state, (GaussianState, LCGaussianState)):
-    if method == "g":
+
+    if method == Method.gaussian:
+        if not isinstance(target_state, (GaussianState, LCGaussianState)):
+            raise TypeError(f"The {target_state=} is not a `GaussianState`or `LCGaussainState`.")
         state = g @ target_state
         # now cutoff has to be max_rank
         return np.sum(np.abs(state.get_statevector(cutoff=max_rank).statevector) ** 2)
-    # should work for all other states.
-    # NOTE Except difficult cases like position, momentum, GKP, cubic phase gate, ...
-    # TODO update with more cases when needed
-    else:  # TODO check here that cutoff canot be None
-        if target_cutoff is None: # TODO remove that since handles by OptimParams
-            raise ValueError("cutoff cannot be None when computing in the Fock basis.")
 
-        g.build_matrix_fock_basis(bra_cutoff=target_cutoff, ket_cutoff=max_rank)
+
+    # TODO update with more cases when needed
+    elif method == Method.fock:
+        # ignore type error since handes at initialisation of OptimisationParameter object
+        # cutoff cannot be None
+        g.build_matrix_fock_basis(bra_cutoff=target_cutoff, ket_cutoff=max_rank) # type: ignore
 
         # print('here', target_state.get_statevector(cutoff=target_cutoff).dim)
         # vectorized! result is a one dim vector of dim ket_cutoff
         return np.sum(
             np.abs(target_state.get_statevector(cutoff=target_cutoff).statevector.conj() @ g.matrix_fock_basis) ** 2
         )
+    # no need for else statement, mypy statically checks that the Method Enum is exhausted
 
 
 # need have non custom objects as arguments for scipy minimize
@@ -157,7 +159,8 @@ def compute_sup_fidelity(
             method=optim_params.method,
         ),
         x0=optim_params.x0,
-        niter=optim_params.niter,  # default niter = 100
+        niter=optim_params.niter, # default niter = 100
+        rng=optim_params.seed,
         # **kwargs,  # other kwargs like rng (seed, or random number generator)
         minimizer_kwargs=minimizer_kwargs,  # type: ignore
     )

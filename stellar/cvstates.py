@@ -475,7 +475,7 @@ class LCGaussianState(CVState):
         # NOTE actually this could be useful to handle global phases in single gausian states...
         if len(self.data) == 1:
             raise ValueError(
-                "A linear combination of a single Gaussian state is a Gaussian state, so use a `GaussianState`object instead."
+                "A linear combination of a single Gaussian state is a Gaussian state, so use a `GaussianState` object instead."
             )
 
         # TODO tune so that FockState(0) is ok. Or use GaussianState with (0,) * 4 params

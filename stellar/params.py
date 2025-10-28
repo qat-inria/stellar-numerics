@@ -1,9 +1,9 @@
 # builtin __init__ and __repr__
 from dataclasses import dataclass
 from cmath import exp
-from typing import Literal
+from enum import Enum, auto
 
-
+### Gaussian parameters
 @dataclass(frozen=True)  # need frozen to implement __hash__ method for cacheing
 class GaussianParameters:
     """Dataclass containing single-mode Gaussian parameters to be used with both `GaussianStates`and `GaussianOp`.
@@ -40,7 +40,15 @@ class GaussianParameters:
     def squeezing(self) -> complex:
         return self.r * exp(1j * self.theta)
 
-
+### Optimisation parameters
+#
+#
+# enum for optimisation methods: ie the way of computing
+# change name OptimMethod?
+class Method(Enum):
+    """Enumeration of the methods to compute the objective function. Only 2 so far."""
+    fock = auto()
+    gaussian = auto()
 @dataclass(frozen=True)
 class OptimisationParameters:
     """A dataclass for recording and serializing optimization parameters"""
@@ -49,14 +57,14 @@ class OptimisationParameters:
     # feed that to the compute_profile fct (to write)
 
     # TODO update for mixed states? or carried by the state?
-    method: Literal["gaussian", "fock"]  # TODO use Enums as before
-    target_cutoff: int | None
+    method: Method  # TODO use Enums as before
+    target_cutoff: int | None = None
     niter: int = 250
     x0: tuple[float, ...] = (0.1,) * 4
-    seed: int = 421
+    seed: int | None = None
     # other_kwargs: dict
 
     def __post_init__(self) -> None:
-        if self.method == "fock":
+        if self.method == Method.fock:
             if self.target_cutoff is None:
                 raise ValueError("cutoff cannot be None when computing in the Fock basis.")
