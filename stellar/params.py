@@ -1,9 +1,10 @@
 # builtin __init__ and __repr__
 from dataclasses import dataclass
 from cmath import exp
+from enum import Enum, auto
 
-
-@dataclass(frozen=True)  # need frozen to implement __hash__ method for cachesing
+### Gaussian parameters
+@dataclass(frozen=True)  # need frozen to implement __hash__ method for cacheing
 class GaussianParameters:
     """Dataclass containing single-mode Gaussian parameters to be used with both `GaussianStates`and `GaussianOp`.
     NOTE r has to be positive? Or deal separately
@@ -18,7 +19,7 @@ class GaussianParameters:
     r: float  # modulus of squeezing
     theta: float  # phase of sueezing
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not isinstance(self.x, (float, int)):
             raise TypeError("Parameter 'x' has to be a float.")
         if not isinstance(self.y, (float, int)):
@@ -38,3 +39,32 @@ class GaussianParameters:
     @property
     def squeezing(self) -> complex:
         return self.r * exp(1j * self.theta)
+
+### Optimisation parameters
+#
+#
+# enum for optimisation methods: ie the way of computing
+# change name OptimMethod?
+class Method(Enum):
+    """Enumeration of the methods to compute the objective function. Only 2 so far."""
+    fock = auto()
+    gaussian = auto()
+@dataclass(frozen=True)
+class OptimisationParameters:
+    """A dataclass for recording and serializing optimization parameters"""
+
+    # want: method (gaussian or Fock), niter, starting point, rng (seed) other kwargs?
+    # feed that to the compute_profile fct (to write)
+
+    # TODO update for mixed states? or carried by the state?
+    method: Method  # TODO use Enums as before
+    target_cutoff: int | None = None
+    niter: int = 250
+    x0: tuple[float, ...] = (0.1,) * 4
+    seed: int | None = None
+    # other_kwargs: dict
+
+    def __post_init__(self) -> None:
+        if self.method == Method.fock:
+            if self.target_cutoff is None:
+                raise ValueError("cutoff cannot be None when computing in the Fock basis.")

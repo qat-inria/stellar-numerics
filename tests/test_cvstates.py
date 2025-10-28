@@ -183,10 +183,9 @@ def test_SV_fock(data: tuple[int, int]) -> None:
 @given(tuple_ints_fock_cutoff_st())
 def test_DM_fock(data: tuple[int, int]) -> None:
     n, cutoff = data
-    print("n", n, "cutoff", cutoff)
     state = FockState(n=n)
     dm = state.get_densitymatrix(cutoff=cutoff)
-    print(f"{dm=}")
+
     assert isinstance(dm, DensityMatrix)
     assert isclose(np.real_if_close(dm.norm), 1)
     assert dm.is_normalized()  # TODO type stuff here

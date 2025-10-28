@@ -1,0 +1,1 @@
+{"state": "BinomialState(statevector=None, is_gaussian=False, N=3, S=2, parity=False)", "ranks": [0, 1, 2], "fidelities": [0.1, 0.2, 0.5], "optim_params": null}

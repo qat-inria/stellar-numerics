@@ -1,0 +1,2787 @@
+DEBUG:__main__:This message should go to the log file
+INFO:__main__:So should this
+WARNING:__main__:And this, too
+ERROR:__main__:And non-ASCII stuff, too, like Øresund and Malmö
+INFO:__main__:Starting GKP script...
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9874831574389085+0.000979288057496793j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9874831563435835+0.0009792881445137662j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9874831565394215+0.0009792881643593022j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9874831569369493+0.000979288154278044j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9874831574291166+0.0009792880565045162j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9263541870040896+5.167212814743259e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9263541837556325+5.167212923635654e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9263541853988477+5.167213145139792e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.926354186519095+5.172380024849648e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9263541870040845+5.167212766248431e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6929142926508554+9.949014434231686e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6929142869031588+9.949014440442034e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6929142911705294+9.949014999826944e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6929142903116835+9.95896341504534e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6929142926508454+9.949014200317958e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4886741046003522+0.0024585076320070556j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4886740986249416+0.0024585076061032526j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.48867410394679023+0.002458507959196563j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.48867410118996807+0.002458508036170857j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.48867410457672616+0.002458507441291691j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5104138662525962+0.0014750393148560902j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5104138602637405+0.0014750392995056397j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5104138655977893+0.001475039525223159j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5104138628763762+0.0014750397085591467j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5104138662381925+0.001475039194828292j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.495215488424984+0.0013365927192235658j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.49521548250525804+0.0013365927054792952j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.49521548774878876+0.0013365928937459487j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4952154850030626+0.0013365931478809198j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4952154884118936+0.0013365926170796237j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.45567323156649164+0.00013132066835318913j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.45567322592990145+0.00013132066726883425j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.45567323060702086+0.000131320677377442j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.45567322807845456+0.00013132147200599142j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4556732315651801+0.00013132066266675996j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4534618990685152+8.245275631809434e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.45346189344932913+8.245275564026732e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4534618980943744+8.245276183353196e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4534618955784245+8.253520843917101e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4534618990685069+8.245275282802627e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4704110541409509+1.1034310390278205e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.47041104849504184+1.103431031702813e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4704110529159582+1.1034310936226233e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.47041105076933065+1.1045344621501476e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4704110541409399+1.1034310053118521e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.316161222937238+3.3393797362655155e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.316161219091927+3.33937971949273e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.3161612200677357+3.339379747593183e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.3161612214872044+3.3427191006708463e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.31616122293720456+3.339379721765338e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.45108502048920246+1.7194480780993967e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4510850150618482+1.7194480683402219e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.45108501877403345+1.719448127421167e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.45108501733652917+1.721167514148005e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.45108502048918525+1.7194480465728886e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.39973489579100574+2.3199779493996917e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.3997348908065232+2.3199779356717216e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.3997348936794193+2.3199779890990117e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.39973489295327364+2.3222979108629136e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.39973489579098254+2.31997792102257e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.42955247658481155+1.9963938661583457e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.42955247133590074+1.9963938547147772e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.42955247467884555+1.996393911619465e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.42955247355337817+1.99839024592138e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.42955247658479156+1.996393835844227e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.42866680016316916+2.009971063004715e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.42866679492278936+2.0099710514868736e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4286667982475534+2.00997110826894e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.42866679713908346+2.011981019873833e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.428666800163149+2.0099710327640718e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.42880170521131417+2.007918298630728e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.428801699969637+2.0079182871241588e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4288017032971537+2.0079183439248825e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.42880170218611297+2.0099262027492006e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.42880170521129407+2.007918268378931e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6788462941009201+0.0014870491716085159j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6788462880153262+0.0014870489802762128j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6788462923579874+0.0014870499058589775j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6788462913966472+0.00148704927278877j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6788462940867314+0.0014870488603580376j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6933077049167531-1.4268668181897644e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6933076989961034-1.4268668359759312e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6933077053151261-1.426866767794914e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6933077028160523-1.4282936806801775e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6933077049167673-1.4268668391964252e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6830398924155399-0.008868534286604508j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.683039886264026-0.00886853440993525j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6830398923224791-0.008868533899819198j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6830398900236353-0.008868535422092748j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6830398925021288-0.008868534448836774j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6918222850064161-0.009657891005776282j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6918222788808364-0.009657891136210106j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6918222850486795-0.00965789061730362j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6918222827046773-0.009657892212204155j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6918222851007935-0.009657891164369966j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8256481370583051-0.024207258237313706j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8256481324391227-0.024207258769281776j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8256481392164804-0.02420725786719471j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8256481363881515-0.024207259710722896j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8256481373004345-0.02420725824010453j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7505686215303747-0.01576597908445638j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7505686157011807-0.015765979309573647j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.750568622277991-0.015765978634039574j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7505686197885338-0.015765980514005077j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7505686216850471-0.01576597922888808j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8095467984027721-0.02128478285537927j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.809546793133561-0.021284783249567257j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.809546799624479-0.021284782350737032j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8095467971133994-0.021284784206642725j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8095467986129647-0.021284782960094884j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8045125018826463-0.022779085525291395j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8045124964644436-0.02277908594781266j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8045125027998943-0.02277908493328673j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8045125004132638-0.02277908679715861j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8045125021066717-0.02277908566258479j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8136538752820311-0.022684098953598193j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8136538699188683-0.02268409940451589j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.813653876051987-0.022684098332688755j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8136538737859537-0.02268410013558721j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8136538755050297-0.022684099095639523j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.809979601781438-0.022020461022148413j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8099795963711816-0.022020461455287577j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8099796024968821-0.022020460413043372j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8099796002677087-0.022020462214730814j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8099796019978079-0.022020461167190128j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8113847982058289-0.023171258091193414j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8113847928335637-0.023171258558587766j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8113847989533666-0.02317125751285434j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8113847967724038-0.02317125933868288j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8113847984339384-0.023171258221765276j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8171626049371826-0.026784229817099915j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8171625997409327-0.026784230416011134j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8171626058276084-0.026784229386113967j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8171626038588019-0.026784231227355744j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8171626052031187-0.026784229881106347j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8270405042518244-0.03154805490125804j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8270404999067639-0.03154805600992091j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8270405058687358-0.031548055118315335j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8270405042384787-0.03154805613261798j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8270405045772421-0.03154805464877492j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8197329592047895-0.030076567608512333j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8197329541539934-0.03007656833199491j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8197329602458084-0.030076567281328438j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8197329583722109-0.030076569070286736j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8197329595055516-0.03007656761596405j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8085426042241207-0.03704565757011688j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8085425991789499-0.037045658470220885j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8085426053700455-0.037045657313304815j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8085426035315874-0.03704565910377427j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8085426045974521-0.03704565751868267j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8089416588933465-0.03663444573860544j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8089416538210936-0.03663444660397123j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8089416600644678-0.03663444541486215j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8089416581030814-0.03663444725903761j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8089416592614234-0.03663444571140593j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8151916492854077-0.03664104283615744j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8151916443208708-0.036641043737096826j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.815191650528758-0.03664104251860441j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.815191648512156-0.03664104430345725j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8151916496541686-0.03664104279483975j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8143577193497269-0.03709598901476305j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8143577143623011-0.037095989919255154j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814357720564437-0.03709598868225542j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8143577185453178-0.037095990481156756j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8143577197228546-0.03709598897843577j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814400692916459-0.0370955186484296j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144006879328174-0.03709551955502073j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144006941331782-0.03709551832074056j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144006921198239-0.03709552011562669j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144006932896664-0.037095518610245806j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144471858329612-0.037089555288719094j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144471808496925-0.03708955619522322j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144471870498153-0.03708955496062272j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144471850356703-0.03708955675544827j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144471862061031-0.03708955525065024j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814441959562255-0.03709165144349143j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144419545789541-0.03709165235003439j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144419607791291-0.03709165111540124j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144419587649803-0.037091652910252286j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144419599354185-0.03709165140541153j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8739949799633636-1.1278691549781017e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8739949766045592-1.1278691915516162e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8739949830119699-1.1278691393136163e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.873994980300199-1.1289970245681178e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8739949799633748-1.1278691516093117e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9019679889913271-0.006726889698023623j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9019679849480812-0.006726889900418744j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9019679899890555-0.006726889430596368j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9019679881224905-0.006726890425710988j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9019679890582848-0.006726889740082897j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.49978137249169546+0.11622055341931536j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.49978136650791677+0.11622055302545724j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4997813692959729+0.11622055502141572j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.49978137015027746+0.1162205548221674j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4997813714531447+0.11622055270929486j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.882494195124874-0.006125584080100138j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8824941905251247-0.006125584296759345j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.882494195017076-0.006125583525648568j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8824941936459969-0.006125584469089056j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8824941951852616-0.0061255842054679195j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8656762585179345-0.0064180713569354135j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8656762536873256-0.006418071544305973j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8656762585931732-0.006418070890959174j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.865676257053795-0.006418071881153234j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8656762585812706-0.006418071471154253j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8242880695804695-0.00809124298046128j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8242880642641572-0.008091243157949264j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8242880698267908-0.00809124251334451j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8242880679209891-0.008091243709074283j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8242880696600895-0.008091243112655222j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8038723162916006-0.011469584743159317j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.803872310755061-0.011469584960765628j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8038723166536311-0.01146958417353858j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8038723145032842-0.011469585589769161j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8038723164039314-0.011469584910004785j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8031370757395604-0.013168794520828406j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8031370701990905-0.013168794763296151j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8031370761975546-0.01316879392408706j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8031370739680425-0.013168795426706813j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8031370758684616-0.013168794692221278j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8059995610852901-0.014355525505835597j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8059995555748614-0.014355525772332529j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8059995615928349-0.014355524895292595j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8059995593475786-0.014355526444996538j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.805999561225834-0.01435552567660264j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8132337679976556-0.017783771155524396j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8132337625831552-0.017783771498423317j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8132337686392989-0.01778377053180191j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8132337663756353-0.01778377219709627j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8132337681720544-0.017783771315375216j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8570553923495786-0.02605066817948561j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8570553891841172-0.02605066970504523j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8570553944563257-0.02605066852041528j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8570553920512775-0.026050668885765925j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8570553926224022-0.026050667779549296j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.82914027905663-0.027221615000921275j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8291402739806032-0.02722161561083341j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8291402800640427-0.027221614431280666j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8291402777953409-0.027221616231122344j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.829140279326154-0.02722161508887615j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8406160909247268-0.03254114784391432j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8406160862444098-0.03254114871343965j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8406160922212554-0.03254114742363263j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8406160899761544-0.03254114908202839j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8406160912510879-0.03254114782778019j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8477411388390097-0.027692200563638428j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8477411357190788-0.02769220227075589j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8477411409363614-0.027692201029609197j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8477411385471525-0.02769220123860863j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8477411391321175-0.027692200074172817j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8412815457019688-0.03318203549647722j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8412815410695059-0.0331820364029687j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8412815470306754-0.03318203509892684j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8412815447875097-0.03318203672947085j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8412815460353715-0.03318203546508232j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8307607452264911-0.037897219990825445j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8307607404763457-0.03789722099349375j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8307607464912299-0.03789721958128377j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8307607442743624-0.03789722127100198j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8307607456080073-0.037897219946578936j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8242516947882125-0.038985379899757956j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8242516899705091-0.03898538089804528j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8242516960974126-0.038985379495524726j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8242516938692084-0.038985381237548404j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8242516951808575-0.038985379853033804j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8193938463052302-0.03903922031973145j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8193938414128392-0.03903922129017195j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8193938476050832-0.03903921992150126j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8193938454058685-0.039039221706505686j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.81939384669814-0.039039220279284755j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8124559994926616-0.03820581387956812j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8124559944941183-0.03820581479765017j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8124560007464521-0.03820581352073513j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.812455998658195-0.038205815348745384j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8124559998769173-0.03820581384481022j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8126581116652956-0.037658714692749964j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8126581066638456-0.037658715604167975j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8126581128880331-0.03765871435730526j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8126581108596277-0.0376587161694741j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8126581120441576-0.03765871465528905j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8140627788619004-0.03717472235835119j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8140627738774894-0.03717472326633034j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8140627800834805-0.037174722032623814j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8140627780699434-0.037174723828619395j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8140627792359583-0.037174722319064143j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8143599088893542-0.03709331056250776j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814359903904961-0.03709331146875782j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8143599101057332-0.037093310234698744j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8143599080925478-0.03709331203006715j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8143599092625333-0.03709331052445402j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144433236147246-0.03709220343351606j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814443318631486-0.03709220434011438j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144433248315842-0.03709220310550509j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144433228175602-0.037092204900276385j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144433239878951-0.037092203395404005j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144429952835129-0.037090765616778015j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814442990300206-0.03709076652329636j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144429965003741-0.03709076528868077j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144429944862261-0.03709076708353529j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144429956566671-0.037090765578706116j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5248796218595775-0.11349897325408594j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5248796163344245-0.11349897456503706j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5248796234260849-0.11349897375819164j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5248796226539445-0.11349897618074481j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5248796231911279-0.11349897250720262j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.612028011159127-0.02435593937872833j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6120280064269682-0.024355939975442754j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6120280144273328-0.024355939724233406j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6120280133676209-0.02435594134827614j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6120280114163429-0.024355939042018167j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5670319084449656-0.0718662518286666j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5670319033217055-0.07186625298745991j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5670319107212447-0.07186625238498386j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5670319099433327-0.07186625447881942j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5670319092563464-0.0718662511576385j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.617549687176346-0.061278618049916155j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6175496820469506-0.06127861921431303j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6175496894228057-0.06127861857603518j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6175496885551-0.0612786204358131j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6175496878521975-0.06127861745481648j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8025354237514287-0.027856071225495486j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8025354189597305-0.02785607206924051j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8025354251417293-0.02785607150963169j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8025354241109952-0.02785607267731325j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8025354240376731-0.027856071010573056j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7719326811580861-0.03165544627259319j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7719326760855034-0.03165544708467496j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7719326826195032-0.03165544649551063j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7719326815788675-0.0316554480024865j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.771932681483434-0.03165544606681417j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7717118793512071-0.033830297662834026j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.771711874223736-0.03383029850174566j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7717118806845101-0.033830297853015216j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7717118796401777-0.03383029942949889j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7717118796984793-0.033830297468118144j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7677136044080594-0.037999567978766746j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7677135991418599-0.03799956884686642j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7677136055281935-0.03799956806745089j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7677136044160522-0.03799956983163276j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7677136047964649-0.03799956782139545j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7722422444073972-0.0390721296242973j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7722422390893446-0.03907213049143377j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7722422454034557-0.039072129606524904j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7722422441635306-0.039072131467065424j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7722422448045214-0.03907212951091451j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8000867332480041-0.03644965168720556j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8000867279348819-0.0364496524905409j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8000867340417939-0.03644965128920689j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8000867322466916-0.03644965322991241j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8000867336116856-0.03644965171616389j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8101997318242381-0.04005602867906665j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8101997267395133-0.04005602960751766j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8101997329735258-0.04005602822821638j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8101997308234727-0.04005603011649163j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8101997322257519-0.04005602867297728j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8345481940033499-0.03351341074009423j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8345481893389848-0.03351341167889195j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8345481953200617-0.0335134104878749j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8345481933084102-0.03351341205932039j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8345481943417119-0.03351341066868439j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8213274657956718-0.037243483909433626j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8213274608941206-0.037243484847572235j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8213274670146843-0.03724348354863478j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8213274649327827-0.037243485301373475j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8213274661703082-0.03724348387213996j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8093551831677674-0.03900566524043674j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8093551781869458-0.03900566620014013j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8093551844287904-0.0390056649661307j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8093551824645204-0.039005666747141066j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8093551835616574-0.039005665173424506j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8139097957915624-0.037384566482458366j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8139097908012686-0.03738456739616626j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8139097969929798-0.03738456615719334j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.813909794993963-0.03738456795145978j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8139097961677432-0.037384566443064086j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8149384655190434-0.03720206889861314j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8149384605438003-0.037202069811356375j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814938466735695-0.037202068570565745j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814938464720025-0.0372020703596536j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8149384658933824-0.0372020688591456j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8146830637927619-0.03713606766230204j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8146830588133259-0.037136068571568794j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8146830650097544-0.03713606733424427j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8146830629947792-0.03713606912638943j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8146830641664012-0.03713606762359435j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144434431006117-0.037090800990645184j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144434381173391-0.03709080189718171j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144434443174966-0.03709080066258524j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814443442303387-0.037090802457407424j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144434434737668-0.037090800952557935j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144430028093848-0.037091213415800586j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144429978260912-0.03709121432233696j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144430040262511-0.0370912130877138j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814443002012113-0.03709121488255619j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144430031825437-0.037091213377721644j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8945097139969923+1.3033191098874555e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8945097098804693+1.3033190639292957e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8945097130512495+1.3033195289872498e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8945097130083164+1.3046224275552938e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8945097139969911+1.303319011024319e-07j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8278230106079087-0.00031011186517140626j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8278230055098275-0.00031011187247974775j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8278230107839103-0.0003101118405274419j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8278230091485325-0.0003101124615598877j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.827823010611007-0.0003101118726412585j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7600717258157922-0.010126170625632461j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.760071719979356-0.01012617077857681j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.760071726214276-0.01012617013657439j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7600717238159486-0.010126171586735956j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7600717259148609-0.010126170791136925j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7897814742815256-0.009150015782378762j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.789781468625958-0.009150015951711662j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7897814745075984-0.009150015249079041j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7897814723767266-0.009150016553409572j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7897814743710889-0.00915001595026703j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.809311135749854-0.011732060545893415j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8093111302429015-0.011732060773358071j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8093111360904705-0.011732059922335843j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8093111339429375-0.011732061327660937j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8093111358645992-0.011732060724688293j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8057950544899284-0.0124576966219516j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8057950489643674-0.01245769685389194j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8057950549153419-0.012457696013191704j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8057950526998904-0.012457697469695639j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8057950546118235-0.012457696796697889j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8055287176793715-0.013100797203766052j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8055287121571938-0.01310079744534158j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8055287181479813-0.013100796594707547j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8055287159061015-0.01310079808569946j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8055287178075822-0.013100797377176175j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8053534439039761-0.015088733534990599j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8053534383986819-0.015088733810478825j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8053534444795803-0.015088732926778163j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8053534421888787-0.015088734514833268j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8053534440517488-0.015088733703120196j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8043068737579152-0.02634797464718367j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8043068684154939-0.026347975153073317j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8043068748424748-0.02634797410186794j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8043068724671968-0.0263479760479323j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8043068740181181-0.02634797475296475j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7731569610885367-0.020825902828455964j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.773156957760519-0.02082590443502161j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7731569641442698-0.020825903673275956j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7731569621391179-0.02082590349612209j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7731569613162009-0.020825902111782153j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8038281720516007-0.02850617539383108j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8038281667573853-0.028506175953287267j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8038281732356081-0.0285061748770184j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8038281708671137-0.028506176855531817j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8038281723338899-0.028506175478748258j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.802363212639562-0.033126257504676695j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8023632074817936-0.03312625819878688j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8023632140552215-0.0331262570777331j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8023632117282453-0.033126259072510614j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8023632129702181-0.03312625752847964j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7938289391055647-0.04069753811641183j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7938289348929279-0.04069753954822334j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7938289413192295-0.04069753837845604j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7938289393133493-0.04069753943445943j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.79382893953474-0.040697537697291286j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8016416249558285-0.035329152256676655j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.801641619866321-0.03532915302434974j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8016416264589682-0.03532915187379696j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8016416241611262-0.03532915384734104j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8016416253099579-0.03532915224804102j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8019325363290397-0.04186617019229268j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8019325313265498-0.041866171169602666j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8019325377943297-0.04186616984517802j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8019325355791648-0.04186617173576389j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8019325367518801-0.041866170126816066j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8250738296927045-0.037600657364288526j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8250738249055389-0.037600658340328816j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8250738310476778-0.03760065700589154j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8250738288570603-0.03760065872114775j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8250738300717751-0.03760065730847172j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8170287729313529-0.03799807417768277j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8170287679497518-0.03799807509263109j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8170287741481509-0.03799807375969744j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8170287719909058-0.037998075586497156j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8170287733126723-0.03799807416067334j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8138597296958413-0.03903569667625686j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8138597247316341-0.039035697630577286j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8138597309528975-0.039035696322509576j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8138597288624329-0.03903569812545153j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8138597300889369-0.039035696631635704j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8145159954728237-0.037689991240084736j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8145159905021746-0.03768999216409913j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8145159967071051-0.03768999090761951j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8145159946703726-0.03768999270016323j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8145159958521996-0.03768999119819986j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814351119780413-0.037108394268590895j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8143511147958529-0.03710839517490995j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8143511209974753-0.03710839393987096j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8143511189823547-0.0371083957359117j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814351120153736-0.03710839423072014j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144471340469809-0.037092661699601834j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144471290637423-0.03709266260620773j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144471352637827-0.037092661371520536j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144471332496824-0.03709266316630362j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144471344201549-0.03709266166150999j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144428435465899-0.03709118405334625j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144428385632911-0.03709118495987939j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144428447634543-0.03709118372525574j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144428427493123-0.03709118552010269j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144428439197485-0.03709118401526913j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6821572639226654-1.186509593669631e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6821572597209571-1.1865096431950928e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6821572681586149-1.1865096191966135e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6821572662464911-1.1876961073092098e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6821572639226773-1.1865095704310334e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7804118680276568-0.004055566046203459j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7804118641669161-0.004055566264819388j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.780411871775674-0.0040555661425580505j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7804118696402547-0.004055566958983912j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7804118680686297-0.004055565966058018j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8712168475331077-0.03531921126619174j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.871216843954044-0.0353192128775237j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8712168475014623-0.03531921124565309j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8712168458435003-0.035319211822665154j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8712168478929724-0.035319211111141745j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8896849177235726-0.026678086983681917j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8896849144251611-0.02667808836168883j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8896849185817102-0.026678087074819057j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8896849165765666-0.02667808758570148j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8896849179964472-0.026678086785796203j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.73297899898419-1.457548263064169e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7329789956982391-1.457548314072192e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.732979003736122-1.4575482673388736e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7329790007334263-1.459005814809021e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7329789989842047-1.4575482455714415e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8826752796528634-0.025387161681153313j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8826752762932051-0.025387162967184983j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8826752810986228-0.025387161796038893j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8826752789281493-0.025387162391946452j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8826752799134384-0.02538716145295483j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8282296019058254-0.028320728160064094j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8282295977217711-0.02832072905566958j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8282296042387443-0.028320728074045575j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8282296018391158-0.028320729507288794j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8282296021947669-0.028320727998825505j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8579731817216488-0.02828367733085183j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.857973177893074-0.028283678453387997j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8579731836011352-0.028283677325015306j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8579731813562432-0.0282836783467054j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8579731820113873-0.02828367712770923j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8308767372370218-0.03944545357555515j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8308767327458539-0.0394454547228526j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8308767388155818-0.03944545330347497j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8308767365220928-0.03944545484617806j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8308767376384667-0.039445453440793636j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8282223103439323-0.03999946692016433j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8282223056636393-0.03999946800503553j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8282223117215474-0.03999946655678067j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8282223094708779-0.03999946821177572j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8282223107485402-0.039999466837517976j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8253504992966426-0.03778208011874499j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.825350494471257-0.037782081086842j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.825350500581775-0.03778207972468687j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.825350498390121-0.03778208146036939j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8253504996768514-0.03778208007810982j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8161303792612674-0.036327648160795645j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8161303742516802-0.0363276490273396j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8161303804654811-0.036327647765099794j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8161303783567554-0.036327649598327086j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.816130379625522-0.036327648149597616j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8166289266712645-0.035790895939648175j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8166289216630773-0.035790896800363174j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8166289278485364-0.03579089556470224j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8166289257921779-0.035790897382350216j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8166289270302349-0.03579089592588736j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8150527192623098-0.03652789922361398j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8150527142618611-0.03652790010942407j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8150527204524918-0.036527898878234884j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8150527184326541-0.036527900684263134j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8150527196293073-0.03652789919617968j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814620912597807-0.03704830727144968j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.81462090761741-0.0370483081783171j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8146209138151468-0.037048306945116946j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814620911803143-0.0370483087373532j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8146209129705587-0.0370483072327952j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144080854118595-0.037091291468151946j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144080804279834-0.03709129237450147j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144080866283612-0.03709129114007689j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144080846145839-0.03709129293522229j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144080857850166-0.0370912914301358j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144397164212545-0.0370912357354736j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144397114379001-0.03709123664199373j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814439717638064-0.037091235407390434j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144397156239797-0.037091237202258334j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144397167944134-0.03709123569740102j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.81444275182238-0.03709127093512742j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144427468390827-0.03709127184166334j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144427530392462-0.037091270607038394j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814442751025105-0.037091272401884326j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144427521955396-0.037091270897049194j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7579346923397234-0.043256539257432454j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7579346866774622-0.04325654011057426j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7579346922861189-0.04325653908889543j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7579346915393878-0.04325654114844608j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7579346927733455-0.04325653925536754j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7250875614287532-1.6210959539083832e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7250875566551138-1.6210960002827224e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7250875647474985-1.6210959725474637e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7250875631035748-1.6227170536103729e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7250875614287695-1.6210959371598044e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7648628977480364-0.0334213351231975j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7648628922741478-0.033421335818918166j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7648628984788867-0.03342133510077769j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7648628975095153-0.033421337072728145j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7648628980856326-0.03342133505551086j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.772340430075861-0.029488505736459194j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7723404247572513-0.029488506393315902j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.772340431176971-0.029488505765738963j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7723404300833202-0.029488507625191274j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7723404303745952-0.02948850564314724j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7777996143468059-0.029996412698854242j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7777996090884773-0.029996413388658695j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7777996154770277-0.02999641273537627j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7777996143505065-0.02999641453593272j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7777996146509963-0.029996412596978498j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8170278189674323-0.03273039549455049j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8170278143839899-0.03273039651704786j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.817027820505863-0.032730395631377265j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8170278189373674-0.032730396876897015j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8170278193035153-0.03273039528414173j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8001296499337313-0.035126913453567596j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8001296449810833-0.03512691437795026j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8001296512084717-0.035126913485527426j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8001296497768562-0.03512691505250371j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8001296502919993-0.03512691330442068j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7969803687096213-0.03726000244176573j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7969803636920747-0.037260003382900794j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7969803699527839-0.03726000240864493j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7969803684296098-0.03726000407177646j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7969803690889491-0.03726000230947162j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8071041015290644-0.03948870401557982j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8071040963860283-0.03948870488749586j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8071041027315509-0.0394887035060841j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8071041004585-0.0394887054618456j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8071041019236661-0.039488704034286545j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8023507450061355-0.03927226258158457j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8023507399200938-0.039272263510716644j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8023507462024619-0.03927226231130765j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.802350744308362-0.03927226415104706j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8023507454022855-0.03927226252436706j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8299427902235776-0.03097860859884765j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8299427852954617-0.030978609371563617j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8299427913068301-0.03097860820211951j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8299427892779238-0.030978609941550935j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8299427905331901-0.030978608611205487j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8126932815137199-0.03619253034088916j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8126932764788319-0.03619253121220941j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8126932826705836-0.03619253001715205j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.812693280714532-0.03619253183031644j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8126932818773652-0.03619253031300812j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8133394094024365-0.036986850322844135j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8133394043881335-0.036986851213211346j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8133394106025359-0.03698684997666162j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8133394085757033-0.03698685179554662j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8133394097741181-0.036986850294183415j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8138056656780053-0.03694999508719782j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.813805660681062-0.03694999598451874j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8138056668903847-0.0369499947556081j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8138056648762638-0.036949996560206706j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8138056660495938-0.03694999505237595j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814261234632152-0.037029090288756714j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8142612296458606-0.03702909119250733j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8142612358491643-0.037029089961023706j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8142612338361904-0.03702909175788557j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8142612350046613-0.037029090251196245j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144364861528298-0.03708303520913559j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144364811696184-0.037083036115514306j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144364873699885-0.03708303488138483j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144364853562058-0.03708303667611778j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144364865259095-0.03708303517098479j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144412989994162-0.03709084704972523j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144412940160625-0.0370908479562382j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144413002161955-0.0370908467216327j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144412982021172-0.037090848516495356j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144412993725708-0.037090847011658434j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144431181122623-0.03709139606940577j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144431131289744-0.03709139697594776j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144431193291366-0.0370913957413171j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144431173149885-0.03709139753615848j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8144431184854232-0.03709139603132559j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9236111990908006+0.0024517884289319202j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9236111967676393+0.0024517880805694104j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9236111974422249+0.002451789182612249j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9236111970255125+0.0024517884735250554j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9236111990665175+0.0024517883404384677j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8863717425681277+0.005860607055305812j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8863717408013442+0.00586060689828198j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8863717411051187+0.005860607934979491j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8863717399733332+0.0058606071073793j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8863717425098849+0.005860607000096468j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8752635372069549+0.010917634476902197j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8752635353443792+0.010917634534964683j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8752635355803269+0.01091763554774798j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8752635345885266+0.01091763456583746j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8752635370982852+0.01091763443538248j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.875840500739776+0.013345693342295566j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8758404986900915+0.013345693451155605j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8758404989818657+0.013345694494425306j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8758404981767979+0.013345693459653184j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8758405006069913+0.01334569329682858j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8706374052878072+0.01389324853644044j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8706374032966946+0.013893248697603498j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8706374035661619+0.013893249704833723j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8706374026823197+0.013893248648686945j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8706374051494196+0.013893248500808942j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8734241762475026+0.012963134289156781j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8734241742582364+0.012963134410581839j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8734241745442973+0.01296313542933399j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8734241736515069+0.012963134396979104j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.873424176118459+0.012963134248283638j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.873790127081939+0.012592655929511157j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8737901250975948+0.012592656042458145j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8737901253997982+0.01259265705828994j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8737901244826815+0.012592656034097722j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8737901269565987+0.01259265588761048j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.875172605960112+0.011145045347035238j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8751726039950444+0.011145045424981676j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8751726043615246+0.011145046430325536j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8751726033483775+0.011145045439058735j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8751726058492318+0.011145045301306689j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8793360428379826+0.0025666498294886256j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.879336041027298+0.0025666496246228225j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8793360417876239+0.0025666506020072468j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8793360401486913+0.0025666498491974826j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8793360428124776+0.002566649774110423j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8779763095239245+0.006544439360207727j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8779763076389279+0.006544439305318197j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8779763082075671+0.006544440286877824j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8779763068671432+0.006544439412291301j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8779763094588805+0.006544439306167557j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8767753261660309+0.0040545090255413065j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8767753242319447+0.0040545088452573685j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8767753249609663+0.004054509887967794j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8767753234822167+0.004054509056890268j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8767753261257769+0.004054508962482846j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8722842444212613+0.0023526439698895066j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8722842423028351+0.002352643656921611j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8722842432039803+0.0023526448403949846j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8722842417166543+0.0023526439876004534j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8722842443979463+0.0023526438914596272j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.871560211319664+0.002671016335365546j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8715602091802302+0.0026710160316576956j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8715602100811272+0.0026710172229720045j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8715602086139799+0.0026710163554225373j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8715602112931986+0.0026710162554138685j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8634006595559153+0.0034218691049098466j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8634006571563518+0.0034218687648293906j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8634006581747179+0.003421870104765237j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8634006568313426+0.0034218691297589693j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8634006595220983+0.0034218690034909594j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7852820718188965+0.003858827328795496j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7852820676917892+0.003858826592235266j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7852820696894866+0.0038588289989035652j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.785282068985703+0.0038588273495731534j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7852820717819118+0.003858827002370727j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8375764983733321+0.003744655566372427j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8375764952758248+0.0037446550638921498j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8375764966811514+0.003744656828833872j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8375764955963418+0.0037446555908396246j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8375764983366623+0.0037446553925480244j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5618386887800144-0.01774022694878527j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5618386827288098-0.01774022808122314j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.561838686386428-0.01774022446043881j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5618386861457308-0.017740226980340786j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5618386889287172-0.01774022786143732j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8354449311598373+0.0036265157681262617j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.835444928011694+0.0036265152505838612j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8354449294499898+0.003626517047676623j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8354449283789238+0.003626515791605154j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8354449311243525+0.0036265155882492864j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8210901168750743+0.0027457173981878824j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8210901134070635+0.0027457167866033715j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8210901150553929+0.0027457187876101297j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8210901140712187+0.0027457174149208637j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8210901168483552+0.002745717177415052j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8192345708523164+0.0022654751435294902j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8192345673621976+0.002265474512538512j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.819234569030885+0.0022654765364114446j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8192345680427952+0.0022654751571020825j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8192345708302812+0.0022654749194540745j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8102172367855776+0.002265939063202268j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8102172331664311+0.0022659383885376564j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8102172348774556+0.002265940514496651j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8102172339603171+0.002265939076055447j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8102172367636047+0.0022659388177486855j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8167995950776774-0.0002946005898582683j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8167995915773342-0.00029460129326982484j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8167995933011423-0.0002945992283505662j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8167995922554633-0.000294600591553812j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8167995950805425-0.0002946008143241224j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8130615804873581+0.0011520844223080315j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8130615769183774+0.0011520837357941846j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.81306157863508+0.0011520858357496665j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8130615776631779+0.0011520844288836721j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8130615804761726+0.0011520841857456134j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.814092131643572+0.001324436664729237j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8140921280853023+0.0013244359873570734j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8140921297975967+0.001324438075234428j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8140921288219101+0.0013244366723553504j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8140921316307093+0.0013244364300698632j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8143897244991891+0.0012813003233493828j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8143897209467109+0.0012812996455095638j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8143897226550716+0.0012813017307114704j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8143897216778975+0.0012813003307373231j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8143897244867441+0.0012813000894809875j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8139996017780008+0.0012130881859396406j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.813999598217306+0.0012130875047833855j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8139995999317589+0.001213089595592158j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8139995989562416+0.0012130881929227893j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8139996017662202+0.0012130879509545743j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8141968217825631+0.001247593955812948j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8141968182260191+0.0012475932763317656j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8141968199373941+0.0012475953643081071j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8141968189610397+0.0012475939630006956j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8141968217704464+0.0012475937213922927j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8142365272140315+0.0012471115447529571j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8142365236578883+0.0012471108653843265j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8142365253690829+0.0012471129530219312j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8142365243926069+0.0012471115519404222j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8142365272019193+0.001247111310401222j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7141121435956143+0.050955986169268955j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7141121395957903+0.05095598518574565j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7141121390473965+0.050955988155133795j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.714112140942556+0.050955986548848316j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7141121431198261+0.050955985671766936j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9455457742539489+0.005811270776832931j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9455457740670177+0.005811270869137256j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9455457712310181+0.0058112711163055145j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9455457738449706+0.0058112712572542325j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9455457741957223+0.005811270795115137j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8046973734268716+0.04006352707924375j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8046973702144575+0.040063526563842364j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8046973692490048+0.040063528733146565j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8046973710892725+0.040063527615681986j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8046973730385466+0.04006352681869331j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7917912304735222+0.04011620412698972j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7917912270707749+0.040116203502804516j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7917912262164718+0.0401162058125993j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7917912280644808+0.040116204637080176j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7917912300873301+0.040116203817975586j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7827138697155613+0.03878040569246714j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7827138661692292+0.03878040497167419j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7827138653721781+0.03878040736631193j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7827138672707419+0.038780406190932655j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7827138693445252+0.038780405341231894j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7612555327407171+0.03262358978263508j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.761255528902992+0.03262358883567473j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7612555281762039+0.03262359136995757j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7612555302250631+0.032623590241046975j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.761255532433308+0.03262358933400176j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7382061558006834+0.02401944583651532j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7382061518113058+0.02401944468603685j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7382061509869096+0.024019447287455885j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7382061532114499+0.024019446212495604j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7382061555775348+0.024019445307430574j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7571305931790724+0.01374774722410901j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7571305892380978+0.013747746027719197j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7571305885055688+0.013747748545910576j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7571305906083385+0.0137477474529551j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7571305930506694+0.013747746722679576j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7559806526351267+0.017183908763177286j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7559806487800417+0.017183907573199715j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.755980647894359+0.017183910116101053j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7559806500658681+0.01718390904052303j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7559806524746019+0.017183908262822616j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7548117962696824+0.017313589829624873j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7548117924297237+0.01731358863615717j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7548117914987639+0.01731359117394176j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7548117937007454+0.017313590111980488j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.754811796108001+0.01731358932761065j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7557436897739851+0.017723474340067925j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7557436859511982+0.017723473155434568j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7557436849993232+0.017723475682315908j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7557436872107518+0.017723474631137617j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7557436896083751+0.017723473841609997j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7558174394594582+0.017910854565379854j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7558174356390407+0.017910853384733118j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7558174346831202+0.01791085590759287j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7558174368980439+0.017910854860517036j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7558174392920749+0.017910854067755517j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7558492542279713+0.01796402580979692j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7558492504075577+0.017964024630004863j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.755849249452218+0.017964027152734003j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7558492516668033+0.017964026105752793j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7558492540600864+0.017964025312341318j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7558290566070438+0.017979247618497826j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7558290527864266+0.01797924643884204j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7558290518312775+0.017979248961685675j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7558290540458601+0.0179792479146727j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7558290564390173+0.017979247121018286j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6566185072661497-0.11574188930100002j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6566185020765238-0.1157418913530236j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6566185035438059-0.1157418890893495j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6566185051728498-0.11574189036678623j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6566185084116896-0.11574188950356873j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.789619464429452-0.06707607451114335j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7896194602036424-0.06707607630466027j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7896194614722135-0.06707607492819852j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7896194626395271-0.06707607547936674j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7896194651066275-0.06707607447356304j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8568669722660731-0.03486489735412793j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8568669693549724-0.034864898870152504j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8568669693918718-0.03486489770365763j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8568669701409958-0.03486489782576001j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8568669726134502-0.034864897394842435j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.879279900361121-0.02532407392813209j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8792798978445716-0.025324075242700465j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8792798975374043-0.025324074209601543j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.879279898270961-0.025324074315781923j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8792799006127375-0.02532407398939011j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7517620492594003+1.957248228066726e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7517620535499449+1.9572481848644576e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7517620455388352+1.957248234772088e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7517620483816598+1.959205474007147e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7517620492593807+1.9572482192896977e-06j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9133481371562984-0.009522242263569404j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9133481355860246-0.009522243232770913j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9133481341958645-0.009522242300974062j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9133481351699202-0.009522242452804124j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9133481372504703-0.009522242364984612j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9038902282816664-0.015720424300125387j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9038902264286057-0.015720425350019232j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9038902252390881-0.015720424529531308j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9038902263384276-0.015720424610628413j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9038902284373941-0.015720424386857553j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8882970270253838-0.02674755427981476j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8882970246771611-0.026747554992734988j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8882970249266472-0.02674755564338649j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8882970256807237-0.026747554781140055j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8882970273001498-0.026747554043064684j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9012815893305507+0.0033975216774486017j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9012815871338152+0.0033975219087220166j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9012815893890862+0.003397520025755903j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9012815880433789+0.003397521736287158j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.9012815892952369+0.003397522032418627j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.89940727751551+0.002295900698367775j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8994072755030657+0.0022959007633810567j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8994072776783512+0.0022958989833550643j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8994072760525903+0.0022959007339256893j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8994072774916445+0.002295901053450595j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8805643781441915+0.0181303207953092j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8805643764416129+0.018130321120188395j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8805643795334152+0.018130318909793317j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8805643763693728+0.018130321012973277j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8805643779552588+0.018130321163379863j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8565103082282258+0.03338935551570892j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8565103067660318+0.03338935623786413j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8565103106508298+0.03338935364528692j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.85651030617804+0.033389355839159716j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.8565103078821257+0.033389355820158936j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.795623031790386+0.05343692408244258j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7956230305558568+0.053436925560080055j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7956230357050501+0.05343692256299816j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7956230292965916+0.053436924404326j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7956230312497661+0.0534369241516034j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7649781551813878+0.05286621636405823j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7649781541790189+0.05286621805889671j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7649781594006022+0.0528662150593608j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7649781524893515+0.05286621657408766j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7649781546545081+0.05286621631393312j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7586249733347521+0.0412584566409232j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7586249726432385+0.04125845819416775j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7586249770470848+0.04125845538141602j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.758624970499812+0.041258456738022156j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7586249729234401+0.04125845660257499j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7383910667407707+0.036544712284191344j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7383910661970879+0.03654471384278397j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7383910703496527+0.03654471114565847j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7383910638390476+0.03654471232797765j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7383910663781873+0.03654471221427683j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7266683503914899+0.03218552949920371j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7266683499520298+0.032185530998852956j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.726668353806518+0.03218552842512761j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7266683474566865+0.0321855295153129j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.726668350072423+0.032185529426748016j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7166735385193758+0.02896687801336064j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7166735381536916+0.028966879472214827j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7166735418063245+0.028966877002913626j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7166735355685998+0.02896687801395824j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7166735382325464+0.028966877935306674j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7065933469178933+0.027043758808822548j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7065933466051003+0.027043760255666106j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7065933501546805+0.02704375785289864j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.706593343963783+0.027043758799453647j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7065933466505485+0.027043758721119186j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6970964348740439+0.026709330118658062j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6970964345939855+0.026709331575896864j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6970964381228663+0.02670932918376726j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6970964319265953+0.026709330102231043j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6970964346103744+0.02670933002247764j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6958478165627214+0.026810731147792147j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6958478162882846+0.02681073259986993j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6958478198011451+0.02681073020422632j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6958478136165243+0.02681073113020276j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6958478162979745+0.02681073105368997j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6964720134145197+0.026799887229670586j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6964720131385671+0.026799888680450062j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6964720166507609+0.0267998862852292j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6964720104676527+0.026799887212511576j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6964720131498552+0.026799887136143744j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6967550445120475+0.026811244885709486j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6967550442357924+0.02681124633492919j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6967550477455831+0.0268112439393228j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6967550415648925+0.026811244868707913j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6967550442472429+0.026811244792872235j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5841214857203697+0.0337138251505718j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.584121485728575+0.03371382612385768j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.584121488130112+0.03371382355374165j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5841214830288056+0.03371382504608785j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5841214853757849+0.033713825266626106j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.595967934228026+0.028939463302071398j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5959679334751351+0.028939465055983767j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.595967937682912+0.028939462808960783j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5959679314963984+0.02893946322797101j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5959679339472079+0.028939463116082653j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5882970247220835+0.03492260213537904j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5882970244852239+0.03492260349379483j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5882970276238262+0.03492260092280874j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5882970220165024+0.03492260203377573j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5882970243725955+0.03492260212598029j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5912242808172217+0.034550491974617716j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5912242805821321+0.03455049335033067j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5912242837586181+0.034550490790847876j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5912242781022775+0.034550491875915926j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5912242804721716+0.034550491953382945j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6191033304031018+0.028239284083864526j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6191033301917283+0.028239285565232922j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6191033335798115+0.028239283178074285j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6191033276013573+0.02823928401737786j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6191033301252948+0.028239283974741656j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6343527585531314+0.023629860211194138j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6343527583626418+0.023629861699127307j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6343527617477485+0.023629859444887748j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6343527557063579+0.023629860161789924j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.634352758321612+0.023629860077032053j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6494304128424985+0.018989330873349097j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6494304126758802+0.018989332341749147j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6494304160015121+0.018989330237232486j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6494304099537842+0.018989330838546155j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6494304126567839+0.018989330726734133j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6611354066862786+0.015476224121353438j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6611354065397638+0.015476225556348054j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6611354097799022+0.01547622358169061j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6611354037668563+0.015476224096036011j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6611354065349381+0.015476223972765109j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6713546060382477+0.012552231518776876j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6713546059099804+0.012552232909049346j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6713546090418073+0.01255223105942047j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6713546030932555+0.012552231500330871j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.671354605915402+0.012552231374056746j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6801484000801089+0.01021183742609612j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6801483999675672+0.010211838763412535j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6801484029748935+0.010211837031383527j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6801483971139203+0.010211837412479736j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6801483999800312+0.010211837289157373j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6880118079426445+0.008342009112127105j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6880118078434273+0.008342010388052072j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6880118107094522+0.008342008768786725j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.688011804958046+0.008342009101956689j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6880118078607467+0.008342008985893924j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6951919151313456+0.006922358097395325j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6951919150426035+0.006922359303641356j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6951919177512965+0.006922357791025874j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6951919121303758+0.006922358089630181j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6951919150632455+0.006922357984116445j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7020056675506309+0.005954454682810229j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7020056674687734+0.0059544558101412345j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7020056700029718+0.005954454395614922j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7020056645346493+0.005954454676653872j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7020056674919176+0.005954454584457858j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.711102957749271+0.004890624822455347j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7111029577045322+0.004890625847086618j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7111029599926392+0.004890624544784543j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7111029547154142+0.004890624818073027j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7111029577009216+0.004890624741273132j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7047171214927673+0.005637383091582563j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7047171214223348+0.005637384188869244j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7047171238842366+0.005637382806447003j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7047171184713049+0.005637383085980062j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.704717121437136+0.005637382998456737j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7103000135199444+0.0048707714260367635j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7103000134531668+0.004870772451557796j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.710300015757539+0.004870771159285527j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7103000104868488+0.004870771421559185j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7103000134717902+0.004870771345125818j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6140036394931705-0.04245086182642613j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6140036403486463-0.042450859226708056j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6140036457067695-0.04245086169872392j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6140036367881991-0.042450861919747965j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6140036398682597-0.04245086256076946j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6311217202255531-0.044949043081430516j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6311217209436537-0.0449490405596191j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6311217261944444-0.04494904277743175j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6311217174963272-0.044949043160336204j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6311217206309547-0.044949043721795125j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6486219299967457-0.045595881611506114j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6486219305102481-0.04559587934692647j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.648621935179067-0.04559588097365374j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6486219272145264-0.045595881624052065j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6486219304242299-0.04559588203791894j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6465758153164496-0.04485892533613865j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.646575815759935-0.04485892315974169j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6465758202533028-0.044858924614149746j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6465758125258805-0.04485892532699516j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6465758157405694-0.044858925709558795j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6410746042812924-0.043761072073610394j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6410746046834878-0.043761069960441656j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6410746090304266-0.04376107131153392j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6410746014908654-0.043761072046495424j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6410746046970612-0.04376107241347723j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6359733132942679-0.044003682481323386j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6359733136746598-0.044003680386710146j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6359733179881413-0.044003681697748716j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6359733105115042-0.04400368244534687j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6359733137128462-0.04400368281173471j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6346918260151675-0.043437295427011725j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6346918263983334-0.04343729334420822j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6346918306666843-0.04343729464719707j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6346918232325534-0.04343729538790949j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6346918264286769-0.04343729575166122j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6346681079658917-0.043599963428138204j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6346681083467128-0.043599961343642614j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6346681126244792-0.04359996264577442j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.634668105183803-0.04359996338923525j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6346681083809033-0.043599963753602644j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6346770845834308-0.043609130550395246j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6346770849640816-0.043609128465807445j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6346770892424669-0.043609129767862236j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6346770818013536-0.04360913051151691j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6346770849985272-0.043609130875906885j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.32836093193175225-0.16676870334036892j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.3283609327325186-0.16676870123759244j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.3283609376593182-0.16676870332969682j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.3283609302858698-0.166768702811251j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.32836093345928186-0.16676870415468545j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.39296551557442594-0.1187695194497417j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.39296551719970396-0.11876951704083699j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.3929655211404621-0.11876951967777179j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.39296551363078785-0.11876951912940924j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.39296551658214257-0.11876952028032814j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.35775400221864967-0.14243506526904648j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.35775400345749475-0.1424350629988382j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.35775400785874895-0.14243506538864986j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.3577540004329973-0.1424350648470023j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.3577540034560472-0.14243506610543769j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.3786333780137417-0.13728875165842985j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.3786333792180649-0.13728874931539758j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.37863338376402284-0.1372887516997242j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.37863337613505754-0.13728875128882295j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.37863337920374773-0.13728875248640127j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.43144569272297323-0.11544133571371902j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4314456939255667-0.11544133316869594j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.431445698809447-0.11544133575445352j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4314456905960159-0.11544133554101989j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4314456936913188-0.11544133661218295j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4421061617620738-0.11978103740341783j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4421061629226533-0.11978103487118844j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.44210616788211826-0.11978103732935894j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4421061596057924-0.11978103723612031j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4421061627871676-0.11978103825417698j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4422046535984744-0.11903424581758584j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.44220465476151516-0.11903424328207686j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4422046597175044-0.11903424575036162j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4422046514408015-0.1190342456518377j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.44220465461566416-0.11903424667144756j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4432519459473016-0.11872157097908394j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4432519471081775-0.11872156844236788j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4432519520654924-0.11872157090579162j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.44325194378614063-0.1187215708142622j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.44325194696255843-0.11872157183013853j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4517101656496033-0.11694010450489115j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.45171016679015685-0.11694010196262195j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.45171017176135336-0.1169401043759865j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.45171016346131443-0.11694010434655937j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4517101666568976-0.11694010533026401j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.46840546752622386-0.11382742593988866j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4684054686231643-0.11382742339474568j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4684054736152271-0.11382742569694372j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.468405465285691-0.11382742579357702j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.4684054685212667-0.11382742671157672j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5021508505059153-0.10702524098550804j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5021508515061373-0.10702523846091506j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5021508564959978-0.10702524051170105j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5021508481626744-0.1070252408620129j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5021508514680697-0.10702524164340829j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5399878021681636-0.0977048938822248j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5399878030490863-0.09770489142367045j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5399878079519695-0.0977048931612903j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5399877997125947-0.09770489378265694j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5399878030711045-0.09770489440889539j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5657678023543778-0.09032778675871793j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5657678031526939-0.09032778437324376j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5657678079362313-0.09032778588414078j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5657677998235897-0.09032778667511818j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5657678032030552-0.0903277871963654j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.580993415463817-0.08553359722713692j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5809934162134894-0.08553359489652677j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5809934209000701-0.08553359626967576j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5809934128889599-0.08553359715271558j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5809934162746624-0.08553359761293045j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.592997586334496-0.08151213653351112j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5929975870463349-0.08151213425278488j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5929975916407008-0.08151213551578278j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5929975837250204-0.0815121364661382j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.59299758711236-0.08151213687897381j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6085772969184495-0.07589098924901991j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6085772975794587-0.07589098704651688j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6085773020232615-0.07589098815571202j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6085772942637683-0.07589098918934259j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6085772976489163-0.07589098954000421j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6343914022441833-0.06602662934662608j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6343914028287357-0.06602662728846087j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6343914069880319-0.06602662816438264j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6343913995160492-0.06602662930238214j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6343914028870543-0.06602662955947669j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6374858043836674-0.06467957753104467j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6374858049572905-0.06467957549953493j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6374858090604305-0.06467957633263195j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6374858016461069-0.0646795774871447j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6374858050147021-0.06467957773004679j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6433080120869005-0.06218062239027483j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6433080126420593-0.06218062040571213j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6433080166466785-0.06218062116843213j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6433080093320813-0.06218062234817454j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6433080126954948-0.062180622566956764j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6520107432077811-0.058439250515125093j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6520107437354798-0.05843924859946489j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6520107475995959-0.058439249267619335j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6520107404277637-0.05843925047694206j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6520107437820211-0.05843925066325972j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6682094956377432-0.05112790554785071j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6682094961135251-0.0511279037777069j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6682094996801717-0.05112790426372065j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6682094928107667-0.051127905516809145j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6682094961436119-0.0511279056446104j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6876332054461628-0.042408035621676395j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6876332058848403-0.04240803401983425j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.687633209076794-0.04240803434913841j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6876332025662587-0.04240803560152408j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6876332058679941-0.042408035675565864j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6689536477395105-0.050799057694634164j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6689536482138961-0.05079905593039747j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6689536517673224-0.050799056410530084j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6689536449104785-0.050799057664039235j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6689536482422334-0.05079905778968923j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6799199555931065-0.04552713903045963j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6799199560319727-0.04552713738174015j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6799199593471216-0.04552713773122498j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6799199527320692-0.045527139004417634j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6799199560456305-0.04552713909179529j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6890175902675304-0.04092103250119031j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6890175906767549-0.040921030960796856j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6890175937667501-0.040921031196597416j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6890175873796974-0.04092103247877263j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.689017590675671-0.040921032535391776j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6962505501863525-0.036995390629346446j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6962505505708487-0.036995389185477096j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6962505534594421-0.03699538932846612j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6962505472766238-0.036995390609693916j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6962505505562683-0.036995390643163005j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7026410004402823-0.03333900699163607j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7026410008022583-0.03333900564254197j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.702641003492408-0.033339005700218895j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7026409975108149-0.033339006974361214j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7026410007743338-0.0333390069882379j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7084710240934979-0.029838271196877007j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7084710244343427-0.029838269943719332j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7084710269230904-0.029838269919958027j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7084710211456915-0.02983827118174022j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.708471024393006-0.02983827117853233j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7129054983802575-0.02704210520485414j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7129054987044868-0.027042104032514856j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.712905501023178-0.027042103943476253j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7129054954182049-0.027042105191325258j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.7129054986520453-0.027042105175656406j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5323855695084052-0.1485846502751553j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5323855700180444-0.148584648100948j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5323855760908756-0.14858464922658454j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5323855672055761-0.14858465049068423j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5323855709312724-0.14858465077310276j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5558897569577986-0.10579306369542199j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5558897578534321-0.10579306120441441j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5558897633232426-0.10579306308959945j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5558897544777022-0.10579306381987616j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.555889757915822-0.10579306435365292j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5737029001281014-0.08404848687269553j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5737029012469302-0.08404848433741746j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5737029060334351-0.08404848637054807j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5737028975683722-0.08404848688008447j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5737029008945617-0.0840484874597162j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5842662020546524-0.08647729801291289j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5842662029939213-0.08647729553947255j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.584266207923606-0.08647729732458498j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5842661994804113-0.08647729802902691j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5842662028534608-0.08647729854354895j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5890612583727238-0.08553111050491344j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5890612592275484-0.08553110807909946j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5890612641162073-0.08553110971294198j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5890612557863788-0.08553111050194581j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5890612591702135-0.08553111098558416j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5959145278611018-0.08138807937118475j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5959145285973575-0.08138807703782089j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.595914533327082-0.0813880784341039j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5959145252484013-0.08138807933203955j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5959145286309859-0.08138807976715305j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.599366463908464-0.07782559090073596j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5993664645992085-0.07782558861853155j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5993664692063714-0.07782558991406074j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.5993664612782088-0.07782559084575655j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.599366464649165-0.07782559125710528j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6001573540384753-0.07640142991685316j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6001573547091528-0.07640142765807874j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6001573592623207-0.0764014289095526j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6001573514021572-0.07640142985483546j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6001573547674629-0.0764014302566299j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6004829067194903-0.07596800623408514j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6004829073850637-0.07596800398183631j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6004829119227468-0.07596800522172274j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6004829040812063-0.07596800617046906j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6004829074448272-0.07596800656941634j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.600624714303891-0.07587721654970632j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6006247149684746-0.07587721429871101j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6006247195034974-0.07587721553636084j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6006247116650674-0.07587721648597005j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6006247150284523-0.0758772168842111j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6009154229366265-0.07573849799408351j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6009154235998948-0.07573849574481087j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6009154281314556-0.07573849697943422j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6009154202968531-0.07573849793039097j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6009154236599866-0.07573849832747793j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6024152578525214-0.07507141695633311j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6024152585096497-0.0750714147151993j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6024152630252808-0.07507141593565346j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6024152552080078-0.07507141689315915j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6024152585700789-0.0750714172845763j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6059676501586995-0.0735308777153232j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6059676508019602-0.07353087549298044j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.605967655281343-0.07353087668164944j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6059676475031197-0.07353087765372464j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.605967650862762-0.0735308780321322j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.615031815472989-0.06959599226484714j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6150318160819793-0.06959599009222942j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6150318204654912-0.06959599120216395j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6150318127893611-0.06959599220772492j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6150318161421757-0.0695959925538144j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6318903750012854-0.06212466622568654j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6318903755479824-0.06212466415711032j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6318903797294666-0.062124665121264966j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6318903722657455-0.062124666177202775j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6318903756030005-0.062124666464988654j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6616662676236739-0.04827820895074239j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6616662680699422-0.048278207106893026j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6616662717978942-0.048278207823068166j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.661666264797041-0.04827820891758387j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6616662680965488-0.048278209109980125j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6425271164696128-0.05729080807883456j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6425271169805782-0.057290806082835335j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6425271210160642-0.0572908069594362j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6425271137015297-0.05729080803601316j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.642527117026822-0.057290808288902664j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6671910740490145-0.04545849189420346j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6671910744686181-0.045458490107988525j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6671910780886651-0.04545849076322343j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6671910712047399-0.04545849186311892j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6671910744953021-0.045458492036611266j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6779462997522685-0.0400672257080397j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6779463001326568-0.04006722403145422j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6779463035324619-0.04006722458887518j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6779462968747071-0.04006722568185891j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6779463001470931-0.040067225822759095j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6835302493916345-0.03722168938899452j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6835302497519755-0.03722168777440091j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6835302530263357-0.037221688280837814j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6835302464968203-0.03722168936530711j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6835302497590928-0.03722168948988399j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6881678288510867-0.034835755965685736j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6881678291949868-0.03483575440550825j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6881678323586697-0.034835754869486674j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6881678259419682-0.034835755944036144j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6881678291954979-0.03483575605539499j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6898243622032418-0.03397933911141221j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6898243625414485-0.0339793375712386j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.689824365664118-0.03397933802026635j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6898243592890264-0.03397933909048699j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6898243625393573-0.03397933919723393j)
+INFO:stellar.gaussian:chosen the method recursive
+DEBUG:stellar.gaussian:self.C=(0.6916704513535403-0.03300834832288799j)

@@ -7,7 +7,7 @@ import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 from stellar.params import GaussianParameters
-from stellar.gaussian import GaussianOp, Method, Parameterisation, check_gaussian_displacement
+from stellar.gaussian import GaussianOp, check_gaussian_displacement
 
 logger = logging.getLogger(__name__)
 
@@ -28,8 +28,10 @@ def test_gaussian_displacement(x: float, y: float) -> None:
 def test_gaussian_squeeze(r: float, theta: float) -> None:
     """Eqs. 47 -> 49 of Quesada"""
     gauss_params = GaussianParameters(x=0, y=0, r=r, theta=theta)
-    sqz = GaussianOp(gauss_params, method=Method.recursive, param=Parameterisation.Fock)
+    sqz = GaussianOp(gauss_params)
 
+    # now need to compute the matrix to instantiate these attributes
+    sqz.build_matrix_fock_basis(bra_cutoff=2, ket_cutoff=2)
     assert sqz.C == 1 / sqrt(cosh(sqz.params.r))
 
     target_mean_vector = np.array([0, 0])
@@ -54,7 +56,7 @@ def test_gaussian_squeeze(r: float, theta: float) -> None:
 )
 def test_matrix_build(left_cut: int, right_cut: int, x: float, y: float, r: float, theta: float) -> None:
     gauss_params = GaussianParameters(x=x, y=y, r=r, theta=theta)
-    gauss = GaussianOp(gauss_params, method=Method.recursive, param=Parameterisation.Fock)
+    gauss = GaussianOp(gauss_params)
 
     gauss.build_matrix_fock_basis(bra_cutoff=left_cut, ket_cutoff=right_cut)
 
