@@ -11,7 +11,9 @@ from stellar.cvstates import (
     BinomialState,
     CatState,
     CoherentState,
-    CVState,
+    CompositeStateData,
+    CompositeCVState,
+    PureCVState,
     DensityMatrix,
     FockState,
     GKPState,
@@ -31,22 +33,22 @@ logger.info("Starting CV state tests")
 
 @given(complex_arrays_st())
 def test_cvstate_init_success(data: StatevectorData) -> None:
-    state = CVState(Statevector(data))
+    state = PureCVState(Statevector(data))
     assert state.is_gaussian is None
     assert state.statevector is not None
 
 
 def test_cvstate_init_nodata() -> None:
-    state = CVState(is_gaussian=True)
+    state = PureCVState(is_gaussian=True)
     print(state.is_gaussian)
     assert state.is_gaussian
 
 
 def test_gstate_init_success() -> None:
     gstate = GaussianState(GaussianParameters(1.0, 2.0, 2.5, 0.37))
-    print(isinstance(gstate, GaussianState), isinstance(gstate, CVState))
+    print(isinstance(gstate, GaussianState), isinstance(gstate, PureCVState))
     assert isinstance(gstate, GaussianState)
-    assert isinstance(gstate, CVState)
+    assert isinstance(gstate, PureCVState)
     assert isinstance(gstate.params, GaussianParameters)
     assert gstate.is_gaussian
 
@@ -56,7 +58,7 @@ def test_cohstate_init_success(amp: complex) -> None:
     cstate = CoherentState(amp)
     # print(cstate.is_gaussian, cstate.params, cstate.amplitude)
     assert isinstance(cstate, GaussianState)
-    assert isinstance(cstate, CVState)
+    assert isinstance(cstate, PureCVState)
     assert isinstance(cstate, CoherentState)
     assert isinstance(cstate.params, GaussianParameters)
     assert isinstance(cstate.amplitude, (float, complex))
@@ -342,3 +344,71 @@ def test_GKP_init() -> None:
     GKPState()
 
     # check other parameters too.
+
+
+def test_init_empty_mixed_state() -> None:
+    """test checking that empty mixed states cannot be instantiated."""
+    with pytest.raises(ValueError):
+        CompositeCVState()
+
+
+def test_init_ambiguous_mixed_state() -> None:
+    """Test checking that mixed states cannot be ambiguously defined."""
+    decomp: CompositeStateData = (
+        (1.0, PureCVState(Statevector(np.array([0, 1], dtype=np.complex128)))),
+        (1.0, PureCVState(Statevector(np.array([2, 1], dtype=np.complex128)))),
+    )
+    with pytest.raises(ValueError):
+        CompositeCVState(matrix=DensityMatrix(np.array([[1, 1], [1, 1]], dtype=np.complex128)), decomposition=decomp)
+
+
+def test_get_dm_mixed_vac_decomp_state() -> None:
+    #
+    """test getting density matrix for mixture of fock states
+    with (1/4) |0><0| + (1/6) |2><2| + (7/12) |3><3| using the pure decomposition
+    """
+    n = 3
+    cutoff = n
+
+    decomp: CompositeStateData = ((1 / 4, FockState(n=0)), (1 / 6, FockState(n=n - 1)), (7 / 12, FockState(n=n)))
+    st = CompositeCVState(decomposition=decomp)
+
+    dm = st.get_densitymatrix(cutoff=cutoff).densitymatrix
+
+    expected_dm = np.zeros((cutoff + 1,) * 2, dtype=np.complex128)
+    # modify in place
+    expected_dm[0, 0] = 1 / 4
+    expected_dm[n - 1, n - 1] = 1 / 6
+    expected_dm[n, n] = 7 / 12
+
+    # print(f"{dm=}\n")
+    # print(f"{expected_dm=} \n")
+
+    assert isclose(np.real_if_close(dm.trace()), 1)
+    np.testing.assert_array_almost_equal(dm, expected_dm)
+
+
+def test_get_dm_mixed_vac_mat_state() -> None:
+    #
+    """test getting density matrix for mixture of fock states
+    with (1/4) |0><0| + (1/6) |2><2| + (7/12) |3><3|
+    input the matrix directly. Check identity.
+    """
+    n = 3
+    cutoff = n
+
+    expected_dm = np.zeros((cutoff + 1,) * 2, dtype=np.complex128)
+    # modify in place
+    expected_dm[0, 0] = 1 / 4
+    expected_dm[n - 1, n - 1] = 1 / 6
+    expected_dm[n, n] = 7 / 12
+
+    st = CompositeCVState(matrix=DensityMatrix(expected_dm))
+
+    dm = st.get_densitymatrix(cutoff=cutoff).densitymatrix
+
+    # print(f"{dm=}\n")
+    # print(f"{expected_dm=} \n")
+
+    assert isclose(np.real_if_close(dm.trace()), 1)
+    np.testing.assert_array_almost_equal(dm, expected_dm)

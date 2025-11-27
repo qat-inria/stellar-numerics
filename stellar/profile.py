@@ -16,7 +16,7 @@ from scipy.optimize import (
     minimize,  # noqa: F401
 )
 
-from stellar.cvstates import CVState, GaussianState, LCGaussianState
+from stellar.cvstates import PureCVState, GaussianState, LCGaussianState
 from stellar.params import GaussianParameters, Method, OptimisationParameters
 from stellar.gaussian import GaussianOp
 
@@ -30,7 +30,7 @@ def compute_obj_func(
     r: float,
     theta: float,
     max_rank: int,
-    target_state: CVState,
+    target_state: PureCVState,
     method: Method,
     target_cutoff: int | None = None,
 ) -> float:
@@ -74,7 +74,9 @@ def compute_obj_func(
     # todo rework this!!
     g = GaussianOp(gauss_params)
 
-
+    if method == Method.gaussian:
+        if not isinstance(target_state, (GaussianState, LCGaussianState)):
+            raise TypeError(f"The {target_state=} is not a `GaussianState`or `LCGaussainState`.")
     if method == Method.gaussian:
         if not isinstance(target_state, (GaussianState, LCGaussianState)):
             raise TypeError(f"The {target_state=} is not a `GaussianState`or `LCGaussainState`.")
@@ -82,12 +84,11 @@ def compute_obj_func(
         # now cutoff has to be max_rank
         return np.sum(np.abs(state.get_statevector(cutoff=max_rank).statevector) ** 2)
 
-
     # TODO update with more cases when needed
     elif method == Method.fock:
         # ignore type error since handes at initialisation of OptimisationParameter object
         # cutoff cannot be None
-        g.build_matrix_fock_basis(bra_cutoff=target_cutoff, ket_cutoff=max_rank) # type: ignore
+        g.build_matrix_fock_basis(bra_cutoff=target_cutoff, ket_cutoff=max_rank)  # type: ignore
 
         # print('here', target_state.get_statevector(cutoff=target_cutoff).dim)
         # vectorized! result is a one dim vector of dim ket_cutoff
@@ -103,8 +104,8 @@ def compute_obj_func(
 # function for that to check convergence?
 def compute_sup_fidelity(
     max_rank: int,
-    target_state: CVState,
-    optim_params: OptimisationParameters
+    target_state: PureCVState,
+    optim_params: OptimisationParameters,
     # target_cutoff: int | None = None,
     # method: str | None = None,
     # x0: tuple[float, ...] = (0.1,) * 4,
@@ -159,7 +160,7 @@ def compute_sup_fidelity(
             method=optim_params.method,
         ),
         x0=optim_params.x0,
-        niter=optim_params.niter, # default niter = 100
+        niter=optim_params.niter,  # default niter = 100
         rng=optim_params.seed,
         # **kwargs,  # other kwargs like rng (seed, or random number generator)
         minimizer_kwargs=minimizer_kwargs,  # type: ignore

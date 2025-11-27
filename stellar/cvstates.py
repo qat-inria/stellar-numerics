@@ -61,7 +61,7 @@ class Statevector:
 
 
 class DensityMatrix:
-    """Class for statevectors in the Fock basis"""
+    """Class for density matrices in the Fock basis"""
 
     # same type as statevector since no way to type annotate number of dimensions
     densitymatrix: StatevectorData
@@ -108,7 +108,7 @@ class DensityMatrix:
 
 # CVState abstrait puis concret?
 @dataclass(frozen=True)
-class CVState:
+class PureCVState:
     statevector: Statevector | None = None
     is_gaussian: bool | None = None
 
@@ -131,11 +131,72 @@ class CVState:
         #     raise ValueError("No statevector provided.")
         return DensityMatrix(
             np.outer(
-                self.get_statevector(cutoff=cutoff).statevector.conjugate(),
                 self.get_statevector(cutoff=cutoff).statevector,
+                self.get_statevector(cutoff=cutoff).statevector.conjugate(),
             ).astype(np.complex128)  # pas un cast. outer ne guarantie pas la précision du complexe mais type oui
         )  # typing.cast python : impose au typeur de croire que 'est d'un type donné
         # TODO type stuff here
+
+
+# TODO composite state hierarchy and abstract classes to distinguish witnesses from DM
+# get_DM -> get_operator return get_DM for mixed states
+# want init dm or list
+
+CompositeStateData: TypeAlias = tuple[tuple[complex, PureCVState], ...]  # need immutable (or frozenset/abstractset)
+
+
+# init directly by matrix or pure state decomposition (not check unit trace and psdness)
+# not that for statevectors, the get_statevec method doesn't modify in place the field but is functional so don't do it here either
+# TODO: when inputting data directly, do it as arrays, not custom objects, it's cumbersome
+@dataclass(frozen=True)
+class CompositeCVState:
+    """a class for composite states. Initialised either by providing a `DensityMatrix` (OperatorMatrix instead TODO) object or a `CompositeStateData` (pure state decomposition)
+    For now this represents ANY ``composite'' state (i.e. mixture of pure states) so not necessarily a state.
+
+    Raises
+    ------
+    ValueError
+        _description_
+    """
+
+    matrix: DensityMatrix | None = None
+    decomposition: CompositeStateData | None = None
+
+    def __post_init__(self) -> None:
+        if self.matrix is None and self.decomposition is None:
+            raise ValueError("A mixed state requires either a matrix in Fock space or a pure-state decomposition.")
+        if self.matrix is not None and self.decomposition is not None:
+            raise ValueError(
+                "There is an ambiguity in the definition of the mixed state. Use either a `DensityMatrix`object or a pure-state decomposition but not both."
+            )
+        if self.decomposition is not None and len(self.decomposition) == 1:  # type: ignore
+            # cannot be none here none type ignore is safe
+            raise ValueError("A composite stat with a single pure state in its decomposition is just a pure state.")
+
+    def get_densitymatrix(self, cutoff: int | None = None) -> DensityMatrix:
+        if self.decomposition is not None:
+            # compute from decomposition
+            # apparently need explicit list conversion for sum to work
+            data = np.sum(
+                [
+                    coeff
+                    * np.outer(
+                        state.get_statevector(cutoff=cutoff).statevector,
+                        state.get_statevector(cutoff=cutoff).statevector.conjugate(),
+                    ).astype(np.complex128)
+                    for coeff, state in self.decomposition
+                ],
+                axis=0,
+            )
+
+            return DensityMatrix(data)
+
+        elif self.matrix is not None:
+            return self.matrix
+
+        else:
+            # TODO rewrite with typing.assert_never()
+            raise ValueError("This should never happen.")  # should never happen due to post_init checks
 
 
 # Thierry's comments 06-27_2025
@@ -162,7 +223,7 @@ class CVState:
 
 # puisque GaussianState est gelé, il faut utiliser object.__setattr__ pour initialiser params.
 @dataclass(frozen=True, init=False)  # manually define __init__ for order parameter order reasons
-class GaussianState(CVState):
+class GaussianState(PureCVState):
     # one un type pour un champ au niveau de la classe
     # dataclass fait le init en plus
     # mypy voit pas init = False
@@ -247,7 +308,7 @@ class GaussianState(CVState):
 
 
 @dataclass(frozen=True, init=False)  # manually define __init__ for order parameter order reasons
-class FockState(CVState):
+class FockState(PureCVState):
     n: int  # type: ignore
 
     def __init__(self, n: int):
@@ -448,7 +509,7 @@ LCGaussianData: TypeAlias = tuple[tuple[complex, GaussianState], ...]  # need im
 
 
 @dataclass(frozen=True, init=False)
-class LCGaussianState(CVState):
+class LCGaussianState(PureCVState):
     """ "A class for handling superpositions of Gaussian states like cat states"
 
     Parameters
@@ -575,7 +636,7 @@ class CatState(LCGaussianState):  # type: ignore[misc]
 
 
 @dataclass(frozen=True, init=False)  # manually define __init__ for order parameter order reasons
-class BinomialState(CVState):
+class BinomialState(PureCVState):
     """After [CDraft] Eq. (F1)) and Michael et al. PHYSICAL REVIEW X 6, 031006 (2016)
 
     Parameters
