@@ -19,4 +19,3 @@ def test_serialization() -> None:
     st = BinomialState(N=3, S=2)
     prof = StellarProfile(repr(st), list(range(3)), [0.1, 0.2, 0.5])
     prof.save_to_file(filename="dummy")
-

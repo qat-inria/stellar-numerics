@@ -6,6 +6,7 @@ from pathlib import Path
 import json
 
 
+# TODO set init manually to do the repr internally
 @dataclass(frozen=True)
 class StellarProfile:
     """A dataclass for stellar profiles allowing manipulation and serialization to json."""
@@ -17,7 +18,7 @@ class StellarProfile:
     state: str  # repr(State) or directly state and take repr? no init then
     ranks: list[int]
     fidelities: list[float]
-    optim_params: OptimisationParameters | None = None # TODO remove None
+    optim_params: OptimisationParameters | None = None  # TODO remove None
 
     def __post_init__(self) -> None:
         if len(self.ranks) != len(self.fidelities):
@@ -42,6 +43,5 @@ class StellarProfile:
         # always
         path.mkdir(parents=True, exist_ok=True)
 
-        with open(path / (filename + '.json'), 'w') as f:
+        with open(path / (filename + ".json"), "w") as f:
             json.dump(asdict(self), f)
-
