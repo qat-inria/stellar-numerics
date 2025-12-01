@@ -1,5 +1,5 @@
 import pytest
-from stellar.cvstates import BinomialState, CatState, CoherentState, FockState, GKPState
+from stellar.cvstates import BinomialState, CatState, CoherentState, CompositeCVState, CompositeStateData, FockState, GKPState
 from stellar.params import Method, OptimisationParameters
 from stellar.profile import compute_sup_fidelity
 import numpy as np
@@ -192,3 +192,23 @@ def test_values_gkp_state_default() -> None:  # amp: complex
         assert isclose(-results.fun, targets[rank], abs_tol=1e-8)
 
     # assert False
+@pytest.mark.parametrize("rank", range(0, 3))
+def test_fock_state_2_mixed(rank: int) -> None:
+    # target |1> Fock state approximated using only Gaussian states
+    tgt_state = FockState(n=2)
+
+    decomp: CompositeStateData = ((1.,FockState(n=2)),) # don't forget the comma!
+    tgt_state_mixed = CompositeCVState(decomposition=decomp)
+
+    pars = OptimisationParameters(method=Method.fock, target_cutoff=4)
+
+    # that is interesting: several minima give the same value in that case...
+    # """results.fun=np.float64(-0.38131937955276224) [0.64287997 1.04245161 0.65847888 2.03637561] True
+    # results_mixed.fun=np.float64(-0.3813193795527602) [-0.76613214 -0.95553206  0.65847906  1.78993471] True"""
+    # but just central symmetry so expected for rot-symm states?
+
+    results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, optim_params=pars)
+    print(f"{results.fun=} {results.x} {results.success}")
+    results_mixed = compute_sup_fidelity(max_rank=rank, target_state=tgt_state_mixed, optim_params=pars)
+    print(f"{results_mixed.fun=} {results_mixed.x} {results_mixed.success}")
+    assert isclose(results.fun, results_mixed.fun)

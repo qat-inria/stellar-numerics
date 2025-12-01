@@ -144,18 +144,22 @@ class PureCVState:
 # want init dm or list
 
 CompositeStateData: TypeAlias = tuple[
-    tuple[complex | float | int, PureCVState], ...
-]  # need immutable (or frozenset/abstractset)
+    tuple[float | int, PureCVState], ...
+]
+
+# need immutable (or frozenset/abstractset)
 
 
 # init directly by matrix or pure state decomposition (not check unit trace and psdness)
 # not that for statevectors, the get_statevec method doesn't modify in place the field but is functional so don't do it here either
 # TODO: when inputting data directly, do it as arrays, not custom objects, it's cumbersome
 # TODO for the instantiation (decomp vs matrix) use an Enum to exhaust all cases and disjunction
+# TODO change to HermitianCVOperator
 @dataclass(frozen=True)
 class CompositeCVState:
-    """a class for composite states. Initialised either by providing a `DensityMatrix` (OperatorMatrix instead TODO) object or a `CompositeStateData` (pure state decomposition)
+    """a class for composite states ie Hermitian operators. Initialised either by providing a `DensityMatrix` (OperatorMatrix instead TODO) object or a `CompositeStateData` (pure state decomposition)
     For now this represents ANY ``composite'' state (i.e. mixture of pure states) so not necessarily a state.
+    Only real number allowed in the decomposition since Hermitian.
 
     Raises
     ------
@@ -175,8 +179,7 @@ class CompositeCVState:
             )
         if self.decomposition is not None and len(self.decomposition) == 1:  # type: ignore
             # cannot be none here none type ignore is safe
-
-            warnings.warn("A composite stat with a single pure state in its decomposition is just a pure state.")
+            warnings.warn("A composite state with a single pure state in its decomposition is just a pure state.")
 
     def get_densitymatrix(self, cutoff: int | None = None) -> DensityMatrix:
         if self.decomposition is not None:

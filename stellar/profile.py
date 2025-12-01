@@ -6,6 +6,7 @@ References:
 
 from math import pi as π
 from typing import Any
+from unicodedata import decomposition
 
 import numpy as np
 from scipy.optimize import (
@@ -16,7 +17,7 @@ from scipy.optimize import (
     minimize,  # noqa: F401
 )
 
-from stellar.cvstates import PureCVState, GaussianState, LCGaussianState
+from stellar.cvstates import CompositeCVState, PureCVState, GaussianState, LCGaussianState
 from stellar.params import GaussianParameters, Method, OptimisationParameters
 from stellar.gaussian import GaussianOp
 
@@ -30,7 +31,7 @@ def compute_obj_func(
     r: float,
     theta: float,
     max_rank: int,
-    target_state: PureCVState,
+    target_state: PureCVState | CompositeCVState,
     method: Method,
     target_cutoff: int | None = None,
 ) -> float:
@@ -44,7 +45,7 @@ def compute_obj_func(
     y : float
         imaginary part of displacement
     r : float
-       modulus of squeezing
+        modulus of squeezing
     theta : float
         phase of squeezing
     max_rank : int
@@ -76,23 +77,36 @@ def compute_obj_func(
 
     if method == Method.gaussian:
         if not isinstance(target_state, (GaussianState, LCGaussianState)):
-            raise TypeError(f"The {target_state=} is not a `GaussianState`or `LCGaussainState`.")
+            raise TypeError(f"The {target_state=} is not a `GaussianState`or `LCGaussianState`.")
         state = g @ target_state
         # now cutoff has to be max_rank
         return np.sum(np.abs(state.get_statevector(cutoff=max_rank).statevector) ** 2)
 
     # TODO update with more cases when needed
     elif method == Method.fock:
+        # common to both pure and composite cases
+
         # ignore type error since handes at initialisation of OptimisationParameter object
         # cutoff cannot be None
         # this adds new fields
         g.build_matrix_fock_basis(bra_cutoff=target_cutoff, ket_cutoff=max_rank)  # type: ignore
 
-        # print('here', target_state.get_statevector(cutoff=target_cutoff).dim)
-        # vectorized! result is a one dim vector of dim ket_cutoff
-        return np.sum(
-            np.abs(target_state.get_statevector(cutoff=target_cutoff).statevector.conj() @ g.matrix_fock_basis) ** 2
-        )
+        if not isinstance(target_state, CompositeCVState):
+
+            # print('here', target_state.get_statevector(cutoff=target_cutoff).dim)
+            # vectorized! result is a one dim vector of dim ket_cutoff
+            return np.sum(
+                np.abs(target_state.get_statevector(cutoff=target_cutoff).statevector.conj() @ g.matrix_fock_basis) ** 2
+            )
+        elif isinstance(target_state, CompositeCVState):
+
+            assert target_state.decomposition is not None
+            # just compute the sum over the pure state decomposition of the mixed state
+            # method only Fock here
+            return sum(coeff * compute_obj_func(x=gauss_params.x, y=gauss_params.y, r=gauss_params.r, theta=gauss_params.theta, max_rank=max_rank, target_state=state, method=method, target_cutoff=target_cutoff) for coeff, state in target_state.decomposition)
+
+        else:
+            raise NotImplementedError("Not implemented yet.")
     # no need for else statement, mypy statically checks that the Method Enum is exhausted
 
 
@@ -102,7 +116,7 @@ def compute_obj_func(
 # function for that to check convergence?
 def compute_sup_fidelity(
     max_rank: int,
-    target_state: PureCVState,
+    target_state: PureCVState | CompositeCVState,
     optim_params: OptimisationParameters,
     # target_cutoff: int | None = None,
     # method: str | None = None,
@@ -146,6 +160,7 @@ def compute_sup_fidelity(
     }
 
     # works but slower than direct which fails on rank = 1, state =|2>
+    # TODO: directly use a `GaussParam` object.
     return basinhopping(
         lambda params: -compute_obj_func(  # type: ignore
             x=params[0],

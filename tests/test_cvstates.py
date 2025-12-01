@@ -428,7 +428,5 @@ def test_trunc_parity(cutoff: int) -> None:
     # diag = np.array([(-1)**k for k in range(0, cutoff+1)], dtype=np.complex128)
     expected_dm = np.diag(np.array([(-1) ** k for k in range(0, cutoff + 1)], dtype=np.complex128))
 
-    print(f"{dm=}")
-    print(f"{expected_dm=}")
     assert dm.shape == (cutoff + 1,) * 2
     np.testing.assert_array_almost_equal(dm, expected_dm)
