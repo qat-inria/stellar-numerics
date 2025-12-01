@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from math import ceil, cosh, exp, factorial, isclose, log, sqrt, tanh, comb
 from math import pi as π
 from typing import Iterator, TypeAlias
+import warnings
 
 
 import numpy as np
@@ -142,12 +143,15 @@ class PureCVState:
 # get_DM -> get_operator return get_DM for mixed states
 # want init dm or list
 
-CompositeStateData: TypeAlias = tuple[tuple[complex, PureCVState], ...]  # need immutable (or frozenset/abstractset)
+CompositeStateData: TypeAlias = tuple[
+    tuple[complex | float | int, PureCVState], ...
+]  # need immutable (or frozenset/abstractset)
 
 
 # init directly by matrix or pure state decomposition (not check unit trace and psdness)
 # not that for statevectors, the get_statevec method doesn't modify in place the field but is functional so don't do it here either
 # TODO: when inputting data directly, do it as arrays, not custom objects, it's cumbersome
+# TODO for the instantiation (decomp vs matrix) use an Enum to exhaust all cases and disjunction
 @dataclass(frozen=True)
 class CompositeCVState:
     """a class for composite states. Initialised either by providing a `DensityMatrix` (OperatorMatrix instead TODO) object or a `CompositeStateData` (pure state decomposition)
@@ -171,7 +175,8 @@ class CompositeCVState:
             )
         if self.decomposition is not None and len(self.decomposition) == 1:  # type: ignore
             # cannot be none here none type ignore is safe
-            raise ValueError("A composite stat with a single pure state in its decomposition is just a pure state.")
+
+            warnings.warn("A composite stat with a single pure state in its decomposition is just a pure state.")
 
     def get_densitymatrix(self, cutoff: int | None = None) -> DensityMatrix:
         if self.decomposition is not None:
@@ -635,7 +640,7 @@ class CatState(LCGaussianState):  # type: ignore[misc]
         object.__setattr__(self, "parity", parity)
 
 
-@dataclass(frozen=True, init=False)  # manually define __init__ for order parameter order reasons
+@dataclass(frozen=True, init=False)  # manually define __init__ for parameter order reasons
 class BinomialState(PureCVState):
     """After [CDraft] Eq. (F1)) and Michael et al. PHYSICAL REVIEW X 6, 031006 (2016)
 
@@ -714,7 +719,7 @@ class BinomialState(PureCVState):
 
 
 class GKPState(LCGaussianState):  # type: ignore[misc]
-    """ "A class for handling approximate square Gottesman-Kitaev-Preskil states"
+    """A class for handling approximate square Gottesman-Kitaev-Preskil states
 
     Standard approx: replace position eigenstates by their finitely-squeezed versions
     and add a Gaussian filter enveloppe
