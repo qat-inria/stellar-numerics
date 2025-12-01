@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from cmath import exp
 from enum import Enum, auto
 
+
 ### Gaussian parameters
 @dataclass(frozen=True)  # need frozen to implement __hash__ method for cacheing
 class GaussianParameters:
@@ -40,6 +41,7 @@ class GaussianParameters:
     def squeezing(self) -> complex:
         return self.r * exp(1j * self.theta)
 
+
 ### Optimisation parameters
 #
 #
@@ -47,8 +49,11 @@ class GaussianParameters:
 # change name OptimMethod?
 class Method(Enum):
     """Enumeration of the methods to compute the objective function. Only 2 so far."""
+
     fock = auto()
     gaussian = auto()
+
+
 @dataclass(frozen=True)
 class OptimisationParameters:
     """A dataclass for recording and serializing optimization parameters"""

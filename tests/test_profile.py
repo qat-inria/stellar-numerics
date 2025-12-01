@@ -6,7 +6,6 @@ import numpy as np
 from math import e, isclose, sqrt
 
 
-
 def test_optimize() -> None:
     # Fock state |2>
     # tgt_state = StateFockBasis(np.array([0, 0, 1, 0]))
@@ -104,7 +103,7 @@ def test_fock_states() -> None:
 # @given(st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=0, max_magnitude=5))
 @pytest.mark.parametrize("method", [Method.fock, Method.gaussian])
 def test_coh_state(method: Method) -> None:
-    """ Check coherent state has indeed rank 0 via both gaussian and fock methods."""
+    """Check coherent state has indeed rank 0 via both gaussian and fock methods."""
 
     amp = 1  # 6.5-.529j
     tgt_state = CoherentState(amplitude=amp)
@@ -114,11 +113,10 @@ def test_coh_state(method: Method) -> None:
     else:
         pars = OptimisationParameters(method=method)
 
-
-
     results = compute_sup_fidelity(max_rank=0, target_state=tgt_state, optim_params=pars)
 
     assert isclose(results.fun, -1, abs_tol=1e-6)
+
 
 # def test_coh_state_gaussian() -> None:
 
@@ -128,6 +126,7 @@ def test_coh_state(method: Method) -> None:
 
 #     results = compute_sup_fidelity(max_rank=0, target_state=tgt_state, optim_params=pars)
 #     assert isclose(results.fun, -1, abs_tol=1e-6)
+
 
 def test_run_cat_state() -> None:  # amp: complex
     amp = 6.5 - 0.529j
@@ -149,8 +148,6 @@ def test_values_cat_state() -> None:  # amp: complex
     for rank in range(0, 4):
         results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, optim_params=pars)
         assert isclose(results.fun, -values[rank], abs_tol=1e-6)
-
-
 
 
 def test_values_bin_e21_state() -> None:  # amp: complex

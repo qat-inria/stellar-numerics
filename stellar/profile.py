@@ -65,18 +65,15 @@ def compute_obj_func(
         only works using Fock statevectors so far
     """
 
-    # NOTE add target state cutoff since input will be an abstract state not a concrete statevector
-
-    # NOTE modify here for different target states
-
     # This is common to all branches
     gauss_params = GaussianParameters(x=x, y=y, r=r, theta=theta)
-    # todo rework this!!
+
+    # TODO here add support for mixed states. either iterate on the decomp or on the matrix
+    # decomp is just a recursive call to this fonction? Can indeed optimise separately
+    # but maybe sum everything then optimize
+
     g = GaussianOp(gauss_params)
 
-    if method == Method.gaussian:
-        if not isinstance(target_state, (GaussianState, LCGaussianState)):
-            raise TypeError(f"The {target_state=} is not a `GaussianState`or `LCGaussainState`.")
     if method == Method.gaussian:
         if not isinstance(target_state, (GaussianState, LCGaussianState)):
             raise TypeError(f"The {target_state=} is not a `GaussianState`or `LCGaussainState`.")
@@ -88,6 +85,7 @@ def compute_obj_func(
     elif method == Method.fock:
         # ignore type error since handes at initialisation of OptimisationParameter object
         # cutoff cannot be None
+        # this adds new fields
         g.build_matrix_fock_basis(bra_cutoff=target_cutoff, ket_cutoff=max_rank)  # type: ignore
 
         # print('here', target_state.get_statevector(cutoff=target_cutoff).dim)
