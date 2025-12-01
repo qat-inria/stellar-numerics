@@ -22,6 +22,7 @@ from stellar.cvstates import (
     SqueezedVacuumState,
     Statevector,
     StatevectorData,
+    TruncatedParityOp,
 )
 from stellar.params import GaussianParameters
 from tests.strategies import complex_arrays_st, gaussian_parameters_st, tuple_ints_fock_cutoff_st
@@ -197,9 +198,6 @@ def test_DM_fock(data: tuple[int, int]) -> None:
     assert isclose(np.real_if_close(dm.densitymatrix[n, n]), 1)
 
 
-# test DensityMatrix
-
-
 # tests LCGaussian
 # only one state
 @given(gaussian_parameters_st())
@@ -360,6 +358,13 @@ def test_init_ambiguous_mixed_state() -> None:
     )
     with pytest.raises(ValueError):
         CompositeCVState(matrix=DensityMatrix(np.array([[1, 1], [1, 1]], dtype=np.complex128)), decomposition=decomp)
+
+
+def test_single_state_decomp() -> None:
+    """Check if instantiating with a single pure state results in a warning."""
+    decomp: CompositeStateData = ((1.0, PureCVState(Statevector(np.array([0, 1], dtype=np.complex128)))),)
+    with pytest.warns():
+        CompositeCVState(decomposition=decomp)
 
 
 def test_get_dm_mixed_vac_decomp_state() -> None:
