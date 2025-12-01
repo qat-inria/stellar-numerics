@@ -417,3 +417,18 @@ def test_get_dm_mixed_vac_mat_state() -> None:
 
     assert isclose(np.real_if_close(dm.trace()), 1)
     np.testing.assert_array_almost_equal(dm, expected_dm)
+
+
+@pytest.mark.parametrize("cutoff", range(1, 5))
+def test_trunc_parity(cutoff: int) -> None:
+    par_op = TruncatedParityOp(cutoff=cutoff)
+
+    dm = par_op.get_densitymatrix(cutoff=cutoff).densitymatrix
+
+    # diag = np.array([(-1)**k for k in range(0, cutoff+1)], dtype=np.complex128)
+    expected_dm = np.diag(np.array([(-1) ** k for k in range(0, cutoff + 1)], dtype=np.complex128))
+
+    print(f"{dm=}")
+    print(f"{expected_dm=}")
+    assert dm.shape == (cutoff + 1,) * 2
+    np.testing.assert_array_almost_equal(dm, expected_dm)

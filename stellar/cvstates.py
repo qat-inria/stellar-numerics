@@ -806,3 +806,22 @@ class GKPState(LCGaussianState):  # type: ignore[misc]
         object.__setattr__(self, "kappa", kappa)
         object.__setattr__(self, "delta", delta)
         object.__setattr__(self, "tol", tol)
+
+
+@dataclass(frozen=True, init=False)
+class TruncatedParityOp(CompositeCVState):
+    """Class for truncated parity operator
+
+    :math: \Pi_n = \sum_{k=0}^n (-1)^k \vert k\rangle\langle k\vert
+
+    As usual convention is cutoff = highest Fock state reached.
+
+
+    Parameters
+    ----------
+    cutoff (int): highest Fock number reached in the decomposition
+    """
+
+    def __init__(self, cutoff: int) -> None:
+        decomp: CompositeStateData = tuple(((-1) ** k, FockState(n=k)) for k in range(0, cutoff + 1))
+        super().__init__(decomposition=decomp)
