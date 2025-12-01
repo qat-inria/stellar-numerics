@@ -6,7 +6,6 @@ References:
 
 from math import pi as π
 from typing import Any
-from unicodedata import decomposition
 
 import numpy as np
 from scipy.optimize import (
