@@ -813,7 +813,7 @@ class GKPState(LCGaussianState):  # type: ignore[misc]
 class TruncatedParityOp(HermitianCVOp):
     """Class for truncated parity operator
 
-    :math: \Pi_n = \sum_{k=0}^n (-1)^k \vert k\rangle\langle k\vert
+    :math: \Pi_n = \sum_{k=0}^n (-1)^k \\vert k \\rangle\\langle k\\vert
 
     As usual convention is cutoff = highest Fock state reached.
 

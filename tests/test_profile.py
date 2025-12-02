@@ -1,3 +1,4 @@
+from itertools import product
 import pytest
 from stellar.cvstates import (
     BinomialState,
@@ -90,6 +91,7 @@ def test_fock_states() -> None:
 
     cutoff = 7  # min is 6 for Fock state |5>
     pars = OptimisationParameters(method=Method.fock, target_cutoff=cutoff)
+    # TODO rewrite using itertools.product as done in `test_fock_state_mixed` below
     for n in range(0, 6):
         tgt_state = FockState(n=n)
         for r in range(0, 6):
@@ -202,12 +204,12 @@ def test_values_gkp_state_default() -> None:  # amp: complex
     # assert False
 
 
-@pytest.mark.parametrize("rank", range(0, 3))
-def test_fock_state_2_mixed(rank: int) -> None:
+@pytest.mark.parametrize(("n", "rank"), product(range(0, 5), range(0, 5)))
+def test_fock_state_mixed(n: int, rank: int) -> None:
     # target |1> Fock state approximated using only Gaussian states
-    tgt_state = FockState(n=2)
+    tgt_state = FockState(n=n)
 
-    decomp: PureDecompositionData = ((1.0, FockState(n=2)),)  # don't forget the comma!
+    decomp: PureDecompositionData = ((1.0, FockState(n=n)),)  # don't forget the comma!
     tgt_state_mixed = HermitianCVOp(decomposition=decomp)
 
     pars = OptimisationParameters(method=Method.fock, target_cutoff=4)
