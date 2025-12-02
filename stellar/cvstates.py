@@ -61,37 +61,37 @@ class Statevector:
         self.statevector = self.statevector / self.norm
 
 
-class DensityMatrix:
-    """Class for density matrices in the Fock basis"""
+class Matrix:
+    """Class for matrices (density matrices or more genral operators) in the Fock basis"""
 
     # same type as statevector since no way to type annotate number of dimensions
-    densitymatrix: StatevectorData
+    matrix: StatevectorData
 
     def __init__(self, data: StatevectorData) -> None:
         if not isinstance(data, np.ndarray):
-            raise TypeError("Target densitymatrix array has to be a numpy array.")
+            raise TypeError("Target matrix array has to be a numpy array.")
         if not data.ndim == 2:
-            raise ValueError("Target density matrix array has to be a matrix.")
+            raise ValueError("Target matrix array has to be a matrix.")
         if not data.shape[0] == data.shape[1]:
-            raise ValueError("Target density matrix array has to be a square matrix.")
+            raise ValueError("Target matrix array has to be a square matrix.")
 
         # check psdness and hermiticity?
 
-        self.densitymatrix = data
-        self.dims = self.densitymatrix.shape  # safe since checked that array is 1-dimensional
+        self.matrix = data
+        self.dims = self.matrix.shape  # safe since checked that array is 1-dimensional
 
     def __repr__(self):
-        return f"DensityMatrix({self.densitymatrix})"
+        return f"DensityMatrix({self.matrix})"
 
     @property
     def norm(self) -> float | complex:
-        return np.trace(self.densitymatrix)
+        return np.trace(self.matrix)
 
     @property
     def purity(self) -> float:
         if not self.is_normalized():
             self.normalize()
-        return np.trace(self.densitymatrix @ self.densitymatrix)
+        return np.trace(self.matrix @ self.matrix)
 
     # default tolerance is 1e-9. Try 1e-5.
     def is_normalized(self) -> bool:
@@ -102,7 +102,7 @@ class DensityMatrix:
     def normalize(self) -> None:
         if np.isclose(self.norm, 0):
             raise ValueError("Cannot normalize the zero matrix.")
-        self.densitymatrix = (self.densitymatrix / self.norm).astype(
+        self.matrix = (self.matrix / self.norm).astype(
             np.complex128
         )  # type de scalaire pas tableau. pas infer type complex128/float ou cpx
 
@@ -126,11 +126,11 @@ class PureCVState:
 
     # since all states have get_statevector method
     # this should be fine
-    def get_densitymatrix(self, cutoff: int | None = None) -> DensityMatrix:
+    def get_densitymatrix(self, cutoff: int | None = None) -> Matrix:
         # NOTE this should work?
         # if self.statevector is None:
         #     raise ValueError("No statevector provided.")
-        return DensityMatrix(
+        return Matrix(
             np.outer(
                 self.get_statevector(cutoff=cutoff).statevector,
                 self.get_statevector(cutoff=cutoff).statevector.conjugate(),
@@ -143,9 +143,7 @@ class PureCVState:
 # get_DM -> get_operator return get_DM for mixed states
 # want init dm or list
 
-CompositeStateData: TypeAlias = tuple[
-    tuple[float | int, PureCVState], ...
-]
+PureDecompositionData: TypeAlias = tuple[tuple[float | int, PureCVState], ...]
 
 # need immutable (or frozenset/abstractset)
 
@@ -156,7 +154,7 @@ CompositeStateData: TypeAlias = tuple[
 # TODO for the instantiation (decomp vs matrix) use an Enum to exhaust all cases and disjunction
 # TODO change to HermitianCVOperator
 @dataclass(frozen=True)
-class CompositeCVState:
+class HermitianCVOp:
     """a class for composite states ie Hermitian operators. Initialised either by providing a `DensityMatrix` (OperatorMatrix instead TODO) object or a `CompositeStateData` (pure state decomposition)
     For now this represents ANY ``composite'' state (i.e. mixture of pure states) so not necessarily a state.
     Only real number allowed in the decomposition since Hermitian.
@@ -167,8 +165,8 @@ class CompositeCVState:
         _description_
     """
 
-    matrix: DensityMatrix | None = None
-    decomposition: CompositeStateData | None = None
+    matrix: Matrix | None = None  # type is ok even if not realy transparent
+    decomposition: PureDecompositionData | None = None
 
     def __post_init__(self) -> None:
         if self.matrix is None and self.decomposition is None:
@@ -181,7 +179,7 @@ class CompositeCVState:
             # cannot be none here none type ignore is safe
             warnings.warn("A composite state with a single pure state in its decomposition is just a pure state.")
 
-    def get_densitymatrix(self, cutoff: int | None = None) -> DensityMatrix:
+    def get_densitymatrix(self, cutoff: int | None = None) -> Matrix:
         if self.decomposition is not None:
             # compute from decomposition
             # apparently need explicit list conversion for sum to work
@@ -197,7 +195,7 @@ class CompositeCVState:
                 axis=0,
             )
 
-            return DensityMatrix(data)
+            return Matrix(data)
 
         elif self.matrix is not None:
             return self.matrix
@@ -812,7 +810,7 @@ class GKPState(LCGaussianState):  # type: ignore[misc]
 
 
 @dataclass(frozen=True, init=False)
-class TruncatedParityOp(CompositeCVState):
+class TruncatedParityOp(HermitianCVOp):
     """Class for truncated parity operator
 
     :math: \Pi_n = \sum_{k=0}^n (-1)^k \vert k\rangle\langle k\vert
@@ -826,5 +824,5 @@ class TruncatedParityOp(CompositeCVState):
     """
 
     def __init__(self, cutoff: int) -> None:
-        decomp: CompositeStateData = tuple(((-1) ** k, FockState(n=k)) for k in range(0, cutoff + 1))
+        decomp: PureDecompositionData = tuple(((-1) ** k, FockState(n=k)) for k in range(0, cutoff + 1))
         super().__init__(decomposition=decomp)

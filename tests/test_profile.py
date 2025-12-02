@@ -1,5 +1,13 @@
 import pytest
-from stellar.cvstates import BinomialState, CatState, CoherentState, CompositeCVState, CompositeStateData, FockState, GKPState
+from stellar.cvstates import (
+    BinomialState,
+    CatState,
+    CoherentState,
+    HermitianCVOp,
+    PureDecompositionData,
+    FockState,
+    GKPState,
+)
 from stellar.params import Method, OptimisationParameters
 from stellar.profile import compute_sup_fidelity
 import numpy as np
@@ -192,13 +200,15 @@ def test_values_gkp_state_default() -> None:  # amp: complex
         assert isclose(-results.fun, targets[rank], abs_tol=1e-8)
 
     # assert False
+
+
 @pytest.mark.parametrize("rank", range(0, 3))
 def test_fock_state_2_mixed(rank: int) -> None:
     # target |1> Fock state approximated using only Gaussian states
     tgt_state = FockState(n=2)
 
-    decomp: CompositeStateData = ((1.,FockState(n=2)),) # don't forget the comma!
-    tgt_state_mixed = CompositeCVState(decomposition=decomp)
+    decomp: PureDecompositionData = ((1.0, FockState(n=2)),)  # don't forget the comma!
+    tgt_state_mixed = HermitianCVOp(decomposition=decomp)
 
     pars = OptimisationParameters(method=Method.fock, target_cutoff=4)
 

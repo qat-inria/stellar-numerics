@@ -11,10 +11,10 @@ from stellar.cvstates import (
     BinomialState,
     CatState,
     CoherentState,
-    CompositeStateData,
-    CompositeCVState,
+    PureDecompositionData,
+    HermitianCVOp,
     PureCVState,
-    DensityMatrix,
+    Matrix,
     FockState,
     GKPState,
     GaussianState,
@@ -189,13 +189,13 @@ def test_DM_fock(data: tuple[int, int]) -> None:
     state = FockState(n=n)
     dm = state.get_densitymatrix(cutoff=cutoff)
 
-    assert isinstance(dm, DensityMatrix)
+    assert isinstance(dm, Matrix)
     assert isclose(np.real_if_close(dm.norm), 1)
     assert dm.is_normalized()  # TODO type stuff here
     assert dm.dims == (cutoff + 1,) * 2
     assert isclose(np.real_if_close(dm.purity), 1)
-    assert isclose(dm.densitymatrix[n, n].imag, 0)
-    assert isclose(np.real_if_close(dm.densitymatrix[n, n]), 1)
+    assert isclose(dm.matrix[n, n].imag, 0)
+    assert isclose(np.real_if_close(dm.matrix[n, n]), 1)
 
 
 # tests LCGaussian
@@ -347,24 +347,24 @@ def test_GKP_init() -> None:
 def test_init_empty_mixed_state() -> None:
     """test checking that empty mixed states cannot be instantiated."""
     with pytest.raises(ValueError):
-        CompositeCVState()
+        HermitianCVOp()
 
 
 def test_init_ambiguous_mixed_state() -> None:
     """Test checking that mixed states cannot be ambiguously defined."""
-    decomp: CompositeStateData = (
+    decomp: PureDecompositionData = (
         (1.0, PureCVState(Statevector(np.array([0, 1], dtype=np.complex128)))),
         (1.0, PureCVState(Statevector(np.array([2, 1], dtype=np.complex128)))),
     )
     with pytest.raises(ValueError):
-        CompositeCVState(matrix=DensityMatrix(np.array([[1, 1], [1, 1]], dtype=np.complex128)), decomposition=decomp)
+        HermitianCVOp(matrix=Matrix(np.array([[1, 1], [1, 1]], dtype=np.complex128)), decomposition=decomp)
 
 
 def test_single_state_decomp() -> None:
     """Check if instantiating with a single pure state results in a warning."""
-    decomp: CompositeStateData = ((1.0, PureCVState(Statevector(np.array([0, 1], dtype=np.complex128)))),)
+    decomp: PureDecompositionData = ((1.0, PureCVState(Statevector(np.array([0, 1], dtype=np.complex128)))),)
     with pytest.warns():
-        CompositeCVState(decomposition=decomp)
+        HermitianCVOp(decomposition=decomp)
 
 
 def test_get_dm_mixed_vac_decomp_state() -> None:
@@ -375,10 +375,10 @@ def test_get_dm_mixed_vac_decomp_state() -> None:
     n = 3
     cutoff = n
 
-    decomp: CompositeStateData = ((1 / 4, FockState(n=0)), (1 / 6, FockState(n=n - 1)), (7 / 12, FockState(n=n)))
-    st = CompositeCVState(decomposition=decomp)
+    decomp: PureDecompositionData = ((1 / 4, FockState(n=0)), (1 / 6, FockState(n=n - 1)), (7 / 12, FockState(n=n)))
+    st = HermitianCVOp(decomposition=decomp)
 
-    dm = st.get_densitymatrix(cutoff=cutoff).densitymatrix
+    dm = st.get_densitymatrix(cutoff=cutoff).matrix
 
     expected_dm = np.zeros((cutoff + 1,) * 2, dtype=np.complex128)
     # modify in place
@@ -408,9 +408,9 @@ def test_get_dm_mixed_vac_mat_state() -> None:
     expected_dm[n - 1, n - 1] = 1 / 6
     expected_dm[n, n] = 7 / 12
 
-    st = CompositeCVState(matrix=DensityMatrix(expected_dm))
+    st = HermitianCVOp(matrix=Matrix(expected_dm))
 
-    dm = st.get_densitymatrix(cutoff=cutoff).densitymatrix
+    dm = st.get_densitymatrix(cutoff=cutoff).matrix
 
     # print(f"{dm=}\n")
     # print(f"{expected_dm=} \n")
@@ -423,7 +423,7 @@ def test_get_dm_mixed_vac_mat_state() -> None:
 def test_trunc_parity(cutoff: int) -> None:
     par_op = TruncatedParityOp(cutoff=cutoff)
 
-    dm = par_op.get_densitymatrix(cutoff=cutoff).densitymatrix
+    dm = par_op.get_densitymatrix(cutoff=cutoff).matrix
 
     # diag = np.array([(-1)**k for k in range(0, cutoff+1)], dtype=np.complex128)
     expected_dm = np.diag(np.array([(-1) ** k for k in range(0, cutoff + 1)], dtype=np.complex128))

@@ -16,7 +16,7 @@ from scipy.optimize import (
     minimize,  # noqa: F401
 )
 
-from stellar.cvstates import CompositeCVState, PureCVState, GaussianState, LCGaussianState
+from stellar.cvstates import HermitianCVOp, PureCVState, GaussianState, LCGaussianState
 from stellar.params import GaussianParameters, Method, OptimisationParameters
 from stellar.gaussian import GaussianOp
 
@@ -30,7 +30,7 @@ def compute_obj_func(
     r: float,
     theta: float,
     max_rank: int,
-    target_state: PureCVState | CompositeCVState,
+    target_state: PureCVState | HermitianCVOp,
     method: Method,
     target_cutoff: int | None = None,
 ) -> float:
@@ -90,19 +90,30 @@ def compute_obj_func(
         # this adds new fields
         g.build_matrix_fock_basis(bra_cutoff=target_cutoff, ket_cutoff=max_rank)  # type: ignore
 
-        if not isinstance(target_state, CompositeCVState):
-
+        if not isinstance(target_state, HermitianCVOp):
             # print('here', target_state.get_statevector(cutoff=target_cutoff).dim)
             # vectorized! result is a one dim vector of dim ket_cutoff
             return np.sum(
                 np.abs(target_state.get_statevector(cutoff=target_cutoff).statevector.conj() @ g.matrix_fock_basis) ** 2
             )
-        elif isinstance(target_state, CompositeCVState):
-
+        elif isinstance(target_state, HermitianCVOp):
             assert target_state.decomposition is not None
             # just compute the sum over the pure state decomposition of the mixed state
             # method only Fock here
-            return sum(coeff * compute_obj_func(x=gauss_params.x, y=gauss_params.y, r=gauss_params.r, theta=gauss_params.theta, max_rank=max_rank, target_state=state, method=method, target_cutoff=target_cutoff) for coeff, state in target_state.decomposition)
+            return sum(
+                coeff
+                * compute_obj_func(
+                    x=gauss_params.x,
+                    y=gauss_params.y,
+                    r=gauss_params.r,
+                    theta=gauss_params.theta,
+                    max_rank=max_rank,
+                    target_state=state,
+                    method=method,
+                    target_cutoff=target_cutoff,
+                )
+                for coeff, state in target_state.decomposition
+            )
 
         else:
             raise NotImplementedError("Not implemented yet.")
@@ -115,7 +126,7 @@ def compute_obj_func(
 # function for that to check convergence?
 def compute_sup_fidelity(
     max_rank: int,
-    target_state: PureCVState | CompositeCVState,
+    target_state: PureCVState | HermitianCVOp,
     optim_params: OptimisationParameters,
     # target_cutoff: int | None = None,
     # method: str | None = None,
