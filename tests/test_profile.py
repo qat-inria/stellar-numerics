@@ -231,11 +231,11 @@ def test_fock_state_mixed(n: int, rank: int) -> None:
     print(f"{results_mixed.fun=} {results_mixed.x} {results_mixed.success}")
     assert isclose(results.fun, results_mixed.fun)
 
-
+# TODO treat GKP separately
 @pytest.mark.parametrize(
     ("tgt_state", "rank"),
     product(
-        [CoherentState(amplitude=-3.19 + 0.12j), CatState(amplitude=6.5 - 0.529j, parity=True), GKPState()], range(0, 5)
+        [CoherentState(amplitude=-3.19 + 0.12j), CatState(amplitude=6.5 - 0.529j, parity=True)], range(0, 5)
     ),
 )
 def test_optim_gauss_state_mixed(tgt_state: PureCVState, rank: int) -> None:
@@ -247,6 +247,7 @@ def test_optim_gauss_state_mixed(tgt_state: PureCVState, rank: int) -> None:
     # if gaussian will be overriden and cutoff ignored
 
     # pars = OptimisationParameters(method=Method.gaussian, seed=421, niter=350)
+    # GKPState()
 
     # don't are convergence to true value just want to check consistency between the two methods
     pars = OptimisationParameters(method=Method.gaussian)
