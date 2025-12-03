@@ -76,4 +76,4 @@ class OptimisationParameters:
                 raise ValueError("cutoff cannot be None when computing in the Fock basis.")
 
         if self.method == Method.gaussian and self.target_cutoff is not None:
-                warnings.warn("`target_cutoff` will be ignored using the `gaussian` method.")
+            warnings.warn("`target_cutoff` will be ignored using the `gaussian` method.")

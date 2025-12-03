@@ -7,7 +7,7 @@ References:
 import warnings
 from math import pi as π
 from typing import Any
-from typing_extensions import assert_never # for 3.10 compatibility
+from typing_extensions import assert_never  # for 3.10 compatibility
 # for 3.13 from typing import assert_never works
 
 import numpy as np
@@ -83,7 +83,6 @@ def compute_obj_func(
     if not isinstance(target_state, HermitianCVOp):
         # gaussian method
         if method == Method.gaussian:
-
             if not isinstance(target_state, (GaussianState, LCGaussianState)):
                 raise TypeError(f"The {target_state=} is not a `GaussianState`or `LCGaussianState`.")
             state = g @ target_state
@@ -113,7 +112,6 @@ def compute_obj_func(
 
     # sure to have a decomposition since checked at the level above
     elif isinstance(target_state, HermitianCVOp):
-
         # just compute the sum over the pure state decomposition of the mixed state
         # adjust the method type depending on the state?
 
@@ -137,10 +135,10 @@ def compute_obj_func(
                 target_state=state,
                 method=method_picker(state),
                 target_cutoff=target_cutoff,
-            ) #mypy yells... silence that due to checking existence of decomposition a level higher
-            for coeff, state in target_state.decomposition # type: ignore
+            )  # mypy yells... silence that due to checking existence of decomposition a level higher
+            for coeff, state in target_state.decomposition  # type: ignore
         )
-# safe since decomposition existence checked at the level above
+    # safe since decomposition existence checked at the level above
     else:
         assert False
     # no need for else statement, mypy statically checks that the Method Enum is exhausted
@@ -196,7 +194,6 @@ def compute_sup_fidelity(
         "bounds": bounds
     }
 
-
     # better to do these checks at this level since will avoid repetition in the logs
 
     # redundant since only done at `Optimisationparameters` instantiation.
@@ -204,14 +201,13 @@ def compute_sup_fidelity(
     #     warnings.warn("`target_cutoff` will be ignored using the `gaussian` method.")
 
     if isinstance(target_state, HermitianCVOp) and target_state.decomposition is not None:
-
         if target_state.decomposition is None:
             raise NotImplementedError("Can only optimize on operators built from a pure-state decomposition for now.")
 
         if any(isinstance(state, (GaussianState, LCGaussianState)) for _, state in target_state.decomposition):
-                warnings.warn(
-                    "A `GaussianState` or `LCGaussianState` was detected in the pure-state decomposition. Overriding your `method` choice for this state if it wasn't `gaussian`."
-                )
+            warnings.warn(
+                "A `GaussianState` or `LCGaussianState` was detected in the pure-state decomposition. Overriding your `method` choice for this state if it wasn't `gaussian`."
+            )
 
     # TODO: directly use a `GaussParam` object.
     return basinhopping(

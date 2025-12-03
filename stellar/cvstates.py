@@ -208,6 +208,7 @@ class HermitianCVOp:
     # def __iter__(self) -> Iterator[tuple[complex, GaussianState]]:
     #     return iter(self.decomposition)
 
+
 # Thierry's comments 06-27_2025
 # frozen=True gèle aussi les champs hérités, donc le self.is_gaussian dans CVState.__init__ ne pouvait pas fonctionner
 # sur un GaussianState
@@ -814,9 +815,9 @@ class GKPState(LCGaussianState):  # type: ignore[misc]
 
 @dataclass(frozen=True, init=False)
 class TruncatedParityOp(HermitianCVOp):
-    """Class for truncated parity operator
+    r"""Class for truncated parity operator
 
-    :math: \Pi_n = \sum_{k=0}^n (-1)^k \\vert k \\rangle\\langle k\\vert
+    :math: \Pi_n = \sum_{k=0}^n (-1)^k \vert k \rangle\langle k\vert
 
     As usual convention is cutoff = highest Fock state reached.
 
