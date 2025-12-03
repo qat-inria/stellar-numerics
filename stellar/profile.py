@@ -83,6 +83,9 @@ def compute_obj_func(
 
     # TODO update with more cases when needed
     elif method == Method.fock:
+        # maybe redundant since checked when calling statevector
+        if target_cutoff is None:
+            raise ValueError("Cannot compute in the Fock basis if no cutoff is given")
         # common to both pure and composite cases
 
         # ignore type error since handes at initialisation of OptimisationParameter object
@@ -118,6 +121,7 @@ def compute_obj_func(
         else:
             raise NotImplementedError("Not implemented yet.")
     # no need for else statement, mypy statically checks that the Method Enum is exhausted
+    # or assert_never(method)?
 
 
 # need have non custom objects as arguments for scipy minimize

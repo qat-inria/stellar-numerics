@@ -116,8 +116,8 @@ class PureCVState:
     # need same interface for all child classes
     # disregard cutoff
     # all child classes can raise an exception
-    # child classes that require a cutoff have to raise a ValueError to eep signature matching
-    # inheritance: all method called from A have to be called from B derived from B
+    # child classes that require a cutoff have to raise a ValueError to keep signature matching
+    # inheritance: all method called from A have to be called from B, derived from B
     def get_statevector(self, cutoff: int | None = None) -> Statevector:
         if self.statevector is None:
             raise ValueError("No statevector provided.")
@@ -242,7 +242,7 @@ class GaussianState(PureCVState):
 
     @functools.cache
     @typing_extensions.override
-    def get_statevector(self, cutoff: int | None = None) -> Statevector:
+    def get_statevector(self, cutoff: int | None = None) -> Statevector: # signature has to match since override
         """returns the statevector of a `GaussianState` object. From Chabaud draft Eq. [F15]
 
         Parameters
