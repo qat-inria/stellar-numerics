@@ -6,7 +6,9 @@ References:
 
 import warnings
 from math import pi as π
-from typing import Any, assert_never
+from typing import Any
+from typing_extensions import assert_never # for 3.10 compatibility
+# for 3.13 from typing import assert_never works
 
 import numpy as np
 from scipy.optimize import (
