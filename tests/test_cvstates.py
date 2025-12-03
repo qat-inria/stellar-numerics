@@ -363,7 +363,7 @@ def test_init_ambiguous_mixed_state() -> None:
 def test_single_state_decomp() -> None:
     """Check if instantiating with a single pure state results in a warning."""
     decomp: PureDecompositionData = ((1.0, PureCVState(Statevector(np.array([0, 1], dtype=np.complex128)))),)
-    with pytest.warns():
+    with pytest.warns(match="A composite state with a single pure state in its decomposition is just a pure state."):
         HermitianCVOp(decomposition=decomp)
 
 

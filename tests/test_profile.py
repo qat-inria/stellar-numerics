@@ -1,18 +1,21 @@
 from itertools import product
+from math import e, isclose, sqrt
+
+import numpy as np
 import pytest
+
 from stellar.cvstates import (
     BinomialState,
     CatState,
     CoherentState,
-    HermitianCVOp,
-    PureDecompositionData,
     FockState,
     GKPState,
+    HermitianCVOp,
+    PureCVState,
+    PureDecompositionData,
 )
 from stellar.params import Method, OptimisationParameters
 from stellar.profile import compute_sup_fidelity
-import numpy as np
-from math import e, isclose, sqrt
 
 
 def test_optimize() -> None:
@@ -111,8 +114,8 @@ def test_fock_states() -> None:
 # BUG for alpha = 8 the squeezing in gauss matrix product overflows the atanh fct
 # @given(st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=0, max_magnitude=5))
 # @given(st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=0, max_magnitude=5))
-@pytest.mark.parametrize("method", [Method.fock, Method.gaussian])
-def test_coh_state(method: Method) -> None:
+@pytest.mark.parametrize(("method", "rank"), product([Method.fock, Method.gaussian], range(0, 5)))
+def test_coh_state(method: Method, rank: int) -> None:
     """Check coherent state has indeed rank 0 via both gaussian and fock methods."""
 
     amp = 1  # 6.5-.529j
@@ -123,7 +126,7 @@ def test_coh_state(method: Method) -> None:
     else:
         pars = OptimisationParameters(method=method)
 
-    results = compute_sup_fidelity(max_rank=0, target_state=tgt_state, optim_params=pars)
+    results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, optim_params=pars)
 
     assert isclose(results.fun, -1, abs_tol=1e-6)
 
@@ -149,6 +152,7 @@ def test_run_cat_state() -> None:  # amp: complex
 def test_values_cat_state() -> None:  # amp: complex
     """Check againt Rui's (Chalmers) values: [0.5, 0.615383 ,0.848799, 0.896384]."""
 
+    # TODO: check with gaussian method?
     amp = 3
     tgt_state = CatState(amplitude=amp, parity=False)
     pars = OptimisationParameters(method=Method.gaussian)
@@ -209,7 +213,7 @@ def test_fock_state_mixed(n: int, rank: int) -> None:
     # target |1> Fock state approximated using only Gaussian states
     tgt_state = FockState(n=n)
 
-    decomp: PureDecompositionData = ((1.0, FockState(n=n)),)  # don't forget the comma!
+    decomp: PureDecompositionData = ((1.0, tgt_state),)  # don't forget the comma!
     tgt_state_mixed = HermitianCVOp(decomposition=decomp)
 
     pars = OptimisationParameters(method=Method.fock, target_cutoff=4)
@@ -222,5 +226,52 @@ def test_fock_state_mixed(n: int, rank: int) -> None:
     results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, optim_params=pars)
     print(f"{results.fun=} {results.x} {results.success}")
     results_mixed = compute_sup_fidelity(max_rank=rank, target_state=tgt_state_mixed, optim_params=pars)
+    print(f"{results_mixed.fun=} {results_mixed.x} {results_mixed.success}")
+    assert isclose(results.fun, results_mixed.fun)
+
+
+@pytest.mark.parametrize(
+    ("tgt_state", "rank"),
+    product([CoherentState(amplitude=-3.19 + 0.12j), CatState(amplitude=6.5 - 0.529j, parity=True)], range(0, 5)),
+)
+def test_optim_gauss_state_mixed(tgt_state: PureCVState, rank: int) -> None:
+    decomp: PureDecompositionData = ((1.0, tgt_state),)  # don't forget the comma!
+    tgt_state_mixed = HermitianCVOp(decomposition=decomp)
+
+    # can always choose this since will go to gaussian if detected
+    # if Fock, will be overriden
+    # if gaussian will be overriden and cutoff ignored
+    pars = OptimisationParameters(method=Method.gaussian)
+
+    results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, optim_params=pars)
+    print(f"{results.fun=} {results.x} {results.success}")
+    # useless since gaussian method on gaussian states but still check
+    with pytest.warns(
+        match="A `GaussianState` or `LCGaussianState` was detected in the pure-state decomposition. Overriding your `method` choice for this state if it wasn't `gaussian`."
+    ):
+        results_mixed = compute_sup_fidelity(max_rank=rank, target_state=tgt_state_mixed, optim_params=pars)
+
+    print(f"{results_mixed.fun=} {results_mixed.x} {results_mixed.success}")
+    assert isclose(results.fun, results_mixed.fun)
+
+@pytest.mark.parametrize(
+    ("tgt_state", "rank"),
+    product([BinomialState(N=2, S=1)], range(0, 5)),
+)
+def test_optim_ngauss_state_mixed(tgt_state: PureCVState, rank: int) -> None:
+    decomp: PureDecompositionData = ((1.0, tgt_state),)  # don't forget the comma!
+    tgt_state_mixed = HermitianCVOp(decomposition=decomp)
+
+    # can always choose this since will go to gaussian if detected
+    # if Fock, will be overriden
+    # if gaussian will be overriden and cutoff ignored
+    pars = OptimisationParameters(method=Method.fock, target_cutoff=6)
+
+    results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, optim_params=pars)
+    print(f"{results.fun=} {results.x} {results.success}")
+    # useless since gaussian method on gaussian states but still check
+
+    results_mixed = compute_sup_fidelity(max_rank=rank, target_state=tgt_state_mixed, optim_params=pars)
+
     print(f"{results_mixed.fun=} {results_mixed.x} {results_mixed.success}")
     assert isclose(results.fun, results_mixed.fun)

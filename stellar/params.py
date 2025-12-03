@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 from cmath import exp
 from enum import Enum, auto
+import warnings
 
 
 ### Gaussian parameters
@@ -73,3 +74,6 @@ class OptimisationParameters:
         if self.method == Method.fock:
             if self.target_cutoff is None:
                 raise ValueError("cutoff cannot be None when computing in the Fock basis.")
+
+        if self.method == Method.gaussian and self.target_cutoff is not None:
+                warnings.warn("`target_cutoff` will be ignored using the `gaussian` method.")

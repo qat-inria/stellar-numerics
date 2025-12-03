@@ -204,6 +204,9 @@ class HermitianCVOp:
             # TODO rewrite with typing.assert_never()
             raise ValueError("This should never happen.")  # should never happen due to post_init checks
 
+    # TODO think about it since not sure to have a decomposition
+    # def __iter__(self) -> Iterator[tuple[complex, GaussianState]]:
+    #     return iter(self.decomposition)
 
 # Thierry's comments 06-27_2025
 # frozen=True gèle aussi les champs hérités, donc le self.is_gaussian dans CVState.__init__ ne pouvait pas fonctionner
@@ -242,7 +245,7 @@ class GaussianState(PureCVState):
 
     @functools.cache
     @typing_extensions.override
-    def get_statevector(self, cutoff: int | None = None) -> Statevector: # signature has to match since override
+    def get_statevector(self, cutoff: int | None = None) -> Statevector:  # signature has to match since override
         """returns the statevector of a `GaussianState` object. From Chabaud draft Eq. [F15]
 
         Parameters
