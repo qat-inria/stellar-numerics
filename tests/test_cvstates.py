@@ -11,6 +11,7 @@ from stellar.cvstates import (
     BinomialState,
     CatState,
     CoherentState,
+    PureDecomposition,
     PureDecompositionData,
     HermitianCVOp,
     PureCVState,
@@ -343,28 +344,12 @@ def test_GKP_init() -> None:
 
     # check other parameters too.
 
-
-def test_init_empty_mixed_state() -> None:
-    """test checking that empty mixed states cannot be instantiated."""
-    with pytest.raises(ValueError):
-        HermitianCVOp()
-
-
-def test_init_ambiguous_mixed_state() -> None:
-    """Test checking that mixed states cannot be ambiguously defined."""
-    decomp: PureDecompositionData = (
-        (1.0, PureCVState(Statevector(np.array([0, 1], dtype=np.complex128)))),
-        (1.0, PureCVState(Statevector(np.array([2, 1], dtype=np.complex128)))),
-    )
-    with pytest.raises(ValueError):
-        HermitianCVOp(matrix=Matrix(np.array([[1, 1], [1, 1]], dtype=np.complex128)), decomposition=decomp)
-
-
 def test_single_state_decomp() -> None:
     """Check if instantiating with a single pure state results in a warning."""
     decomp: PureDecompositionData = ((1.0, PureCVState(Statevector(np.array([0, 1], dtype=np.complex128)))),)
     with pytest.warns(match="A composite state with a single pure state in its decomposition is just a pure state."):
-        HermitianCVOp(decomposition=decomp)
+        op = HermitianCVOp(data=decomp)
+        print(type(op.data) is PureDecompositionData)
 
 
 def test_get_dm_mixed_vac_decomp_state() -> None:
@@ -376,7 +361,7 @@ def test_get_dm_mixed_vac_decomp_state() -> None:
     cutoff = n
 
     decomp: PureDecompositionData = ((1 / 4, FockState(n=0)), (1 / 6, FockState(n=n - 1)), (7 / 12, FockState(n=n)))
-    st = HermitianCVOp(decomposition=decomp)
+    st = HermitianCVOp(data=decomp)
 
     dm = st.get_densitymatrix(cutoff=cutoff).matrix
 
@@ -408,7 +393,7 @@ def test_get_dm_mixed_vac_mat_state() -> None:
     expected_dm[n - 1, n - 1] = 1 / 6
     expected_dm[n, n] = 7 / 12
 
-    st = HermitianCVOp(matrix=Matrix(expected_dm))
+    st = HermitianCVOp(data=Matrix(expected_dm))
 
     dm = st.get_densitymatrix(cutoff=cutoff).matrix
 

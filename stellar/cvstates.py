@@ -165,22 +165,17 @@ class HermitianCVOp:
         _description_
     """
 
-    matrix: Matrix | None = None  # type is ok even if not realy transparent
-    decomposition: PureDecompositionData | None = None
+    data: Matrix | PureDecompositionData
 
     def __post_init__(self) -> None:
-        if self.matrix is None and self.decomposition is None:
-            raise ValueError("A mixed state requires either a matrix in Fock space or a pure-state decomposition.")
-        if self.matrix is not None and self.decomposition is not None:
-            raise ValueError(
-                "There is an ambiguity in the definition of the mixed state. Use either a `DensityMatrix`object or a pure-state decomposition but not both."
-            )
-        if self.decomposition is not None and len(self.decomposition) == 1:  # type: ignore
+        if (
+            not isinstance(self.data, Matrix) and len(self.data) == 1
+        ):  # if first predicate is true second makes sense (can be checked)
             # cannot be none here none type ignore is safe
             warnings.warn("A composite state with a single pure state in its decomposition is just a pure state.")
 
     def get_densitymatrix(self, cutoff: int | None = None) -> Matrix:
-        if self.decomposition is not None:
+        if not isinstance(self.data, Matrix):
             # compute from decomposition
             # apparently need explicit list conversion for sum to work
             data = np.sum(
@@ -190,19 +185,15 @@ class HermitianCVOp:
                         state.get_statevector(cutoff=cutoff).statevector,
                         state.get_statevector(cutoff=cutoff).statevector.conjugate(),
                     ).astype(np.complex128)
-                    for coeff, state in self.decomposition
+                    for coeff, state in self.data
                 ],
                 axis=0,
             )
 
             return Matrix(data)
 
-        elif self.matrix is not None:
-            return self.matrix
-
         else:
-            # TODO rewrite with typing.assert_never()
-            raise ValueError("This should never happen.")  # should never happen due to post_init checks
+            return self.data
 
     # TODO think about it since not sure to have a decomposition
     # def __iter__(self) -> Iterator[tuple[complex, GaussianState]]:
@@ -829,4 +820,4 @@ class TruncatedParityOp(HermitianCVOp):
 
     def __init__(self, cutoff: int) -> None:
         decomp: PureDecompositionData = tuple(((-1) ** k, FockState(n=k)) for k in range(0, cutoff + 1))
-        super().__init__(decomposition=decomp)
+        super().__init__(data=decomp)
