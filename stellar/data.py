@@ -1,5 +1,6 @@
-from dataclasses import dataclass, asdict
+from dataclasses import InitVar, dataclass, asdict, field
 
+from stellar.cvstates import HermitianCVOp, PureCVState
 from stellar.params import OptimisationParameters
 
 from pathlib import Path
@@ -11,16 +12,17 @@ import json
 class StellarProfile:
     """A dataclass for stellar profiles allowing manipulation and serialization to json."""
 
-    # attributes: state, list of ranks, stellar fidelities, optim params
-    # add compute profile
     # single rank returns a StellarProfile?
     # Combine them by concatenation if different ranks but same state and params.
-    state: str  # repr(State) or directly state and take repr? no init then
+    # state name of the parameter and _state for the field
+    state: InitVar[PureCVState | HermitianCVOp]  # constructor param name = c
+    _state: str = field(init=False)  # stored attribute
     ranks: list[int]
     fidelities: list[float]
     optim_params: OptimisationParameters | None = None  # TODO remove None
 
-    def __post_init__(self) -> None:
+    def __post_init__(self, state: PureCVState | HermitianCVOp) -> None:
+        object.__setattr__(self, "_state", repr(state))  # same trick since frozen dataclass
         if len(self.ranks) != len(self.fidelities):
             raise ValueError("The length of ranks and fidelities have to match.")
 
