@@ -343,6 +343,7 @@ def test_GKP_init() -> None:
 
     # check other parameters too.
 
+
 def test_single_state_decomp() -> None:
     """Check if instantiating with a single pure state results in a warning."""
     decomp: PureDecompositionData = ((1.0, PureCVState(Statevector(np.array([0, 1], dtype=np.complex128)))),)

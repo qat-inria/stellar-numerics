@@ -216,7 +216,7 @@ def test_fock_state_mixed(n: int, rank: int) -> None:
     tgt_state = FockState(n=n)
 
     decomp: PureDecompositionData = ((1.0, tgt_state),)  # don't forget the comma!
-    tgt_state_mixed = HermitianCVOp(decomposition=decomp)
+    tgt_state_mixed = HermitianCVOp(data=decomp)
 
     pars = OptimisationParameters(method=Method.fock, target_cutoff=4)
 
@@ -239,7 +239,7 @@ def test_fock_state_mixed(n: int, rank: int) -> None:
 )
 def test_optim_gauss_state_mixed(tgt_state: PureCVState, rank: int) -> None:
     decomp: PureDecompositionData = ((1.0, tgt_state),)  # don't forget the comma!
-    tgt_state_mixed = HermitianCVOp(decomposition=decomp)
+    tgt_state_mixed = HermitianCVOp(data=decomp)
     print(f"{tgt_state_mixed}")
     # can always choose this since will go to gaussian if detected
     # if Fock, will be overriden
@@ -269,7 +269,7 @@ def test_optim_gauss_state_mixed(tgt_state: PureCVState, rank: int) -> None:
 )
 def test_optim_ngauss_state_mixed(tgt_state: PureCVState, rank: int) -> None:
     decomp: PureDecompositionData = ((1.0, tgt_state),)  # don't forget the comma!
-    tgt_state_mixed = HermitianCVOp(decomposition=decomp)
+    tgt_state_mixed = HermitianCVOp(data=decomp)
 
     # can always choose this since will go to gaussian if detected
     # if Fock, will be overriden
@@ -294,7 +294,7 @@ def test_warning_mixed() -> None:
         (0.5, BinomialState(N=2, S=1)),
         (0.5, GaussianState(GaussianParameters(x=-1.3, y=0.7, r=1.2, theta=-0.477))),
     )
-    tgt_state_mixed = HermitianCVOp(decomposition=decomp)
+    tgt_state_mixed = HermitianCVOp(data=decomp)
 
     rank = 3
 
