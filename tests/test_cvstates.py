@@ -11,7 +11,6 @@ from stellar.cvstates import (
     BinomialState,
     CatState,
     CoherentState,
-    PureDecomposition,
     PureDecompositionData,
     HermitianCVOp,
     PureCVState,
