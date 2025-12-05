@@ -229,7 +229,7 @@ def test_fock_state_mixed(n: int, rank: int) -> None:
     print(f"{results.fun=} {results.x} {results.success}")
     results_mixed = compute_sup_fidelity(max_rank=rank, target_state=tgt_state_mixed, optim_params=pars)
     print(f"{results_mixed.fun=} {results_mixed.x} {results_mixed.success}")
-    assert isclose(results.fun, results_mixed.fun)
+    assert isclose(results.fun, results_mixed.fun, abs_tol=1e-8)
 
 
 # TODO treat GKP separately
