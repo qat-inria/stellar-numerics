@@ -19,7 +19,7 @@ from scipy.optimize import (
     minimize,  # noqa: F401
 )
 
-from stellar.cvstates import GaussianState, HermitianCVOp, LCGaussianState, PureCVState
+from stellar.cvstates import GaussianState, HermitianCVOp, LCGaussianState, Matrix, PureCVState
 from stellar.gaussian import GaussianOp
 from stellar.params import GaussianParameters, Method, OptimisationParameters
 
@@ -136,7 +136,7 @@ def compute_obj_func(
                 method=method_picker(state),
                 target_cutoff=target_cutoff,
             )  # mypy yells... silence that due to checking existence of decomposition a level higher
-            for coeff, state in target_state.decomposition  # type: ignore
+            for coeff, state in target_state.data
         )
     # safe since decomposition existence checked at the level above
     else:
@@ -200,11 +200,12 @@ def compute_sup_fidelity(
     # if optim_params.method == Method.gaussian and optim_params.target_cutoff is not None:
     #     warnings.warn("`target_cutoff` will be ignored using the `gaussian` method.")
 
-    if isinstance(target_state, HermitianCVOp) and target_state.decomposition is not None:
-        if target_state.decomposition is None:
+    if isinstance(target_state, HermitianCVOp):
+        if isinstance(target_state.data, Matrix):
             raise NotImplementedError("Can only optimize on operators built from a pure-state decomposition for now.")
 
-        if any(isinstance(state, (GaussianState, LCGaussianState)) for _, state in target_state.decomposition):
+        # know data is not a Matrix so ignore type
+        if any(isinstance(state, (GaussianState, LCGaussianState)) for _, state in target_state.data):
             warnings.warn(
                 "A `GaussianState` or `LCGaussianState` was detected in the pure-state decomposition. Overriding your `method` choice for this state if it wasn't `gaussian`."
             )
