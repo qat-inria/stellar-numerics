@@ -186,8 +186,7 @@ def compute_obj_func_mixed(
             target_cutoff=target_cutoff,
         )  # mypy yells... silence that due to checking existence of decomposition a level higher
         for coeff, state in target_state.data
-        )
-
+    )
 
 
 # need have non custom objects as arguments for scipy minimize
@@ -249,12 +248,29 @@ def compute_sup_fidelity(
     # mypy issue ?
     # mypy#10445 reports TypeVar bounds being ignored in generic aliases.
     # mypy#16535 shows TypeVar bound errors with Literal.
-    # T = TypeVar("T", bound=PureCVState | HermitianCVOp) # type: ignore
-    # def caller(state: T, func: Callable[T]):
-    #    return min(state, func, rest)
+    T = TypeVar("T", bound=PureCVState | HermitianCVOp)  # type: ignore
 
-
-    func = compute_obj_func_pure
+    # cannot name fields here so warning on positional
+    def caller(
+        state: T, func: Callable[[float, float, float, float, int, T, Method, int | None], float]
+    ) -> OptimizeResult:
+        return basinhopping(
+            lambda params: -func(
+                params[0],
+                params[1],
+                params[2],
+                params[3],
+                max_rank,
+                state,
+                optim_params.method,
+                optim_params.target_cutoff,
+            ),
+            x0=optim_params.x0,
+            niter=optim_params.niter,  # default niter = 100
+            rng=optim_params.seed,
+            # **kwargs,  # other kwargs like rng (seed, or random number generator)
+            minimizer_kwargs=minimizer_kwargs,  # type: ignore
+        )
 
     if isinstance(target_state, HermitianCVOp):
         if isinstance(target_state.data, Matrix):
@@ -265,30 +281,30 @@ def compute_sup_fidelity(
             warnings.warn(
                 "A `GaussianState` or `LCGaussianState` was detected in the pure-state decomposition. Overriding your `method` choice for this state if it wasn't `gaussian`."
             )
-        func = compute_obj_func_mixed
-
-
+        return caller(target_state, compute_obj_func_mixed)
 
     # can always duplicate the call directly but looks bad...
 
+    else:
+        return caller(target_state, compute_obj_func_pure)
     # TODO: directly use a `GaussParam` object?
-    return basinhopping(
-        lambda params: -func(
-            x=params[0],
-            y=params[1],
-            r=params[2],
-            theta=params[3],
-            max_rank=max_rank,
-            target_state=target_state,
-            target_cutoff=optim_params.target_cutoff,
-            method=optim_params.method,
-        ),
-        x0=optim_params.x0,
-        niter=optim_params.niter,  # default niter = 100
-        rng=optim_params.seed,
-        # **kwargs,  # other kwargs like rng (seed, or random number generator)
-        minimizer_kwargs=minimizer_kwargs,  # type: ignore
-    )
+    # return basinhopping(
+    #     lambda params: -func(
+    #         x=params[0],
+    #         y=params[1],
+    #         r=params[2],
+    #         theta=params[3],
+    #         max_rank=max_rank,
+    #         target_state=target_state,
+    #         target_cutoff=optim_params.target_cutoff,
+    #         method=optim_params.method,
+    #     ),
+    #     x0=optim_params.x0,
+    #     niter=optim_params.niter,  # default niter = 100
+    #     rng=optim_params.seed,
+    #     # **kwargs,  # other kwargs like rng (seed, or random number generator)
+    #     minimizer_kwargs=minimizer_kwargs,  # type: ignore
+    # )
 
 
 # compute stellar_profile.
@@ -309,3 +325,4 @@ def compute_sup_fidelity(
 # x0 = [5, 0]  # Initial guess within the bounds
 
 # result = basinhopping(objective, x0, minimizer_kwargs=minimizer_kwargs)
+    return StellarProfile(state=target_state, ranks=ranks, fidelities=fidelities, optim_params=optim_params)
