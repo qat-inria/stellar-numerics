@@ -4,9 +4,11 @@ References:
 [3] Chabaud et al., https://arxiv.org/abs/1907.11009 (2020)
 """
 
+from typing import TypeVar
 import warnings
 from math import pi as π
-from typing import Any
+from typing import Any, Callable
+from hypothesis import target
 from typing_extensions import assert_never  # for 3.10 compatibility
 # for 3.13 from typing import assert_never works
 
@@ -27,13 +29,94 @@ from stellar.params import GaussianParameters, Method, OptimisationParameters
 # whatever the state we try just care about it's stellar rank?? Eq. 9 https://arxiv.org/abs/2011.04320
 
 
-def compute_obj_func(
+def compute_obj_func_pure(
     x: float,
     y: float,
     r: float,
     theta: float,
     max_rank: int,
-    target_state: PureCVState | HermitianCVOp,
+    target_state: PureCVState,
+    method: Method,
+    target_cutoff: int | None = None,
+) -> float:
+    """function to be optimized in the pure_state case
+    From [2] Thm 1
+
+    Parameters
+    ----------
+    x : float
+        real part of displacement
+    y : float
+        imaginary part of displacement
+    r : float
+        modulus of squeezing
+    theta : float
+        phase of squeezing
+    max_rank : int
+        stellar rank to compute
+    target_state : CVState
+        target state
+    target_cutoff : int
+        cutoff to use when computing the target state's statevector
+
+    Returns
+    -------
+    float
+        the value of the stellar robustness/fidelity
+
+    Raises
+    ------
+    NotImplementedError
+        only works using Fock statevectors so far
+    """
+
+    # This is common to all cases
+    gauss_params = GaussianParameters(x=x, y=y, r=r, theta=theta)
+
+    # TODO here add support for mixed states. either iterate on the decomp or on the matrix
+    # decomp is just a recursive call to this fonction? Can indeed optimise separately
+    # but maybe sum everything then optimize
+
+    g = GaussianOp(gauss_params)
+
+    # print(f"working on pur state {target_state}")
+    # print(isinstance(target_state, (GaussianState, LCGaussianState)))
+
+    # gaussian method
+    if method == Method.gaussian:
+        if not isinstance(target_state, (GaussianState, LCGaussianState)):
+            raise TypeError(f"The {target_state=} is not a `GaussianState`or `LCGaussianState`.")
+        state = g @ target_state
+        # now cutoff has to be max_rank
+        return np.sum(np.abs(state.get_statevector(cutoff=max_rank).statevector) ** 2)
+
+    elif method == Method.fock:
+        # maybe redundant since checked when calling statevector
+        if target_cutoff is None:
+            raise ValueError("Cannot compute in the Fock basis if no cutoff is given")
+        # common to both pure and composite cases
+
+        # ignore type error since handes at initialisation of OptimisationParameter object
+        # cutoff cannot be None
+        # this adds new fields
+        g.build_matrix_fock_basis(bra_cutoff=target_cutoff, ket_cutoff=max_rank)  # type: ignore
+
+        # vectorized! result is a one dim vector of dim ket_cutoff
+        return np.sum(
+            np.abs(target_state.get_statevector(cutoff=target_cutoff).statevector.conj() @ g.matrix_fock_basis) ** 2
+        )
+
+    else:
+        assert_never(method)
+
+
+def compute_obj_func_mixed(
+    x: float,
+    y: float,
+    r: float,
+    theta: float,
+    max_rank: int,
+    target_state: HermitianCVOp,
     method: Method,
     target_cutoff: int | None = None,
 ) -> float:
@@ -75,74 +158,36 @@ def compute_obj_func(
     # decomp is just a recursive call to this fonction? Can indeed optimise separately
     # but maybe sum everything then optimize
 
-    g = GaussianOp(gauss_params)
+    # g = GaussianOp(gauss_params)
+    # just compute the sum over the pure state decomposition of the mixed state
+    # adjust the method type depending on the state?
 
-    # First, check if pure state or operator
-
-    # Pure state case
-    if not isinstance(target_state, HermitianCVOp):
-        # gaussian method
-        if method == Method.gaussian:
-            if not isinstance(target_state, (GaussianState, LCGaussianState)):
-                raise TypeError(f"The {target_state=} is not a `GaussianState`or `LCGaussianState`.")
-            state = g @ target_state
-            # now cutoff has to be max_rank
-            return np.sum(np.abs(state.get_statevector(cutoff=max_rank).statevector) ** 2)
-
-        elif method == Method.fock:
-            # maybe redundant since checked when calling statevector
-            if target_cutoff is None:
-                raise ValueError("Cannot compute in the Fock basis if no cutoff is given")
-            # common to both pure and composite cases
-
-            # ignore type error since handes at initialisation of OptimisationParameter object
-            # cutoff cannot be None
-            # this adds new fields
-            g.build_matrix_fock_basis(bra_cutoff=target_cutoff, ket_cutoff=max_rank)  # type: ignore
-
-            # vectorized! result is a one dim vector of dim ket_cutoff
-            return np.sum(
-                np.abs(target_state.get_statevector(cutoff=target_cutoff).statevector.conj() @ g.matrix_fock_basis) ** 2
-            )
+    # TODO better way of doing this? No longer the choice here. Whereas can have it in pure state case.
+    def method_picker(state: PureCVState) -> Method:
+        if isinstance(state, (GaussianState, LCGaussianState)):
+            return Method.gaussian
 
         else:
-            assert_never(method)
+            return method
 
-    # Operator case (density matrix or general hermitian operator)
+    print(f"{target_state.data=}")
 
-    # sure to have a decomposition since checked at the level above
-    elif isinstance(target_state, HermitianCVOp):
-        # just compute the sum over the pure state decomposition of the mixed state
-        # adjust the method type depending on the state?
-
-        # TODO better way of doing this? No longer the choice here. Whereas can have it in pure state case.
-        def method_picker(state: PureCVState) -> Method:
-            if isinstance(state, (GaussianState, LCGaussianState)):
-                return Method.gaussian
-
-            else:
-                return method
-
-        # TODO: use optim params here too?
-        return sum(
-            coeff
-            * compute_obj_func(
-                x=gauss_params.x,
-                y=gauss_params.y,
-                r=gauss_params.r,
-                theta=gauss_params.theta,
-                max_rank=max_rank,
-                target_state=state,
-                method=method_picker(state),
-                target_cutoff=target_cutoff,
-            )  # mypy yells... silence that due to checking existence of decomposition a level higher
-            for coeff, state in target_state.data
+    # TODO: use optim params here too?
+    return sum(
+        coeff
+        * compute_obj_func_pure(
+            x=gauss_params.x,
+            y=gauss_params.y,
+            r=gauss_params.r,
+            theta=gauss_params.theta,
+            max_rank=max_rank,
+            target_state=state,
+            method=method_picker(state),
+            target_cutoff=target_cutoff,
+        )  # mypy yells... silence that due to checking existence of decomposition a level higher
+        for coeff, state in target_state.data
         )
-    # safe since decomposition existence checked at the level above
-    else:
-        assert False
-    # no need for else statement, mypy statically checks that the Method Enum is exhausted
-    # or assert_never(method)?
+
 
 
 # need have non custom objects as arguments for scipy minimize
@@ -200,6 +245,17 @@ def compute_sup_fidelity(
     # if optim_params.method == Method.gaussian and optim_params.target_cutoff is not None:
     #     warnings.warn("`target_cutoff` will be ignored using the `gaussian` method.")
 
+    # TODO fix that. Why so any problems??
+    # mypy issue ?
+    # mypy#10445 reports TypeVar bounds being ignored in generic aliases.
+    # mypy#16535 shows TypeVar bound errors with Literal.
+    # T = TypeVar("T", bound=PureCVState | HermitianCVOp) # type: ignore
+    # def caller(state: T, func: Callable[T]):
+    #    return min(state, func, rest)
+
+
+    func = compute_obj_func_pure
+
     if isinstance(target_state, HermitianCVOp):
         if isinstance(target_state.data, Matrix):
             raise NotImplementedError("Can only optimize on operators built from a pure-state decomposition for now.")
@@ -209,10 +265,15 @@ def compute_sup_fidelity(
             warnings.warn(
                 "A `GaussianState` or `LCGaussianState` was detected in the pure-state decomposition. Overriding your `method` choice for this state if it wasn't `gaussian`."
             )
+        func = compute_obj_func_mixed
 
-    # TODO: directly use a `GaussParam` object.
+
+
+    # can always duplicate the call directly but looks bad...
+
+    # TODO: directly use a `GaussParam` object?
     return basinhopping(
-        lambda params: -compute_obj_func(  # type: ignore
+        lambda params: -func(
             x=params[0],
             y=params[1],
             r=params[2],
