@@ -7,7 +7,8 @@ import functools
 from dataclasses import dataclass
 from math import ceil, cosh, exp, factorial, isclose, log, sqrt, tanh, comb
 from math import pi as π
-from typing import Iterator, TypeAlias
+from typing import Generic, Iterator, TypeAlias, TypeVar
+import warnings
 
 
 import numpy as np
@@ -60,37 +61,37 @@ class Statevector:
         self.statevector = self.statevector / self.norm
 
 
-class DensityMatrix:
-    """Class for statevectors in the Fock basis"""
+class Matrix:
+    """Class for matrices (density matrices or more genral operators) in the Fock basis"""
 
     # same type as statevector since no way to type annotate number of dimensions
-    densitymatrix: StatevectorData
+    matrix: StatevectorData
 
     def __init__(self, data: StatevectorData) -> None:
         if not isinstance(data, np.ndarray):
-            raise TypeError("Target densitymatrix array has to be a numpy array.")
+            raise TypeError("Target matrix array has to be a numpy array.")
         if not data.ndim == 2:
-            raise ValueError("Target density matrix array has to be a matrix.")
+            raise ValueError("Target matrix array has to be a matrix.")
         if not data.shape[0] == data.shape[1]:
-            raise ValueError("Target density matrix array has to be a square matrix.")
+            raise ValueError("Target matrix array has to be a square matrix.")
 
         # check psdness and hermiticity?
 
-        self.densitymatrix = data
-        self.dims = self.densitymatrix.shape  # safe since checked that array is 1-dimensional
+        self.matrix = data
+        self.dims = self.matrix.shape  # safe since checked that array is 1-dimensional
 
     def __repr__(self):
-        return f"DensityMatrix({self.densitymatrix})"
+        return f"DensityMatrix({self.matrix})"
 
     @property
     def norm(self) -> float | complex:
-        return np.trace(self.densitymatrix)
+        return np.trace(self.matrix)
 
     @property
     def purity(self) -> float:
         if not self.is_normalized():
             self.normalize()
-        return np.trace(self.densitymatrix @ self.densitymatrix)
+        return np.trace(self.matrix @ self.matrix)
 
     # default tolerance is 1e-9. Try 1e-5.
     def is_normalized(self) -> bool:
@@ -101,22 +102,22 @@ class DensityMatrix:
     def normalize(self) -> None:
         if np.isclose(self.norm, 0):
             raise ValueError("Cannot normalize the zero matrix.")
-        self.densitymatrix = (self.densitymatrix / self.norm).astype(
+        self.matrix = (self.matrix / self.norm).astype(
             np.complex128
         )  # type de scalaire pas tableau. pas infer type complex128/float ou cpx
 
 
 # CVState abstrait puis concret?
 @dataclass(frozen=True)
-class CVState:
+class PureCVState:
     statevector: Statevector | None = None
     is_gaussian: bool | None = None
 
     # need same interface for all child classes
     # disregard cutoff
     # all child classes can raise an exception
-    # child classes that require a cutoff have to raise a ValueError to eep signature matching
-    # inheritance: all method called from A have to be called from B derived from B
+    # child classes that require a cutoff have to raise a ValueError to keep signature matching
+    # inheritance: all method called from A have to be called from B, derived from B
     def get_statevector(self, cutoff: int | None = None) -> Statevector:
         if self.statevector is None:
             raise ValueError("No statevector provided.")
@@ -125,17 +126,81 @@ class CVState:
 
     # since all states have get_statevector method
     # this should be fine
-    def get_densitymatrix(self, cutoff: int | None = None) -> DensityMatrix:
+    def get_densitymatrix(self, cutoff: int | None = None) -> Matrix:
         # NOTE this should work?
         # if self.statevector is None:
         #     raise ValueError("No statevector provided.")
-        return DensityMatrix(
+        return Matrix(
             np.outer(
-                self.get_statevector(cutoff=cutoff).statevector.conjugate(),
                 self.get_statevector(cutoff=cutoff).statevector,
+                self.get_statevector(cutoff=cutoff).statevector.conjugate(),
             ).astype(np.complex128)  # pas un cast. outer ne guarantie pas la précision du complexe mais type oui
         )  # typing.cast python : impose au typeur de croire que 'est d'un type donné
         # TODO type stuff here
+
+
+# TODO composite state hierarchy and abstract classes to distinguish witnesses from DM
+# get_DM -> get_operator return get_DM for mixed states
+# want init dm or list
+
+PureDecompositionData: TypeAlias = tuple[tuple[float | int, PureCVState], ...]
+
+# need immutable (or frozenset/abstractset)
+
+
+# init directly by matrix or pure state decomposition (not check unit trace and psdness)
+# not that for statevectors, the get_statevec method doesn't modify in place the field but is functional so don't do it here either
+# TODO: when inputting data directly, do it as arrays, not custom objects, it's cumbersome
+# TODO for the instantiation (decomp vs matrix) use an Enum to exhaust all cases and disjunction
+# TODO change to HermitianCVOperator
+T = TypeVar("T", bound=Matrix | PureDecompositionData)
+
+
+@dataclass(frozen=True)
+class HermitianCVOp(Generic[T]):
+    """a class for composite states ie Hermitian operators. Initialised either by providing a `DensityMatrix` (OperatorMatrix instead TODO) object or a `CompositeStateData` (pure state decomposition)
+    For now this represents ANY ``composite'' state (i.e. mixture of pure states) so not necessarily a state.
+    Only real number allowed in the decomposition since Hermitian.
+
+    Raises
+    ------
+    ValueError
+        _description_
+    """
+
+    data: T  # Matrix | PureDecompositionData
+
+    def __post_init__(self) -> None:
+        if (
+            not isinstance(self.data, Matrix) and len(self.data) == 1
+        ):  # if first predicate is true second makes sense (can be checked)
+            # cannot be none here none type ignore is safe
+            warnings.warn("A composite state with a single pure state in its decomposition is just a pure state.")
+
+    def get_densitymatrix(self, cutoff: int | None = None) -> Matrix:
+        if not isinstance(self.data, Matrix):
+            # compute from decomposition
+            # apparently need explicit list conversion for sum to work
+            data = np.sum(
+                [
+                    coeff
+                    * np.outer(
+                        state.get_statevector(cutoff=cutoff).statevector,
+                        state.get_statevector(cutoff=cutoff).statevector.conjugate(),
+                    ).astype(np.complex128)
+                    for coeff, state in self.data
+                ],
+                axis=0,
+            )
+
+            return Matrix(data)
+
+        else:
+            return self.data
+
+    # TODO think about it since not sure to have a decomposition
+    # def __iter__(self) -> Iterator[tuple[complex, GaussianState]]:
+    #     return iter(self.decomposition)
 
 
 # Thierry's comments 06-27_2025
@@ -162,7 +227,7 @@ class CVState:
 
 # puisque GaussianState est gelé, il faut utiliser object.__setattr__ pour initialiser params.
 @dataclass(frozen=True, init=False)  # manually define __init__ for order parameter order reasons
-class GaussianState(CVState):
+class GaussianState(PureCVState):
     # one un type pour un champ au niveau de la classe
     # dataclass fait le init en plus
     # mypy voit pas init = False
@@ -175,7 +240,7 @@ class GaussianState(CVState):
 
     @functools.cache
     @typing_extensions.override
-    def get_statevector(self, cutoff: int | None = None) -> Statevector:
+    def get_statevector(self, cutoff: int | None = None) -> Statevector:  # signature has to match since override
         """returns the statevector of a `GaussianState` object. From Chabaud draft Eq. [F15]
 
         Parameters
@@ -247,7 +312,7 @@ class GaussianState(CVState):
 
 
 @dataclass(frozen=True, init=False)  # manually define __init__ for order parameter order reasons
-class FockState(CVState):
+class FockState(PureCVState):
     n: int  # type: ignore
 
     def __init__(self, n: int):
@@ -448,7 +513,7 @@ LCGaussianData: TypeAlias = tuple[tuple[complex, GaussianState], ...]  # need im
 
 
 @dataclass(frozen=True, init=False)
-class LCGaussianState(CVState):
+class LCGaussianState(PureCVState):
     """ "A class for handling superpositions of Gaussian states like cat states"
 
     Parameters
@@ -574,8 +639,8 @@ class CatState(LCGaussianState):  # type: ignore[misc]
         object.__setattr__(self, "parity", parity)
 
 
-@dataclass(frozen=True, init=False)  # manually define __init__ for order parameter order reasons
-class BinomialState(CVState):
+@dataclass(frozen=True, init=False)  # manually define __init__ for parameter order reasons
+class BinomialState(PureCVState):
     """After [CDraft] Eq. (F1)) and Michael et al. PHYSICAL REVIEW X 6, 031006 (2016)
 
     Parameters
@@ -653,7 +718,7 @@ class BinomialState(CVState):
 
 
 class GKPState(LCGaussianState):  # type: ignore[misc]
-    """ "A class for handling approximate square Gottesman-Kitaev-Preskil states"
+    """A class for handling approximate square Gottesman-Kitaev-Preskil states
 
     Standard approx: replace position eigenstates by their finitely-squeezed versions
     and add a Gaussian filter enveloppe
@@ -740,3 +805,22 @@ class GKPState(LCGaussianState):  # type: ignore[misc]
         object.__setattr__(self, "kappa", kappa)
         object.__setattr__(self, "delta", delta)
         object.__setattr__(self, "tol", tol)
+
+
+@dataclass(frozen=True, init=False)
+class TruncatedParityOp(HermitianCVOp):
+    r"""Class for truncated parity operator
+
+    :math: \Pi_n = \sum_{k=0}^n (-1)^k \vert k \rangle\langle k\vert
+
+    As usual convention is cutoff = highest Fock state reached.
+
+
+    Parameters
+    ----------
+    cutoff (int): highest Fock number reached in the decomposition
+    """
+
+    def __init__(self, cutoff: int) -> None:
+        decomp: PureDecompositionData = tuple(((-1) ** k, FockState(n=k)) for k in range(0, cutoff + 1))
+        super().__init__(data=decomp)

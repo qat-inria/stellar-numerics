@@ -129,8 +129,7 @@ def test_LCGaussian_op_disp_vac(op_disp: complex, state_disp: complex) -> None:
         )
     )
 
-    op = GaussianOp(
-        GaussianParameters(x=op_disp.real, y=op_disp.imag, r=0, theta=0))
+    op = GaussianOp(GaussianParameters(x=op_disp.real, y=op_disp.imag, r=0, theta=0))
 
     output = op @ state  # cast(LCGaussianState, op @ state)
 

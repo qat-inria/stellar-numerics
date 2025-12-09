@@ -11,8 +11,10 @@ from stellar.cvstates import (
     BinomialState,
     CatState,
     CoherentState,
-    CVState,
-    DensityMatrix,
+    PureDecompositionData,
+    HermitianCVOp,
+    PureCVState,
+    Matrix,
     FockState,
     GKPState,
     GaussianState,
@@ -20,6 +22,7 @@ from stellar.cvstates import (
     SqueezedVacuumState,
     Statevector,
     StatevectorData,
+    TruncatedParityOp,
 )
 from stellar.params import GaussianParameters
 from tests.strategies import complex_arrays_st, gaussian_parameters_st, tuple_ints_fock_cutoff_st
@@ -31,22 +34,22 @@ logger.info("Starting CV state tests")
 
 @given(complex_arrays_st())
 def test_cvstate_init_success(data: StatevectorData) -> None:
-    state = CVState(Statevector(data))
+    state = PureCVState(Statevector(data))
     assert state.is_gaussian is None
     assert state.statevector is not None
 
 
 def test_cvstate_init_nodata() -> None:
-    state = CVState(is_gaussian=True)
+    state = PureCVState(is_gaussian=True)
     print(state.is_gaussian)
     assert state.is_gaussian
 
 
 def test_gstate_init_success() -> None:
     gstate = GaussianState(GaussianParameters(1.0, 2.0, 2.5, 0.37))
-    print(isinstance(gstate, GaussianState), isinstance(gstate, CVState))
+    print(isinstance(gstate, GaussianState), isinstance(gstate, PureCVState))
     assert isinstance(gstate, GaussianState)
-    assert isinstance(gstate, CVState)
+    assert isinstance(gstate, PureCVState)
     assert isinstance(gstate.params, GaussianParameters)
     assert gstate.is_gaussian
 
@@ -56,7 +59,7 @@ def test_cohstate_init_success(amp: complex) -> None:
     cstate = CoherentState(amp)
     # print(cstate.is_gaussian, cstate.params, cstate.amplitude)
     assert isinstance(cstate, GaussianState)
-    assert isinstance(cstate, CVState)
+    assert isinstance(cstate, PureCVState)
     assert isinstance(cstate, CoherentState)
     assert isinstance(cstate.params, GaussianParameters)
     assert isinstance(cstate.amplitude, (float, complex))
@@ -186,16 +189,13 @@ def test_DM_fock(data: tuple[int, int]) -> None:
     state = FockState(n=n)
     dm = state.get_densitymatrix(cutoff=cutoff)
 
-    assert isinstance(dm, DensityMatrix)
+    assert isinstance(dm, Matrix)
     assert isclose(np.real_if_close(dm.norm), 1)
     assert dm.is_normalized()  # TODO type stuff here
     assert dm.dims == (cutoff + 1,) * 2
     assert isclose(np.real_if_close(dm.purity), 1)
-    assert isclose(dm.densitymatrix[n, n].imag, 0)
-    assert isclose(np.real_if_close(dm.densitymatrix[n, n]), 1)
-
-
-# test DensityMatrix
+    assert isclose(dm.matrix[n, n].imag, 0)
+    assert isclose(np.real_if_close(dm.matrix[n, n]), 1)
 
 
 # tests LCGaussian
@@ -342,3 +342,76 @@ def test_GKP_init() -> None:
     GKPState()
 
     # check other parameters too.
+
+
+def test_single_state_decomp() -> None:
+    """Check if instantiating with a single pure state results in a warning."""
+    decomp: PureDecompositionData = ((1.0, PureCVState(Statevector(np.array([0, 1], dtype=np.complex128)))),)
+    with pytest.warns(match="A composite state with a single pure state in its decomposition is just a pure state."):
+        op = HermitianCVOp(data=decomp)
+        print(type(op.data) is PureDecompositionData)
+
+
+def test_get_dm_mixed_vac_decomp_state() -> None:
+    #
+    """test getting density matrix for mixture of fock states
+    with (1/4) |0><0| + (1/6) |2><2| + (7/12) |3><3| using the pure decomposition
+    """
+    n = 3
+    cutoff = n
+
+    decomp: PureDecompositionData = ((1 / 4, FockState(n=0)), (1 / 6, FockState(n=n - 1)), (7 / 12, FockState(n=n)))
+    st = HermitianCVOp(data=decomp)
+
+    dm = st.get_densitymatrix(cutoff=cutoff).matrix
+
+    expected_dm = np.zeros((cutoff + 1,) * 2, dtype=np.complex128)
+    # modify in place
+    expected_dm[0, 0] = 1 / 4
+    expected_dm[n - 1, n - 1] = 1 / 6
+    expected_dm[n, n] = 7 / 12
+
+    # print(f"{dm=}\n")
+    # print(f"{expected_dm=} \n")
+
+    assert isclose(np.real_if_close(dm.trace()), 1)
+    np.testing.assert_array_almost_equal(dm, expected_dm)
+
+
+def test_get_dm_mixed_vac_mat_state() -> None:
+    #
+    """test getting density matrix for mixture of fock states
+    with (1/4) |0><0| + (1/6) |2><2| + (7/12) |3><3|
+    input the matrix directly. Check identity.
+    """
+    n = 3
+    cutoff = n
+
+    expected_dm = np.zeros((cutoff + 1,) * 2, dtype=np.complex128)
+    # modify in place
+    expected_dm[0, 0] = 1 / 4
+    expected_dm[n - 1, n - 1] = 1 / 6
+    expected_dm[n, n] = 7 / 12
+
+    st = HermitianCVOp(data=Matrix(expected_dm))
+
+    dm = st.get_densitymatrix(cutoff=cutoff).matrix
+
+    # print(f"{dm=}\n")
+    # print(f"{expected_dm=} \n")
+
+    assert isclose(np.real_if_close(dm.trace()), 1)
+    np.testing.assert_array_almost_equal(dm, expected_dm)
+
+
+@pytest.mark.parametrize("cutoff", range(1, 5))
+def test_trunc_parity(cutoff: int) -> None:
+    par_op = TruncatedParityOp(cutoff=cutoff)
+
+    dm = par_op.get_densitymatrix(cutoff=cutoff).matrix
+
+    # diag = np.array([(-1)**k for k in range(0, cutoff+1)], dtype=np.complex128)
+    expected_dm = np.diag(np.array([(-1) ** k for k in range(0, cutoff + 1)], dtype=np.complex128))
+
+    assert dm.shape == (cutoff + 1,) * 2
+    np.testing.assert_array_almost_equal(dm, expected_dm)

@@ -2,6 +2,8 @@
 from dataclasses import dataclass
 from cmath import exp
 from enum import Enum, auto
+import warnings
+
 
 ### Gaussian parameters
 @dataclass(frozen=True)  # need frozen to implement __hash__ method for cacheing
@@ -40,6 +42,7 @@ class GaussianParameters:
     def squeezing(self) -> complex:
         return self.r * exp(1j * self.theta)
 
+
 ### Optimisation parameters
 #
 #
@@ -47,8 +50,11 @@ class GaussianParameters:
 # change name OptimMethod?
 class Method(Enum):
     """Enumeration of the methods to compute the objective function. Only 2 so far."""
+
     fock = auto()
     gaussian = auto()
+
+
 @dataclass(frozen=True)
 class OptimisationParameters:
     """A dataclass for recording and serializing optimization parameters"""
@@ -68,3 +74,6 @@ class OptimisationParameters:
         if self.method == Method.fock:
             if self.target_cutoff is None:
                 raise ValueError("cutoff cannot be None when computing in the Fock basis.")
+
+        if self.method == Method.gaussian and self.target_cutoff is not None:
+            warnings.warn("`target_cutoff` will be ignored using the `gaussian` method.")

@@ -3,7 +3,6 @@ from math import pi as π
 
 import hypothesis.extra.numpy as hn
 import numpy as np
-import numpy.typing as npt
 from hypothesis import strategies as st
 
 from stellar.params import GaussianParameters
