@@ -8,7 +8,6 @@ from typing import TypeVar
 import warnings
 from math import pi as π
 from typing import Any, Callable
-from hypothesis import target
 from typing_extensions import assert_never  # for 3.10 compatibility
 # for 3.13 from typing import assert_never works
 
@@ -21,7 +20,8 @@ from scipy.optimize import (
     minimize,  # noqa: F401
 )
 
-from stellar.cvstates import GaussianState, HermitianCVOp, LCGaussianState, Matrix, PureCVState
+from stellar.cvstates import GaussianState, HermitianCVOp, LCGaussianState, Matrix, PureCVState, PureDecompositionData
+from stellar.data import StellarProfile
 from stellar.gaussian import GaussianOp
 from stellar.params import GaussianParameters, Method, OptimisationParameters
 
@@ -88,7 +88,7 @@ def compute_obj_func_pure(
             raise TypeError(f"The {target_state=} is not a `GaussianState`or `LCGaussianState`.")
         state = g @ target_state
         # now cutoff has to be max_rank
-        return np.sum(np.abs(state.get_statevector(cutoff=max_rank).statevector) ** 2)
+        return -np.sum(np.abs(state.get_statevector(cutoff=max_rank).statevector) ** 2)
 
     elif method == Method.fock:
         # maybe redundant since checked when calling statevector
@@ -102,7 +102,7 @@ def compute_obj_func_pure(
         g.build_matrix_fock_basis(bra_cutoff=target_cutoff, ket_cutoff=max_rank)  # type: ignore
 
         # vectorized! result is a one dim vector of dim ket_cutoff
-        return np.sum(
+        return -np.sum(
             np.abs(target_state.get_statevector(cutoff=target_cutoff).statevector.conj() @ g.matrix_fock_basis) ** 2
         )
 
@@ -116,7 +116,7 @@ def compute_obj_func_mixed(
     r: float,
     theta: float,
     max_rank: int,
-    target_state: HermitianCVOp,
+    target_state: HermitianCVOp[PureDecompositionData],
     method: Method,
     target_cutoff: int | None = None,
 ) -> float:
@@ -170,9 +170,10 @@ def compute_obj_func_mixed(
         else:
             return method
 
-    print(f"{target_state.data=}")
+    # print(f"{target_state.data=}")
 
     # TODO: use optim params here too?
+    # NOTE no minus sign here since included in the pure state case
     return sum(
         coeff
         * compute_obj_func_pure(
@@ -233,10 +234,6 @@ def compute_sup_fidelity(
     bounds = Bounds([-np.inf, -np.inf, 1e-5, 0], [np.inf, np.inf, 15, 2 * π])
 
     # no typing for this object either in scipy or scipy-stubs
-    minimizer_kwargs: dict[str, Any] = {
-        # "method": "L-BFGS-B",
-        "bounds": bounds
-    }
 
     # better to do these checks at this level since will avoid repetition in the logs
 
@@ -244,27 +241,31 @@ def compute_sup_fidelity(
     # if optim_params.method == Method.gaussian and optim_params.target_cutoff is not None:
     #     warnings.warn("`target_cutoff` will be ignored using the `gaussian` method.")
 
-    # TODO fix that. Why so any problems??
-    # mypy issue ?
-    # mypy#10445 reports TypeVar bounds being ignored in generic aliases.
-    # mypy#16535 shows TypeVar bound errors with Literal.
-    T = TypeVar("T", bound=PureCVState | HermitianCVOp)  # type: ignore
+    T = TypeVar("T", bound=PureCVState | HermitianCVOp)
 
     # cannot name fields here so warning on positional
     def caller(
         state: T, func: Callable[[float, float, float, float, int, T, Method, int | None], float]
     ) -> OptimizeResult:
-        return basinhopping(
-            lambda params: -func(
-                params[0],
-                params[1],
-                params[2],
-                params[3],
+        # def explicite partial funct
+        # params from above scope``
+        # HERE
+        minimizer_kwargs: dict[str, Any] = {
+            # "method": "L-BFGS-B",
+            "bounds": bounds,
+            "args": (
                 max_rank,
                 state,
                 optim_params.method,
                 optim_params.target_cutoff,
             ),
+        }
+
+        def partial_func(params, *args):  # no types to avoind problem in basinhoppin?
+            return func(params[0], params[1], params[2], params[3], *args)
+
+        return basinhopping(
+            partial_func,
             x0=optim_params.x0,
             niter=optim_params.niter,  # default niter = 100
             rng=optim_params.seed,
@@ -325,4 +326,16 @@ def compute_sup_fidelity(
 # x0 = [5, 0]  # Initial guess within the bounds
 
 # result = basinhopping(objective, x0, minimizer_kwargs=minimizer_kwargs)
+
+
+def compute_profile(
+    ranks: list[int], target_state: PureCVState | HermitianCVOp, optim_params: OptimisationParameters
+) -> StellarProfile:
+    fidelities: list[float] = []
+
+    for rank in ranks:
+        fidelities.append(
+            -compute_sup_fidelity(max_rank=rank, target_state=target_state, optim_params=optim_params).fun
+        )
+
     return StellarProfile(state=target_state, ranks=ranks, fidelities=fidelities, optim_params=optim_params)

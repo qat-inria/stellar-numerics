@@ -7,7 +7,7 @@ import functools
 from dataclasses import dataclass
 from math import ceil, cosh, exp, factorial, isclose, log, sqrt, tanh, comb
 from math import pi as π
-from typing import Iterator, TypeAlias
+from typing import Generic, Iterator, TypeAlias, TypeVar
 import warnings
 
 
@@ -153,8 +153,11 @@ PureDecompositionData: TypeAlias = tuple[tuple[float | int, PureCVState], ...]
 # TODO: when inputting data directly, do it as arrays, not custom objects, it's cumbersome
 # TODO for the instantiation (decomp vs matrix) use an Enum to exhaust all cases and disjunction
 # TODO change to HermitianCVOperator
+T = TypeVar("T", bound=Matrix | PureDecompositionData)
+
+
 @dataclass(frozen=True)
-class HermitianCVOp:
+class HermitianCVOp(Generic[T]):
     """a class for composite states ie Hermitian operators. Initialised either by providing a `DensityMatrix` (OperatorMatrix instead TODO) object or a `CompositeStateData` (pure state decomposition)
     For now this represents ANY ``composite'' state (i.e. mixture of pure states) so not necessarily a state.
     Only real number allowed in the decomposition since Hermitian.
@@ -165,7 +168,7 @@ class HermitianCVOp:
         _description_
     """
 
-    data: Matrix | PureDecompositionData
+    data: T  # Matrix | PureDecompositionData
 
     def __post_init__(self) -> None:
         if (

@@ -30,7 +30,7 @@ default:
     - conda activate stellar-numerics
   tags:
     - ci.inria.fr # For using shared runners
-    - large # For selecting small shared runners
+    - large # For selecting large shared runners. Needed for big tests
 
 test:
   stage: test

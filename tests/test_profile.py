@@ -232,10 +232,11 @@ def test_fock_state_mixed(n: int, rank: int) -> None:
     assert isclose(results.fun, results_mixed.fun, abs_tol=1e-8)
 
 
-# TODO treat GKP separately
 @pytest.mark.parametrize(
     ("tgt_state", "rank"),
-    product([CoherentState(amplitude=-3.19 + 0.12j), CatState(amplitude=6.5 - 0.529j, parity=True)], range(0, 5)),
+    product(
+        [CoherentState(amplitude=-3.19 + 0.12j), CatState(amplitude=6.5 - 0.529j, parity=True), GKPState()], range(0, 5)
+    ),
 )
 def test_optim_gauss_state_mixed(tgt_state: PureCVState, rank: int) -> None:
     decomp: PureDecompositionData = ((1.0, tgt_state),)  # don't forget the comma!
@@ -245,11 +246,9 @@ def test_optim_gauss_state_mixed(tgt_state: PureCVState, rank: int) -> None:
     # if Fock, will be overriden
     # if gaussian will be overriden and cutoff ignored
 
-    # pars = OptimisationParameters(method=Method.gaussian, seed=421, niter=350)
-    # GKPState()
-
-    # don't are convergence to true value just want to check consistency between the two methods
-    pars = OptimisationParameters(method=Method.gaussian)
+    # fix the seed for reproducibility.
+    # Fixing it is necessary only for the default GKPState that maybe be stuck in local optima.
+    pars = OptimisationParameters(method=Method.gaussian, seed=421)
 
     results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, optim_params=pars)
     print(f"{results.fun=} {results.x} {results.success}")
@@ -284,9 +283,6 @@ def test_optim_ngauss_state_mixed(tgt_state: PureCVState, rank: int) -> None:
 
     print(f"{results_mixed.fun=} {results_mixed.x} {results_mixed.success}")
     assert isclose(results.fun, results_mixed.fun, abs_tol=1e-8)
-
-
-# TODO add atol to make the CI pass?
 
 
 def test_warning_mixed() -> None:
