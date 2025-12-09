@@ -7,7 +7,10 @@ from pathlib import Path
 import json
 
 
-# TODO set init manually to do the repr internally
+# TODO use a mapping instead of two separate lists
+# quick fix: dict(zip(ranks, fidelities))
+# TODO add __iter__ function
+# Todo add draw( function)
 @dataclass(frozen=True)
 class StellarProfile:
     """A dataclass for stellar profiles allowing manipulation and serialization to json."""

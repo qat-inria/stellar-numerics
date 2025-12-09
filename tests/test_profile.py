@@ -15,8 +15,9 @@ from stellar.cvstates import (
     PureCVState,
     PureDecompositionData,
 )
+from stellar.data import StellarProfile
 from stellar.params import GaussianParameters, Method, OptimisationParameters
-from stellar.profile import compute_sup_fidelity
+from stellar.profile import compute_profile, compute_sup_fidelity
 
 
 def test_optimize() -> None:
@@ -241,7 +242,7 @@ def test_fock_state_mixed(n: int, rank: int) -> None:
 def test_optim_gauss_state_mixed(tgt_state: PureCVState, rank: int) -> None:
     decomp: PureDecompositionData = ((1.0, tgt_state),)  # don't forget the comma!
     tgt_state_mixed = HermitianCVOp(data=decomp)
-    print(f"{tgt_state_mixed}")
+    # print(f"{tgt_state_mixed}")
     # can always choose this since will go to gaussian if detected
     # if Fock, will be overriden
     # if gaussian will be overriden and cutoff ignored
@@ -303,3 +304,40 @@ def test_warning_mixed() -> None:
         match="A `GaussianState` or `LCGaussianState` was detected in the pure-state decomposition. Overriding your `method` choice for this state if it wasn't `gaussian`."
     ):
         compute_sup_fidelity(max_rank=rank, target_state=tgt_state_mixed, optim_params=pars)
+
+
+def test_compute_profile_pure() -> None:
+    """correctness of the optimization has been checked above"""
+
+    ranks = range(0, 5)
+    tgt_state = CatState(amplitude=3.47 - 1.7j, parity=True)
+
+    pars = OptimisationParameters(method=Method.gaussian)
+
+    profile = compute_profile(ranks=list(ranks), target_state=tgt_state, optim_params=pars)
+    print(profile)
+    assert isinstance(profile, StellarProfile)
+    assert profile.ranks == list(ranks)
+    assert len(profile.fidelities) == len(profile.ranks)
+
+
+def test_compute_profile_mixed() -> None:
+    """correctness of the optimization has been checked above
+    in general even if we have no clue of the actual profile
+    for this random state."""
+
+    decomp: PureDecompositionData = (
+        (0.5, BinomialState(N=2, S=1)),
+        (0.5, GaussianState(GaussianParameters(x=-1.3, y=0.7, r=1.2, theta=-0.477))),
+    )
+
+    ranks = range(0, 5)
+    tgt_state = HermitianCVOp(data=decomp)
+
+    pars = OptimisationParameters(method=Method.fock, target_cutoff=6)
+
+    profile = compute_profile(ranks=list(ranks), target_state=tgt_state, optim_params=pars)
+    print(profile)
+    assert isinstance(profile, StellarProfile)
+    assert profile.ranks == list(ranks)
+    assert len(profile.fidelities) == len(profile.ranks)

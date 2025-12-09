@@ -703,11 +703,10 @@ class BinomialState(PureCVState):
             )
 
         indices = [(2 * k + self.parity) * (self.S + 1) for k in range(0, (self.N + 1 - self.parity) // 2 + 1)]
-        print((self.N + 2 - self.parity) // 2, list(range(0, (self.N + 2 - self.parity) // 2)))
-        print(f"{indices=}")
+
         data = np.zeros(cutoff + 1, dtype=np.complex128)
         values = [sqrt(comb(self.N + 1, j // (self.S + 1))) for j in indices]
-        print(f"{values=}")
+
         np.put(data, indices, values)
 
         # TODO rewrite as full list comprehension?
