@@ -327,10 +327,11 @@ def compute_sup_fidelity(
 
 # result = basinhopping(objective, x0, minimizer_kwargs=minimizer_kwargs)
 
+# the type of SteallarProfile knows about the type of its target state
+S = TypeVar("S", bound=PureCVState | HermitianCVOp)
 
-def compute_profile(
-    ranks: list[int], target_state: PureCVState | HermitianCVOp, optim_params: OptimisationParameters
-) -> StellarProfile:
+
+def compute_profile(ranks: list[int], target_state: S, optim_params: OptimisationParameters) -> StellarProfile[S]:
     fidelities: list[float] = []
 
     for rank in ranks:
