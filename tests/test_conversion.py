@@ -18,7 +18,7 @@ def test_det_conversion() -> None:
     from_profile = compute_profile(ranks=list(range(max_rank)), target_state=from_state, optim_params=pars)
     to_profile = compute_profile(ranks=list(range(max_rank)), target_state=to_state, optim_params=pars)
     max_dist = max_trace_distance_precision_pure_pure_det(from_profile=from_profile, to_profile=to_profile, nb_copies=2)
-    print(f"{max_dist=}")
+    print(f"{max_dist=}") # need 1 - f_0(cat)
     assert False
 
 
