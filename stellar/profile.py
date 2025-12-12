@@ -4,6 +4,7 @@ References:
 [3] Chabaud et al., https://arxiv.org/abs/1907.11009 (2020)
 """
 
+import logging
 from typing import TypeVar
 import warnings
 from math import pi as π
@@ -27,6 +28,8 @@ from stellar.params import GaussianParameters, Method, OptimisationParameters
 
 ## Notes
 # whatever the state we try just care about it's stellar rank?? Eq. 9 https://arxiv.org/abs/2011.04320
+
+logger = logging.getLogger(__name__)
 
 
 def compute_obj_func_pure(
@@ -334,6 +337,7 @@ S = TypeVar("S", bound=PureCVState | HermitianCVOp)
 def compute_profile(ranks: list[int], target_state: S, optim_params: OptimisationParameters) -> StellarProfile[S]:
     fidelities: list[float] = []
 
+    logger.info("Starting computing profile...")
     for rank in ranks:
         fidelities.append(
             -compute_sup_fidelity(max_rank=rank, target_state=target_state, optim_params=optim_params).fun
