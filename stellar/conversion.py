@@ -1,6 +1,5 @@
 from enum import Enum, auto
 import logging
-from math import floor
 from typing import TypeVar, assert_never
 from stellar.cvstates import HermitianCVOp, PureCVState
 from stellar.profile import StellarProfile

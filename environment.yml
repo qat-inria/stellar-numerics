@@ -1,6 +1,6 @@
 name: stellar-numerics
 dependencies:
-  - python=3.10
+  - python=3.11
   - pip # required for pip-installed dependencies
   - pip:
     - -e . # install dependencies as in pyproject.toml
