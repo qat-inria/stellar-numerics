@@ -1,7 +1,7 @@
 from enum import Enum, auto
 import logging
 from math import floor
-from typing import TypeVar
+from typing import TypeVar, assert_never
 from stellar.cvstates import HermitianCVOp, PureCVState
 from stellar.profile import StellarProfile
 
@@ -39,6 +39,14 @@ def max_trace_distance_precision(
             return max_trace_distance_precision_pure_pure_det(
                 from_profile=from_profile, to_profile=to_profile, nb_copies=nb_copies
             )
+        elif protocol is Protocol.probabilistic:
+            pass
+            # return max_trace_distance_precision_pure_pure_prob(
+            #     from_profile=from_profile, to_profile=to_profile, nb_copies=nb_copies
+            # )
+        else:
+            assert_never(protocol)
+
     else:
         raise NotImplementedError
 
@@ -54,12 +62,38 @@ V = TypeVar("V", bound=PureCVState)
 
 def max_trace_distance_precision_pure_pure_det(
     from_profile: StellarProfile[U], to_profile: StellarProfile[V], nb_copies: int
-) -> float:  # or None, error
-    """finding max trace distance for deterministic conversion between pure states with a fixed number of copies"""
-    logger.info("Starting Gaussian conversion analysis...")
+) -> float:
+    """finding max trace distance for deterministic conversion between pure states with a fixed number of copies.
+    Eq. (34) [HFFC25]"""
+    logger.info("Starting deterministicGaussian conversion analysis...")
     # avoid recomputing this
     max_rank_from = max(from_profile.profile.keys())
     max_rank_to = max(to_profile.profile.keys())
+
+    max_n = min([max_rank_from, max_rank_to // nb_copies])  # floor taken by integer division
+
+    print(f"{max_n=}")
+    distance_list: list[float] = []
+
+    # do we need to know the n giving the max?
+    for n in range(0, max_n + 1):
+        distance_list.append(1 - to_profile.profile[nb_copies * n] - nb_copies * (1 - from_profile.profile[n]))
+    print(f"{distance_list=}")
+    return max(distance_list)
+
+
+def max_trace_distance_precision_pure_pure_prob(
+    from_profile: StellarProfile[U], to_profile: StellarProfile[V], nb_copies: int
+) -> float:  # or None, error
+    """finding max trace distance for probabilistic conversion between pure states with a fixed number of copies.
+    The actual profile of the target state is not required since it is a looser bound see Eq. (35) [HFFC25]."""
+    logger.info("Starting probabilistic Gaussian conversion analysis...")
+    # avoid recomputing this
+    max_rank_from = max(from_profile.profile.keys())
+    max_rank_to = max(to_profile.profile.keys())
+
+    # need to supply the rank of input
+    # change parameters
 
     max_n = min([max_rank_from, max_rank_to // nb_copies])  # floor taken by integer division
 
