@@ -1,4 +1,4 @@
-FROM conda/miniconda3
+FROM continuumio/miniconda3
 COPY . /stellar-numerics
 RUN conda init bash
 RUN . ~/.bashrc && conda env create -f /stellar-numerics/environment.yml
