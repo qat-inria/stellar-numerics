@@ -78,10 +78,5 @@ class OptimisationParameters:
         if self.method == Method.gaussian and self.target_cutoff is not None:
             warnings.warn("`target_cutoff` will be ignored using the `gaussian` method.")
 
-    def to_dict(self):
-        return {
-            "state": repr(self.state),
-            "ranks": self.ranks,
-            "fidelities": self.fidelities,
-            "optim_params": self.optim_params.to_dict(),
-        }
+    def __repr__(self) -> str:
+        return f"OptimisationParameters(method={self.method}, target_cutoff={self.target_cutoff}, niter={self.niter}, x0={self.x0}, seed={self.seed})"

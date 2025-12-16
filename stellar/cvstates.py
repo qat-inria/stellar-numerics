@@ -138,6 +138,9 @@ class PureCVState:
         )  # typing.cast python : impose au typeur de croire que 'est d'un type donné
         # TODO type stuff here
 
+    def __repr__(self) -> str:
+        return f"PureCVState(statevector={self.statevector}, is_gaussian={self.is_gaussian})"
+
 
 # TODO composite state hierarchy and abstract classes to distinguish witnesses from DM
 # get_DM -> get_operator return get_DM for mixed states
@@ -153,7 +156,7 @@ PureDecompositionData: TypeAlias = tuple[tuple[float | int, PureCVState], ...]
 # TODO: when inputting data directly, do it as arrays, not custom objects, it's cumbersome
 # TODO for the instantiation (decomp vs matrix) use an Enum to exhaust all cases and disjunction
 # TODO change to HermitianCVOperator
-T = TypeVar("T", bound=Matrix | PureDecompositionData)
+T = TypeVar("T", Matrix, PureDecompositionData)
 
 
 @dataclass(frozen=True)
@@ -199,8 +202,14 @@ class HermitianCVOp(Generic[T]):
             return self.data
 
     # TODO think about it since not sure to have a decomposition
-    # def __iter__(self) -> Iterator[tuple[complex, GaussianState]]:
-    #     return iter(self.decomposition)
+    def __iter__(self) -> Iterator[tuple[float | int, PureCVState]]:
+        if not isinstance(self.data, Matrix):
+            return iter(self.data)
+        else:
+            raise TypeError("Cannot iterate on the object.")
+
+    def __repr__(self) -> str:
+        return f"HermitianCVOp(data={self.data})"
 
 
 # Thierry's comments 06-27_2025
@@ -238,7 +247,7 @@ class GaussianState(PureCVState):
         super().__init__(statevector=statevector, is_gaussian=True)
         object.__setattr__(self, "params", params)  # since frozen dataclass
 
-    @functools.cache
+    # @functools.cache
     @typing_extensions.override
     def get_statevector(self, cutoff: int | None = None) -> Statevector:  # signature has to match since override
         """returns the statevector of a `GaussianState` object. From Chabaud draft Eq. [F15]
@@ -302,6 +311,9 @@ class GaussianState(PureCVState):
 
         return Statevector(data)
 
+    def __repr__(self) -> str:
+        return f"GaussianState(params={self.params})"
+
     # overload __matmul__(self, other) for gaussian operations
     # if type(other) not implemented
     # return NotImplemented -> appel rmatmul -> echoue aussi (operateur non defini)
@@ -324,7 +336,7 @@ class FockState(PureCVState):
             super().__init__(statevector=None, is_gaussian=False)
         object.__setattr__(self, "n", n)  # since frozen dataclass
 
-    @functools.cache
+    # @functools.cache
     @typing_extensions.override
     def get_statevector(self, cutoff: int | None = None) -> Statevector:
         """returns the statevector of a `FockState` object.
@@ -361,6 +373,9 @@ class FockState(PureCVState):
 
         return Statevector(data)
 
+    def __repr__(self) -> str:
+        return f"FockState(n={self.n})"
+
 
 @dataclass(frozen=True, init=False)  # manually define __init__ to avoid many __init__ calls for differet objects
 class CoherentState(GaussianState):  # type: ignore[misc]
@@ -378,10 +393,10 @@ class CoherentState(GaussianState):  # type: ignore[misc]
     # try to cache it to avoid recomputing? but maybve don't want to cache it always if  computations are done... store as attribute??
     # need self to be hashable so GaussianParam has to be hashable so frozen dataclass
     # mutable objects are not hashable!
-    @functools.cache
+    # @functools.cache
     @typing_extensions.override  # toutes les filles qui implémentent get_statevector to check same signature
     def get_statevector(self, cutoff: int | None = None) -> Statevector:
-        """returns the statevector of a `CoherentState` object.
+        r"""returns the statevector of a `CoherentState` object.
 
         Parameters
         ----------
@@ -404,7 +419,7 @@ class CoherentState(GaussianState):  # type: ignore[misc]
         -----
         The statevector is computed as
 
-        .. math:: \vert \alpha \rangle = e^{- \abs{\alpha}^2 / 2}\\sum_{n = 0}\frac{\alpha^n}{n!} \vert n \rangle
+        .. math:: \vert \alpha \rangle = e^{- \vert\alpha\vert^2 / 2}\\sum_{n = 0}\frac{\alpha^n}{n!} \vert n \rangle
         """
         if not isinstance(cutoff, int):
             raise TypeError("The Fock space cutoff has to be an integer.")
@@ -416,6 +431,9 @@ class CoherentState(GaussianState):  # type: ignore[misc]
         )
 
         return Statevector(data)
+
+    def __repr__(self) -> str:
+        return f"CoherentState(amplitude={self.amplitude})"
 
 
 @dataclass(frozen=True, init=False)
@@ -432,7 +450,7 @@ class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
 
     # try to cache it to avoid recomputing? but maybve don't want to cache it always if  computations are done... store as attribute??
     # need self to be hashable so GaussianParam has to be hashable so frozen dataclass
-    @functools.cache
+    # @functools.cache
     @typing_extensions.override  # toutes les filles qui implémentent get_statevector to check same signature
     def get_statevector(self, cutoff: int | None = None) -> Statevector:
         """returns the statevector of a `SqueezedVacuumState` object.
@@ -478,6 +496,9 @@ class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
         ) / sqrt(cosh(abs(self.amplitude)))
 
         return Statevector(data)
+
+    def __repr__(self) -> str:
+        return f"SqueezedVacuumState(amplitude={self.amplitude})"
 
 
 # need to make that a frozen dataclass for same hashing issues
@@ -558,7 +579,7 @@ class LCGaussianState(PureCVState):
     def __iter__(self) -> Iterator[tuple[complex, GaussianState]]:
         return iter(self.data)
 
-    @functools.cache
+    # @functools.cache
     @typing_extensions.override  # toutes les filles qui implémentent get_statevector to check same signature
     def get_statevector(self, cutoff: int | None = None) -> Statevector:
         """returns the statevector of a `LCGaussianState` object by looping on its elements.
@@ -604,6 +625,9 @@ class LCGaussianState(PureCVState):
 
         return Statevector(tot_data)
 
+    def __repr__(self) -> str:
+        return f"LCGaussianState(data={self.data})"
+
 
 # linter doesn't see init = False
 @dataclass(frozen=True, init=False)
@@ -638,6 +662,9 @@ class CatState(LCGaussianState):  # type: ignore[misc]
         object.__setattr__(self, "amplitude", amplitude)
         object.__setattr__(self, "parity", parity)
 
+    def __repr__(self) -> str:
+        return f"CatState(amplitude={self.amplitude}, parity={self.parity})"
+
 
 @dataclass(frozen=True, init=False)  # manually define __init__ for parameter order reasons
 class BinomialState(PureCVState):
@@ -665,7 +692,10 @@ class BinomialState(PureCVState):
         object.__setattr__(self, "S", S)  # since frozen dataclass
         object.__setattr__(self, "parity", parity)  # since frozen dataclass
 
-    @functools.cache
+    def __repr__(self) -> str:
+        return f"BinomialState(N={self.N}, S={self.S}, parity={self.parity})"
+
+    # @functools.cache
     @typing_extensions.override
     def get_statevector(self, cutoff: int | None = None) -> Statevector:
         """returns the statevector of a `BinomialState` object.
@@ -716,6 +746,7 @@ class BinomialState(PureCVState):
         return Statevector(data / sqrt(2**self.N))
 
 
+@dataclass(frozen=True, init=False)
 class GKPState(LCGaussianState):  # type: ignore[misc]
     """A class for handling approximate square Gottesman-Kitaev-Preskil states
 
@@ -777,7 +808,7 @@ class GKPState(LCGaussianState):  # type: ignore[misc]
         smax = ceil(sqrt(-log(tol) / (π * kappa**2 * dimension)))
         # without `tuple` this is a generator. More efficient? Don't think so the states carries it always.
         # log is natural log, no phase needed since 0 < delta < 1 => - ln delta > 0
-
+        # print(f"{smax=}")
         # TODO refactor for more efficiency
 
         coeffs = np.array(
@@ -805,6 +836,9 @@ class GKPState(LCGaussianState):  # type: ignore[misc]
         object.__setattr__(self, "delta", delta)
         object.__setattr__(self, "tol", tol)
 
+    def __repr__(self) -> str:
+        return f"GKPState(dimension={self.dimension}, index={self.index}, kappa={self.kappa}, delta={self.delta}, tol={self.tol:.2e})"
+
 
 @dataclass(frozen=True, init=False)
 class TruncatedParityOp(HermitianCVOp):
@@ -820,6 +854,15 @@ class TruncatedParityOp(HermitianCVOp):
     cutoff (int): highest Fock number reached in the decomposition
     """
 
+    cutoff: int  # type: ignore
+
     def __init__(self, cutoff: int) -> None:
+        if cutoff is None:
+            raise ValueError("cutoff cannot be None.")
+
         decomp: PureDecompositionData = tuple(((-1) ** k, FockState(n=k)) for k in range(0, cutoff + 1))
         super().__init__(data=decomp)
+        object.__setattr__(self, "cutoff", cutoff)
+
+    def __repr__(self) -> str:
+        return f"TruncatedParityOp(cutoff={self.cutoff})"

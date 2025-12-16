@@ -1,8 +1,11 @@
-from stellar.cvstates import BinomialState, CoherentState, FockState, PureCVState
+from math import isclose
+from pathlib import Path
+from stellar.cvstates import BinomialState, CatState, CoherentState, FockState, PureCVState
 from stellar.data import StellarProfile
 import pytest
 
 from stellar.params import OptimisationParameters, Method
+from stellar.profile import compute_profile
 
 
 def test_init_success() -> None:
@@ -31,7 +34,31 @@ def test_iter() -> None:
 
 def test_serialization() -> None:
     st = BinomialState(N=3, S=2)
-    prof = StellarProfile(state=st, ranks=list(range(3)), fidelities=[0.1, 0.2, 0.5])
+    prof = StellarProfile(
+        state=st,
+        ranks=list(range(3)),
+        fidelities=[0.1, 0.2, 0.5],
+        optim_params=OptimisationParameters(method=Method.gaussian),
+    )
     # , optim_params=OptimisationParameters(method=Method.gaussian)
     # TODO serialize OptimParams too
     prof.save_to_file(filename="dummyb")
+
+
+def test_deserialization() -> None:
+    st = CatState(amplitude=3)
+    pars = OptimisationParameters(method=Method.gaussian)
+    profile = compute_profile(ranks=list(range(1)), target_state=st, optim_params=pars)
+
+    path = Path("tests/data/")
+    path.mkdir(parents=True, exist_ok=True)
+
+    profile.save_to_file("test", path=path)
+
+    prof = StellarProfile.from_file("test", path)
+
+    assert isinstance(prof.state, CatState)
+    assert prof.state.amplitude == st.amplitude
+    assert prof.state == st
+    assert prof.optim_params == pars
+    assert isclose(prof.profile[0], 0.5, abs_tol=1e-8)

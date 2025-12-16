@@ -30,7 +30,7 @@ if __name__ == "__main__":
     #   - `tol` parameter of the GKP state (how many Gaussians in the decomposition)
     #   - starting point `x0` of the optimization
     #   - ...
-
+    # todo add different seed and starting point to check th evalue
     print("Starting...")
     for n in range(100, 600, 100):
 
