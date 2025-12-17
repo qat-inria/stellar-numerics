@@ -64,7 +64,7 @@ def max_trace_distance_precision_pure_pure_det(
 ) -> float:
     """finding max trace distance for deterministic conversion between pure states with a fixed number of copies.
     Eq. (34) [HFFC25]"""
-# logger.info("Starting deterministicGaussian conversion analysis...")
+    # logger.info("Starting deterministicGaussian conversion analysis...")
     # avoid recomputing this
     max_rank_from = max(from_profile.profile.keys())
     max_rank_to = max(to_profile.profile.keys())
@@ -86,7 +86,7 @@ def max_trace_distance_precision_pure_pure_prob(
 ) -> float:  # or None, error
     """finding max trace distance for probabilistic conversion between pure states with a fixed number of copies.
     The actual profile of the target state is not required since it is a looser bound see Eq. (35) [HFFC25]."""
-# logger.info("Starting probabilistic Gaussian conversion analysis...")
+    # logger.info("Starting probabilistic Gaussian conversion analysis...")
     # avoid recomputing this
     max_rank_from = max(from_profile.profile.keys())
     max_rank_to = max(to_profile.profile.keys())

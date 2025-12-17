@@ -125,7 +125,7 @@ class GaussianOp:
             -(abs(self.alpha) ** 2 + self.alpha.conjugate() ** 2 * exp(1j * self.params.theta) * tanh(self.params.r))
             / 2
         ) / sqrt(cosh(self.params.r))
-# logger.debug(f"{self.C=}")
+        # logger.debug(f"{self.C=}")
         # [1] Eq. (45)
         self.mean_vector = np.array(
             [
