@@ -39,7 +39,7 @@ test:
   # rules:
   #   - if: $CI_PIPELINE_SOURCE == "push"
   script:
-    - pytest
+    - pytest --isolate
 
 # benchmark:
 #   stage: benchmark
