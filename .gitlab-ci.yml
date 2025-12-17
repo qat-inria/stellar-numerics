@@ -40,7 +40,7 @@ test:
   #   - if: $CI_PIPELINE_SOURCE == "push"
   script:
   # all tests in their own threads if --isolate
-    - pytest #--isolate
+    - pytest --isolate
 
 # benchmark:
 #   stage: benchmark
