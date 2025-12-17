@@ -10,9 +10,9 @@ from stellar.cvstates import GaussianState, LCGaussianState
 from stellar.gaussian import GaussianOp
 from stellar.params import GaussianParameters
 
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 
-logger.info("Starting tests in Gaussian operations and states.")
+# logger.info("Starting tests in Gaussian operations and states.")
 
 
 @given(st.complex_numbers(min_magnitude=0, max_magnitude=1e6), st.complex_numbers(min_magnitude=0, max_magnitude=1e6))
