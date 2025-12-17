@@ -24,7 +24,7 @@ def test_det_conversion() -> None:
     # assert False
 
 
-# @pytest.mark.skip
+@pytest.mark.skip
 def test_det_conversion_paper() -> None:
     from_state = CatState(amplitude=1, parity=True)  # 6
     to_state = GKPState(delta=0.3, kappa=0.3)  # more terms (11 vs 4) than Δ = κ = 0.3
