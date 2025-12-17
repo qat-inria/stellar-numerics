@@ -813,7 +813,7 @@ class GKPState(LCGaussianState):  # type: ignore[misc]
 
         coeffs = np.array(
             [exp(-π * kappa**2 * (dimension * s + index) ** 2 / dimension) for s in range(-smax, smax + 1)],
-            dtype=np.float128,
+            dtype=np.float64,
         )
         norm = sqrt(np.sum(np.abs(coeffs) ** 2))
 
