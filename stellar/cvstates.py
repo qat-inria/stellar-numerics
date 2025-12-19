@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import cmath
-import functools
 from dataclasses import dataclass
 from math import ceil, cosh, exp, factorial, isclose, log, sqrt, tanh, comb
 from math import pi as π

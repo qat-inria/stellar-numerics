@@ -3,7 +3,6 @@ References
 [1] Miatto & Quesada https://arxiv.org/abs/2004.11002 (2020)
 """
 
-import logging
 from cmath import exp, phase
 from math import atanh, cosh, sinh, sqrt, tanh
 

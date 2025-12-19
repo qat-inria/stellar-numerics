@@ -1,6 +1,5 @@
 """test conversion module"""
 
-import json
 import time
 from stellar.conversion import max_trace_distance_precision_pure_pure_det
 from stellar.cvstates import CatState, CoherentState, GKPState

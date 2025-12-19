@@ -4,7 +4,6 @@ References:
 [3] Chabaud et al., https://arxiv.org/abs/1907.11009 (2020)
 """
 
-import logging
 from typing import TypeVar
 import warnings
 from math import pi as π
@@ -254,7 +253,7 @@ def compute_sup_fidelity(
         # params from above scope``
         # HERE
         minimizer_kwargs: dict[str, Any] = {
-            # "method": "L-BFGS-B",
+            "method": "L-BFGS-B", #"COBYLA"
             "bounds": bounds,
             "args": (
                 max_rank,

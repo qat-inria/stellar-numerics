@@ -1,4 +1,3 @@
-import logging
 from cmath import exp, phase
 from cmath import isclose as cisclose
 from math import atanh, cosh, isclose, sinh, sqrt, tanh

@@ -1,4 +1,3 @@
-import logging
 from cmath import exp
 from math import cosh, pi, sqrt, tanh
 
