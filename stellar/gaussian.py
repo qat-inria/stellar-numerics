@@ -3,7 +3,6 @@ References
 [1] Miatto & Quesada https://arxiv.org/abs/2004.11002 (2020)
 """
 
-import logging
 from cmath import exp, phase
 from math import atanh, cosh, sinh, sqrt, tanh
 
@@ -17,7 +16,7 @@ from stellar.params import GaussianParameters
 
 # from stellar.cvstates import GaussianState, LCGaussianState
 
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 
 
 class GaussianOp:
@@ -125,7 +124,7 @@ class GaussianOp:
             -(abs(self.alpha) ** 2 + self.alpha.conjugate() ** 2 * exp(1j * self.params.theta) * tanh(self.params.r))
             / 2
         ) / sqrt(cosh(self.params.r))
-        logger.debug(f"{self.C=}")
+        # logger.debug(f"{self.C=}")
         # [1] Eq. (45)
         self.mean_vector = np.array(
             [

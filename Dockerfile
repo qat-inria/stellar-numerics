@@ -1,4 +1,4 @@
-FROM conda/miniconda3
+FROM continuumio/miniconda3
 COPY . /stellar-numerics
 RUN conda init bash
 RUN . ~/.bashrc && conda env create -f /stellar-numerics/environment.yml
@@ -8,4 +8,4 @@ RUN . ~/.bashrc && conda env create -f /stellar-numerics/environment.yml
 RUN . ~/.bashrc && conda activate stellar-numerics && conda install conda git libmambapy
 # No information stored about machine '<runner name>'. I know about nothing.
 # Run asv at the console the first time to generate one, or run `asv machine --yes`.
-RUN . ~/.bashrc && conda activate stellar-numerics && cd /stellar-numerics
+RUN . ~/.bashrc && conda activate stellar-numerics && cd /stellar-numerics && asv machine --yes

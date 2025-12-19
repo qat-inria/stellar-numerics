@@ -1,4 +1,3 @@
-import logging
 from cmath import exp
 from math import cosh, pi, sqrt, tanh
 
@@ -9,9 +8,9 @@ from hypothesis import strategies as st
 from stellar.params import GaussianParameters
 from stellar.gaussian import GaussianOp, check_gaussian_displacement
 
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 
-logger.info("Starting tests")
+# logger.info("Starting tests")
 
 
 def test_gaussian_init_fail_sqz() -> None:

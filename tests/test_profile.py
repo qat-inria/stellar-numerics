@@ -316,9 +316,11 @@ def test_compute_profile_pure() -> None:
 
     profile = compute_profile(ranks=list(ranks), target_state=tgt_state, optim_params=pars)
     print(profile)
+    comp_ranks = list(profile.profile.keys())
+    comp_fids = list(profile.profile.values())
     assert isinstance(profile, StellarProfile)
-    assert profile.ranks == list(ranks)
-    assert len(profile.fidelities) == len(profile.ranks)
+    assert comp_ranks == list(ranks)
+    assert len(comp_fids) == len(comp_ranks)
 
 
 def test_compute_profile_mixed() -> None:
@@ -338,6 +340,10 @@ def test_compute_profile_mixed() -> None:
 
     profile = compute_profile(ranks=list(ranks), target_state=tgt_state, optim_params=pars)
     print(profile)
+
+    comp_ranks = list(profile.profile.keys())
+    comp_fids = list(profile.profile.values())
+
     assert isinstance(profile, StellarProfile)
-    assert profile.ranks == list(ranks)
-    assert len(profile.fidelities) == len(profile.ranks)
+    assert comp_ranks == list(ranks)
+    assert len(comp_fids) == len(comp_ranks)

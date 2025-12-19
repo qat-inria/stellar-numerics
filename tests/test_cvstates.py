@@ -1,5 +1,4 @@
 import cmath
-import logging
 from math import exp, factorial, isclose, sqrt
 
 import numpy as np
@@ -27,9 +26,9 @@ from stellar.cvstates import (
 from stellar.params import GaussianParameters
 from tests.strategies import complex_arrays_st, gaussian_parameters_st, tuple_ints_fock_cutoff_st
 
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 
-logger.info("Starting CV state tests")
+# logger.info("Starting CV state tests")
 
 
 @given(complex_arrays_st())

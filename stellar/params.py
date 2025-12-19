@@ -77,3 +77,6 @@ class OptimisationParameters:
 
         if self.method == Method.gaussian and self.target_cutoff is not None:
             warnings.warn("`target_cutoff` will be ignored using the `gaussian` method.")
+
+    def __repr__(self) -> str:
+        return f"OptimisationParameters(method={self.method}, target_cutoff={self.target_cutoff}, niter={self.niter}, x0={self.x0}, seed={self.seed})"

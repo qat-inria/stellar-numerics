@@ -1,7 +1,9 @@
+asv
 hypothesis
 hypothesis[numpy]
 mypy
 pytest
+pytest-isolate
 ruff
 numpy
 scipy
