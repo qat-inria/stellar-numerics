@@ -5,6 +5,6 @@ mypy
 pytest
 pytest-isolate
 ruff
-numpy
+numpy<2.4
 scipy
 scipy-stubs
