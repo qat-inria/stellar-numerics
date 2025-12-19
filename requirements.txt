@@ -3,7 +3,6 @@ hypothesis
 hypothesis[numpy]
 mypy
 pytest
-pytest-isolate
 ruff
 numpy<2.4
 scipy
