@@ -1,5 +1,6 @@
 from enum import Enum, auto
 from typing import TypeVar, assert_never
+import warnings
 
 from stellar.cvstates import HermitianCVOp, PureCVState
 from stellar.profile import StellarProfile
@@ -86,5 +87,7 @@ def max_trace_distance_precision_pure_pure_post(
 ) -> float:  # or None, error
     """finding max trace distance for postselected conversion between pure states with a fixed number of copies.
     The actual profile of the target state is not required (only the stellar rank) since it is a looser bound see Eq. (35) [HFFC25]."""
-
+    warnings.warn(
+        "For postselected gaussian pure state conversion, the `from_profile` is not used and only depends on the input state's stellar rank."
+    )
     return 1 - to_profile.profile[nb_copies * from_rank]
