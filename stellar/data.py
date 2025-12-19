@@ -138,19 +138,19 @@ class StellarProfile(Generic[S]):
 
         # Plot vertical lines
         for i, v in zip(x, values):
-            plt.vlines(x=i, ymin=0, ymax=v, color='r', linewidth=3)
+            plt.vlines(x=i, ymin=0, ymax=v, color="r", linewidth=3)
             # Horizontal dashed line from y-axis to this bar
-            plt.hlines(y=v, xmin=-1, xmax=i, linestyles='dashed', colors=['gray'], linewidth=1, alpha=0.7)
-            plt.text(i, v + 0.04, str(v), ha='center', va='bottom', fontsize=10)
+            plt.hlines(y=v, xmin=-1, xmax=i, linestyles="dashed", colors=["gray"], linewidth=1, alpha=0.7)
+            plt.text(i, v + 0.04, str(v), ha="center", va="bottom", fontsize=10)
 
         # Configure axes
         plt.xticks(x)
         plt.xlim(-0.5, len(values) - 0.5)
         plt.ylim(0, 1.1)
-        plt.xlabel('rank')
-        plt.ylabel('Stellar fidelity')
+        plt.xlabel("rank")
+        plt.ylabel("Stellar fidelity")
         # plt.title('Stellar profile for ...')
+
+        plt.savefig(path / (filename + ".pdf"))
         if show:
             plt.show()
-        plt.savefig(path / (filename + ".pdf"))
-

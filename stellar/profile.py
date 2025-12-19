@@ -253,7 +253,7 @@ def compute_sup_fidelity(
         # params from above scope``
         # HERE
         minimizer_kwargs: dict[str, Any] = {
-            "method": "L-BFGS-B", #"COBYLA"
+            "method": "L-BFGS-B",  # "COBYLA"
             "bounds": bounds,
             "args": (
                 max_rank,
