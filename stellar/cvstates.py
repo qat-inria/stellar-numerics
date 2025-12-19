@@ -3,12 +3,11 @@
 from __future__ import annotations
 
 import cmath
+import warnings
 from dataclasses import dataclass
-from math import ceil, cosh, exp, factorial, isclose, log, sqrt, tanh, comb
+from math import ceil, comb, cosh, exp, factorial, isclose, log, sqrt, tanh
 from math import pi as π
 from typing import Generic, Iterator, TypeAlias, TypeVar
-import warnings
-
 
 import numpy as np
 import numpy.typing as npt

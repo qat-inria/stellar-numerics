@@ -1,7 +1,9 @@
 asv
 hypothesis
 hypothesis[numpy]
+matplotlib
 mypy
+numpy
 pytest
 ruff
 numpy<2.4

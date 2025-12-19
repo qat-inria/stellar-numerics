@@ -1,10 +1,13 @@
 from math import isclose
+import os
 from pathlib import Path
-from stellar.cvstates import BinomialState, CatState, CoherentState, FockState, PureCVState
-from stellar.data import StellarProfile
+
+import numpy as np
 import pytest
 
-from stellar.params import OptimisationParameters, Method
+from stellar.cvstates import BinomialState, CatState, CoherentState, FockState, PureCVState
+from stellar.data import StellarProfile
+from stellar.params import Method, OptimisationParameters
 from stellar.profile import compute_profile
 
 
@@ -62,3 +65,22 @@ def test_deserialization() -> None:
     assert prof.state == st
     assert prof.optim_params == pars
     assert isclose(prof.profile[0], 0.5, abs_tol=1e-8)
+
+
+def test_draw() -> None:
+    "dummy test"
+    st = BinomialState(N=3, S=2)
+    rng = np.random.default_rng(seed=42)
+    prof = StellarProfile(
+        state=st,
+        ranks=list(range(15)),
+        fidelities=sorted(list(rng.random(15))),
+        optim_params=OptimisationParameters(method=Method.gaussian),
+    )
+
+    # , optim_params=OptimisationParameters(method=Method.gaussian)
+    # TODO serialize OptimParams too
+
+    prof.draw(filename="dummyb", text=False)
+
+    assert os.path.exists(Path("tmp/profiles/") / ("dummyb" + ".pdf"))

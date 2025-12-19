@@ -1,8 +1,8 @@
 # builtin __init__ and __repr__
-from dataclasses import dataclass
-from cmath import exp
-from enum import Enum, auto
 import warnings
+from cmath import exp
+from dataclasses import dataclass
+from enum import Enum, auto
 
 
 ### Gaussian parameters
