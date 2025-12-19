@@ -1,5 +1,6 @@
 from typing import Generic, Iterator, TypeVar
 from dataclasses import InitVar, dataclass, field
+import matplotlib.pyplot as plt
 
 # unused imports required for from_file method since can encounter all possible instances. use *?
 from stellar.cvstates import (
@@ -121,5 +122,35 @@ class StellarProfile(Generic[S]):
             optim_params=eval(d["optim_params"]),
         )
 
+    def draw(self, filename: str, path: Path | None = None, show: bool = False):
+        """Method to generate a profile graph from the StellarProfile object"""
 
-# asdict(self, dict_factory=lambda fields: {k: encode(v) if isinstance(v, (PureCVState, HermitianCVOp)) else v for k, v in fields}), f)
+        if path is None:
+            path = Path("tmp/profiles/")
+
+        # Example data
+        values = list(self.profile.values())
+
+        # X positions (0, 1, 2, ...)
+        x = list(self.profile.keys())
+
+        plt.figure(figsize=(8, 5))
+
+        # Plot vertical lines
+        for i, v in zip(x, values):
+            plt.vlines(x=i, ymin=0, ymax=v, color='r', linewidth=3)
+            # Horizontal dashed line from y-axis to this bar
+            plt.hlines(y=v, xmin=-1, xmax=i, linestyles='dashed', colors=['gray'], linewidth=1, alpha=0.7)
+            plt.text(i, v + 0.04, str(v), ha='center', va='bottom', fontsize=10)
+
+        # Configure axes
+        plt.xticks(x)
+        plt.xlim(-0.5, len(values) - 0.5)
+        plt.ylim(0, 1.1)
+        plt.xlabel('rank')
+        plt.ylabel('Stellar fidelity')
+        # plt.title('Stellar profile for ...')
+        if show:
+            plt.show()
+        plt.savefig(path / (filename + ".pdf"))
+
