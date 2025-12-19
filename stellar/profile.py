@@ -4,13 +4,11 @@ References:
 [3] Chabaud et al., https://arxiv.org/abs/1907.11009 (2020)
 """
 
-from typing import TypeVar
 import warnings
 from math import pi as π
-from typing import Any, Callable
-from typing_extensions import assert_never  # for 3.10 compatibility
-# for 3.13 from typing import assert_never works
+from typing import Any, Callable, TypeVar
 
+# for 3.13 from typing import assert_never works
 import numpy as np
 from scipy.optimize import (
     Bounds,  # noqa: F401
@@ -19,6 +17,7 @@ from scipy.optimize import (
     direct,  # noqa: F401
     minimize,  # noqa: F401
 )
+from typing_extensions import assert_never  # for 3.10 compatibility
 
 from stellar.cvstates import GaussianState, HermitianCVOp, LCGaussianState, Matrix, PureCVState, PureDecompositionData
 from stellar.data import StellarProfile

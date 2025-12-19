@@ -1,24 +1,24 @@
-from typing import Generic, Iterator, TypeVar
+import json
 from dataclasses import InitVar, dataclass, field
+from pathlib import Path
+from typing import Generic, Iterator, TypeVar
+
 import matplotlib.pyplot as plt
 
 # unused imports required for from_file method since can encounter all possible instances. use *?
 from stellar.cvstates import (
-    HermitianCVOp,
-    PureCVState,
-    CatState,  # noqa: F401
-    GKPState,  # noqa: F401
     BinomialState,  # noqa: F401
+    CatState,  # noqa: F401
     CoherentState,  # noqa: F401
-    SqueezedVacuumState,  # noqa: F401
-    GaussianState,  # noqa: F401
-    LCGaussianState,  # noqa: F401
     FockState,  # noqa: F401
+    GaussianState,  # noqa: F401
+    GKPState,  # noqa: F401
+    HermitianCVOp,
+    LCGaussianState,  # noqa: F401
+    PureCVState,
+    SqueezedVacuumState,  # noqa: F401
 )
-from stellar.params import OptimisationParameters, Method  # noqa: F401
-
-from pathlib import Path
-import json
+from stellar.params import Method, OptimisationParameters  # noqa: F401
 
 # obj = MyData(1, Nested(42, some_state))
 # jsonable = asdict(obj, dict_factory=lambda d: {k: encode(v) if isinstance(v, State) else v for k, v in d.items()})
@@ -122,8 +122,11 @@ class StellarProfile(Generic[S]):
             optim_params=eval(d["optim_params"]),
         )
 
-    def draw(self, filename: str, path: Path | None = None, show: bool = False):
-        """Method to generate a profile graph from the StellarProfile object"""
+    def draw(self, filename: str, path: Path | None = None, text: bool = True, show: bool = False):
+        """Method to generate a profile graph from the StellarProfile object
+        show bool to show in addirion to saving
+        text whether to add the value on top of the bar
+        """
 
         if path is None:
             path = Path("tmp/profiles/")
@@ -141,14 +144,15 @@ class StellarProfile(Generic[S]):
             plt.vlines(x=i, ymin=0, ymax=v, color="r", linewidth=3)
             # Horizontal dashed line from y-axis to this bar
             plt.hlines(y=v, xmin=-1, xmax=i, linestyles="dashed", colors=["gray"], linewidth=1, alpha=0.7)
-            plt.text(i, v + 0.04, str(v), ha="center", va="bottom", fontsize=10)
+            if text:
+                plt.text(i, v + 0.04, f"{v:.3f}", ha="center", va="bottom", fontsize=10)
 
         # Configure axes
         plt.xticks(x)
         plt.xlim(-0.5, len(values) - 0.5)
         plt.ylim(0, 1.1)
         plt.xlabel("rank")
-        plt.ylabel("Stellar fidelity")
+        plt.ylabel("stellar fidelity")
         # plt.title('Stellar profile for ...')
 
         plt.savefig(path / (filename + ".pdf"))
