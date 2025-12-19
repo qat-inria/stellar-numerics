@@ -1,7 +1,7 @@
 """test conversion module"""
 
 import time
-from stellar.conversion import max_trace_distance_precision_pure_pure_det
+from stellar.conversion import max_trace_distance_precision_pure_pure_std
 from stellar.cvstates import CatState, CoherentState, GKPState
 from stellar.params import Method, OptimisationParameters
 from stellar.profile import compute_profile
@@ -18,7 +18,7 @@ def test_det_conversion() -> None:
 
     from_profile = compute_profile(ranks=list(range(max_rank)), target_state=from_state, optim_params=pars)
     to_profile = compute_profile(ranks=list(range(max_rank)), target_state=to_state, optim_params=pars)
-    max_dist = max_trace_distance_precision_pure_pure_det(from_profile=from_profile, to_profile=to_profile, nb_copies=2)
+    max_dist = max_trace_distance_precision_pure_pure_std(from_profile=from_profile, to_profile=to_profile, nb_copies=2)
     print(f"{max_dist=}")  # need 1 - f_0(cat)
     # assert False
 
@@ -45,7 +45,7 @@ def test_det_conversion_paper() -> None:
     # with open("gkp33350" + ".json", "w") as f:
     #     json.dump(to_profile.profile, f)
     dist_time = time.time()
-    max_dist = max_trace_distance_precision_pure_pure_det(from_profile=from_profile, to_profile=to_profile, nb_copies=1)
+    max_dist = max_trace_distance_precision_pure_pure_std(from_profile=from_profile, to_profile=to_profile, nb_copies=1)
     print(f"{max_dist=}")  # expect something around 0.23
     print(f"dist time {dist_time - to_time}")
     assert False
