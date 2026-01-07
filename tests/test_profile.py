@@ -1,5 +1,5 @@
 from itertools import product
-from math import e, isclose, sqrt
+from math import e, exp, isclose, sqrt
 
 import numpy as np
 import pytest
@@ -347,3 +347,41 @@ def test_compute_profile_mixed() -> None:
     assert isinstance(profile, StellarProfile)
     assert comp_ranks == list(ranks)
     assert len(comp_fids) == len(comp_ranks)
+
+
+def analytical_stellar_fidelity_mixed_01(prob: float) -> float:
+    # check if p is smaller than 1/2
+    if prob < 0.5:
+
+        def gp(t: float) -> float:
+            # knows prob from scope
+            return sqrt((1 + t) ** 3 * (1 - t)) * exp(prob / ((1 - prob) * (1 + t)))
+
+        tstar = 0.25 * (sqrt(9 - 10 * prob / (1 - prob) + prob**2 / (1 - prob) ** 2) + (2 * prob - 1) / (1 - prob))
+
+        return (1 - prob) * gp(tstar) / e
+
+    return prob
+
+
+@pytest.mark.parametrize("prob", [0, 0.0032, 0.249, 0.33337, 0.491, 0.5601, 0.6662, 0.7831, 0.91673645, 1])
+def test_profile_mixed_values(prob: float) -> None:
+    """Check of the correctness of the optimization for the state
+    p |0><0| + (1-p) |1><1|"""
+
+    # prob = 0.68247
+    decomp: PureDecompositionData = (
+        (prob, FockState(n=0)),
+        (1 - prob, FockState(n=1)),
+    )
+
+    ranks = range(0, 2)
+    tgt_state = HermitianCVOp(data=decomp)
+
+    pars = OptimisationParameters(method=Method.fock, target_cutoff=6)
+
+    profile = compute_profile(ranks=list(ranks), target_state=tgt_state, optim_params=pars)
+    print(f"{profile.profile=} and {analytical_stellar_fidelity_mixed_01(prob)}")
+
+    assert isclose(profile.profile[0], analytical_stellar_fidelity_mixed_01(prob), abs_tol=1e-8)
+    # assert False
