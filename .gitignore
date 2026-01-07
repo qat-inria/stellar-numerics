@@ -11,3 +11,5 @@ excludesfile = ~/.gitignore
 *.egg-info/
 *.mmd
 class.pdf
+*.prof
+*.json
