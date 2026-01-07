@@ -29,7 +29,7 @@ def test_det_conversion_paper() -> None:
     from_state = CatState(amplitude=1, parity=True)  # 6
     to_state = GKPState(delta=0.3, kappa=0.3)  # more terms (11 vs 4) than Δ = κ = 0.3
 
-    max_rank = 1  # why 20 profile file?
+    max_rank = 1
     # same parameters for both states
     pars = OptimisationParameters(method=Method.gaussian, niter=350)
     init = time.time()
@@ -53,13 +53,13 @@ def test_det_conversion_paper() -> None:
 
 
 def test_det_conversion_prob() -> None:
-    """test conversion from rank 1 to even cat state amp √4"""
+    """test conversion from rank 1 to even cat state amp"""
     # check for 3 copies with Rui's value: 1-f_3(cat) = 1-0.896384 ≅ 0.103616
     # from_state = CoherentState(amplitude=3)
     true_value = 1 - 0.896384
     to_state = CatState(
         amplitude=3, parity=False
-    )  # sqrt(4) gives 0.021810 kind of ok conversion paper [HFFC25] Fig. 4.
+    )  # sqrt(4) = √4 gives 0.021810 kind of ok conversion paper [HFFC25] Fig. 4.
 
     max_rank = 5
     # same parameters for both states
