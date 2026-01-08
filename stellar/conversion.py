@@ -19,7 +19,7 @@ class Protocol(Enum):
 # union is empty anyways
 # NOTE: is there a better wat to do this?
 S = TypeVar("S", PureCVState, HermitianCVOp)
-T = TypeVar("T", PureCVState, HermitianCVOp)
+T = TypeVar("T", bound=PureCVState)
 
 
 # both have a defined state type but they can be different
@@ -27,30 +27,52 @@ T = TypeVar("T", PureCVState, HermitianCVOp)
 # find a way to filter types.
 # Would be nice to have profile.state instead of profile._state
 def max_trace_distance_precision(
-    from_profile: StellarProfile[S], to_profile: StellarProfile[T], protocol: Protocol, nb_copies: int
-) -> float:  # or None?
+    protocol: Protocol,
+    nb_copies: int,
+    to_profile: StellarProfile[T],
+    from_profile: StellarProfile[S] | None = None,
+    from_rank: int | None = None,
+) -> float:  # or None? TODO don't understand this typing issue
     # assume contiguous ranks from 0 to max in all cases
-    # max_rank_from = max(from_profile.ranks)
-    # max_rank_to = max(to_profile.ranks)
+
+    # flow: will only assess convergence from pure to pure or mixed to pure
+
+    if from_profile is None and from_rank is None:
+        raise ValueError("Both `from_profile`and `from_rank` cannot be None.")
+
+    if isinstance(to_profile.state, HermitianCVOp):
+        raise ValueError("Cannot assess Gaussian conversion to a mixed state.")
 
     # pure -> pure case
-    if isinstance(from_profile.state, PureCVState) and isinstance(to_profile.state, PureCVState):
-        if protocol is Protocol.standard:
+    # requires both profiles explicitely
+
+    if protocol is Protocol.standard:
+        if from_profile is None:
+            raise ValueError(
+                "`from_profile` cannot be None when assessing Gaussian conversion with a non-postselected protocol."
+            )
+        if isinstance(from_profile.state, PureCVState):
             return max_trace_distance_precision_pure_pure_std(
                 from_profile=from_profile, to_profile=to_profile, nb_copies=nb_copies
             )
-        elif protocol is Protocol.postselected:
-            pass
-            # return max_trace_distance_precision_pure_pure_prob(
-            #     from_profile=from_profile, to_profile=to_profile, nb_copies=nb_copies
-            # )
-        else:
-            assert_never(protocol)
+        elif isinstance(from_profile.state, HermitianCVOp):
+            # TODO to be modified here for mixed states
+            return 3.0
 
+    elif protocol is Protocol.postselected:
+        # TODO check here what happens for mixed states
+        if from_profile is not None:
+            warnings.warn("`from_profile` is not used in assessing Gaussian conversion with a postselected protocol.")
+        if from_rank is None:
+            raise ValueError(
+                "`from_rank` has to be specified in assessing Gaussian conversion with a postselected protocol"
+            )
+
+        return max_trace_distance_precision_pure_pure_post(
+            to_profile=to_profile, from_rank=from_rank, nb_copies=nb_copies
+        )
     else:
-        raise NotImplementedError
-
-    return 3.0  # to remove. Partial typing stuff.
+        assert_never(protocol)
 
 
 # TODO discuss type refinement with Thierry
@@ -87,7 +109,8 @@ def max_trace_distance_precision_pure_pure_post(
 ) -> float:  # or None, error
     """finding max trace distance for postselected conversion between pure states with a fixed number of copies.
     The actual profile of the target state is not required (only the stellar rank) since it is a looser bound see Eq. (35) [HFFC25]."""
-    warnings.warn(
-        "For postselected gaussian pure state conversion, the `from_profile` is not used and only depends on the input state's stellar rank."
-    )
+
     return 1 - to_profile.profile[nb_copies * from_rank]
+
+
+# TODO add from mixed state converison bounds

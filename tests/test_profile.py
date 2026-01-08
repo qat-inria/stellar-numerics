@@ -369,7 +369,6 @@ def test_profile_mixed_values(prob: float) -> None:
     """Check of the correctness of the optimization for the state
     p |0><0| + (1-p) |1><1|"""
 
-    # prob = 0.68247
     decomp: PureDecompositionData = (
         (prob, FockState(n=0)),
         (1 - prob, FockState(n=1)),
