@@ -1,5 +1,5 @@
 from enum import Enum, auto
-from typing import TypeVar, assert_never
+from typing import TypeGuard, TypeVar, assert_never
 import warnings
 
 from stellar.cvstates import HermitianCVOp, PureCVState
@@ -20,6 +20,10 @@ class Protocol(Enum):
 # NOTE: is there a better wat to do this?
 S = TypeVar("S", PureCVState, HermitianCVOp)
 T = TypeVar("T", bound=PureCVState)
+
+
+def is_stellar_profile_pure(profile: StellarProfile[S]) -> TypeGuard[StellarProfile[PureCVState]]:
+    return isinstance(profile.state, PureCVState)
 
 
 # both have a defined state type but they can be different
@@ -51,13 +55,13 @@ def max_trace_distance_precision(
             raise ValueError(
                 "`from_profile` cannot be None when assessing Gaussian conversion with a non-postselected protocol."
             )
-        if isinstance(from_profile.state, PureCVState):
+        if is_stellar_profile_pure(from_profile):
             return max_trace_distance_precision_pure_pure_std(
                 from_profile=from_profile, to_profile=to_profile, nb_copies=nb_copies
             )
-        elif isinstance(from_profile.state, HermitianCVOp):
-            # TODO to be modified here for mixed states
-            return 3.0
+        assert isinstance(from_profile.state, HermitianCVOp)
+        # TODO to be modified here for mixed states
+        return 3.0
 
     elif protocol is Protocol.postselected:
         # TODO check here what happens for mixed states
