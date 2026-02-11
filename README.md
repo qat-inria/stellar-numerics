@@ -1,4 +1,9 @@
+
 # stellar-numerics
+
+![CI](https://github.com/qat-inria/stellar-numerics/actions/workflows/ci.yml/badge.svg)
+
+[![Type checked with mypy](https://img.shields.io/badge/type%20checked-mypy-blue.svg)](https://mypy-lang.org/)
 
 ## Objective
 
