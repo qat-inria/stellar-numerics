@@ -1,9 +1,7 @@
 
 # stellar-numerics
 
-![CI](https://github.com/qat-inria/stellar-numerics/actions/workflows/ci.yml/badge.svg)
-
-[![Type checked with mypy](https://img.shields.io/badge/type%20checked-mypy-blue.svg)](https://mypy-lang.org/)
+![CI](https://github.com/qat-inria/stellar-numerics/actions/workflows/ci.yml/badge.svg)[![Type checked with mypy](https://img.shields.io/badge/type%20checked-mypy-blue.svg)](https://mypy-lang.org/)[![Checked with pyright](https://microsoft.github.io/pyright/img/pyright_badge.svg)](https://microsoft.github.io/pyright/)
 
 ## Objective
 
