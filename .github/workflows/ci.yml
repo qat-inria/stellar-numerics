@@ -18,17 +18,17 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.python-version }}
       - run: |
           python -m pip install --upgrade pip
-          pip install flake8 black isort
+          pip install ruff
       - name: Run Ruff Linter
         run: ruff check --output-format=github
-        
+
   format:
     runs-on: ubuntu-latest
     steps:
@@ -39,13 +39,13 @@ jobs:
           python-version: ${{ env.python-version }}
       - run: |
           python -m pip install --upgrade pip
-          pip install flake8 black isort
+          pip install ruff
       - name: Run Ruff Formatter Check
         run: ruff format --check
-      
-      
-      
-     # mypy  pyright later
+
+
+
+# mypy  pyright later
   test:
     runs-on: ubuntu-latest
     steps:
