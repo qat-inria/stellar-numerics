@@ -49,7 +49,6 @@ For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k
 
 - Project idea: Ulysse Chabaud
 - Qode: Maxime Garnier & Thierry Martinez
-- QATnowledgements: Zacharie van Herstraeten
 
 ## References
 
