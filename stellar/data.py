@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import json
-from dataclasses import InitVar, dataclass, field
+from collections.abc import Mapping, Iterable
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Generic, Iterator, TypeVar
 
@@ -31,30 +34,40 @@ from stellar.params import Method, OptimisationParameters  # noqa: F401
 # quick fix: dict(zip(ranks, fidelities))
 # TODO add __iter__ function
 # Todo add draw( function)
+S_co = TypeVar("S_co", bound=PureCVState | HermitianCVOp, covariant=True)
 S = TypeVar("S", bound=PureCVState | HermitianCVOp)
 
 
-@dataclass(frozen=True)
-class StellarProfile(Generic[S]):
+@dataclass(frozen=True, init=False)
+class StellarProfile(Generic[S_co]):
     """A dataclass for stellar profiles allowing manipulation and serialization to json."""
 
     # single rank returns a StellarProfile?
     # Combine them by concatenation if different ranks but same state and params.
     # state name of the parameter and _state for the field
     # state: InitVar[S]  # constructor param name = c
-    state: S  # PureCVState | HermitianCVOp
+    state: S_co = field(init=False)  # PureCVState | HermitianCVOp
     # _state: str = field(init=False)  # stored attribute
-    ranks: InitVar[list[int]]
-    fidelities: InitVar[list[float]]
-    profile: dict[int, float] = field(init=False)
-    optim_params: OptimisationParameters | None = None  # TODO remove None
+    ranks: tuple[int]
+    fidelities: tuple[float]
+    profile: Mapping[int, float]
+    optim_params: OptimisationParameters | None  # TODO remove None
 
-    def __post_init__(self, ranks: list[int], fidelities: list[float]) -> None:  # , state: S
-        # object.__setattr__(self, "_state", repr(state))  # same trick since frozen dataclass
-        if len(ranks) != len(fidelities):
+    def __init__(
+        self,
+        state: S_co,
+        ranks: Iterable[int],
+        fidelities: Iterable[float],
+        optim_params: OptimisationParameters | None = None,
+    ) -> None:
+        object.__setattr__(self, "state", state)
+        object.__setattr__(self, "ranks", tuple(ranks))
+        object.__setattr__(self, "fidelities", tuple(fidelities))
+        object.__setattr__(self, "optim_params", optim_params)
+        if len(self.ranks) != len(self.fidelities):
             raise ValueError("The length of ranks and fidelities have to match.")
-        object.__setattr__(self, "profile", dict(zip(ranks, fidelities)))  # same trick since frozen dataclass
-        # self.profile = dict(zip(ranks, fidelities))
+        profile = dict(zip(ranks, fidelities))
+        object.__setattr__(self, "profile", profile)
 
     def __iter__(self) -> Iterator[tuple[int, float]]:  # TODO return type annotate this
         return iter(self.profile.items())
@@ -65,6 +78,9 @@ class StellarProfile(Generic[S]):
             "profile": self.profile,
             "optim_params": repr(self.optim_params),
         }
+
+    def replace(self, state: S) -> StellarProfile[S]:
+        return StellarProfile(state, self.ranks, self.fidelities, self.optim_params)
 
     def save_to_file(self, filename: str, path: Path | None = None) -> None:
         """

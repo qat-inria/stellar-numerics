@@ -54,12 +54,15 @@ def test_det_conversion_fail_mixed() -> None:
     to_profile = compute_profile(ranks=list(range(max_rank)), target_state=to_state, optim_params=pars)
 
     with pytest.raises(ValueError, match="Cannot assess Gaussian conversion to a mixed state."):
-        # manually disable typing warning since want to check the dynamical error
+        # manually disable typing error since want to check the dynamical error
+        # Indeed, `to_profile` variable has type `StellarProfile[HermitianCVOp]` whereas
+        #   `to_profile` parameter expects the type `StellarProfile[PureCVState]`,
+        #    and `HermitianCVOp` is not a subtype of `PureCVState`.
         max_trace_distance_precision(
             protocol=Protocol.standard,
             nb_copies=2,
-            to_profile=to_profile,
-            from_profile=from_profile,  # type: ignore
+            to_profile=to_profile,  # type: ignore
+            from_profile=from_profile,
         )
 
 

@@ -1,5 +1,5 @@
 from enum import Enum, auto
-from typing import TypeGuard, TypeVar, assert_never
+from typing import TypeVar, assert_never
 import warnings
 
 from stellar.cvstates import HermitianCVOp, PureCVState
@@ -16,16 +16,6 @@ class Protocol(Enum):
     postselected = auto()
 
 
-# union is empty anyways
-# NOTE: is there a better wat to do this?
-S = TypeVar("S", PureCVState, HermitianCVOp)
-T = TypeVar("T", bound=PureCVState)
-
-
-def is_stellar_profile_pure(profile: StellarProfile[S]) -> TypeGuard[StellarProfile[PureCVState]]:
-    return isinstance(profile.state, PureCVState)
-
-
 # both have a defined state type but they can be different
 # equations will also be different ...
 # find a way to filter types.
@@ -33,8 +23,8 @@ def is_stellar_profile_pure(profile: StellarProfile[S]) -> TypeGuard[StellarProf
 def max_trace_distance_precision(
     protocol: Protocol,
     nb_copies: int,
-    to_profile: StellarProfile[T],
-    from_profile: StellarProfile[S] | None = None,
+    to_profile: StellarProfile[PureCVState],
+    from_profile: StellarProfile[PureCVState | HermitianCVOp] | None = None,
     from_rank: int | None = None,
 ) -> float:  # or None? TODO don't understand this typing issue
     # assume contiguous ranks from 0 to max in all cases
@@ -55,9 +45,11 @@ def max_trace_distance_precision(
             raise ValueError(
                 "`from_profile` cannot be None when assessing Gaussian conversion with a non-postselected protocol."
             )
-        if is_stellar_profile_pure(from_profile):
+        if isinstance(from_profile.state, PureCVState):
+            # In this branch, the typer knows that `from_profile.state` has type `PureCVState`,
+            # therefore `from_profile.replace(from_profile.state)` has type `StellarProfile[PureCVState]`.
             return max_trace_distance_precision_pure_pure_std(
-                from_profile=from_profile, to_profile=to_profile, nb_copies=nb_copies
+                from_profile=from_profile.replace(from_profile.state), to_profile=to_profile, nb_copies=nb_copies
             )
         assert isinstance(from_profile.state, HermitianCVOp)
         # TODO to be modified here for mixed states
