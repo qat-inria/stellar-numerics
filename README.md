@@ -30,7 +30,7 @@ $$\sup_{\rho \in \mathcal S_k} F(\rho, \ket{\psi}) = \sup_{\Phi \in \mathcal S_k
 \sup_{\hat{G}} {\rm Tr}[\underbrace{\hat{\Pi}_k}_{=\sum_{n=0}^k |n\times n|} \hat G^\dagger\ket\psi\bra\psi G]
 $$
 
-For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k \bra l$ with ${\hat W}$ Hermitian. An example: ${\hat W} = a \ket \psi \bra \psi + b \ket\varphi \bra \varphi$ with $\langle \varphi \vert \psi \rangle = 0$ and $a,b \in \mathbb{R}$ (not necessarily positive!!). Or truncated parity operator $(-1)^{\hat n} =  |0><0|-|1><1|+|2><2|-...$
+For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k \bra l$ with ${\hat W}$ Hermitian.
 
 ### Conventions
 
@@ -41,9 +41,6 @@ For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k
 - Gaussian states
   - $\vert \gamma , \xi \rangle = {\hat G}(\gamma, \xi) \, \vert 0 \rangle$
 - Fock cutoffs and ranks: highest Fock number *not* dimension
-- multimode?
-  - Fock basis
-  - Beam-splitters
 
 ## Code Structure
 
@@ -51,20 +48,12 @@ For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k
 
 ## To do
 
-- science
-  - [x] change `LCGaussianData` back to `TypeAlias`
-  - [x] add gaussian state computation
-  - [ ] generate (multi) cat profiles
-  - [ ] try other states
-  - [ ] Go to witnesses
-
 - software
-  - [ ] auto doc generation
+  - [ ] Automatic documentation generation
 
 ## Contributions
 
-- Project idea: Ulysse Chabaud
-- Qode: Maxime Garnier & Thierry Martinez
+Maxime Garnier, Thierry Martinez and Ulysse Chabaud
 
 ## References
 

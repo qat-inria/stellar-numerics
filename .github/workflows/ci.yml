@@ -58,9 +58,6 @@ jobs:
       - name: Run Ruff Formatter Check
         run: ruff format --check stellar/ tests/
 
-
-
-# mypy  pyright later
   test:
     runs-on: ubuntu-latest
     steps:
