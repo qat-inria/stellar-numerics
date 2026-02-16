@@ -1,10 +1,26 @@
 
-# stellar-numerics
+# stellar-rank-numerics
 
 [![CI](https://github.com/qat-inria/stellar-numerics/actions/workflows/ci.yml/badge.svg)](https://github.com/qat-inria/stellar-numerics/actions)
 [![Type checked with mypy](https://img.shields.io/badge/type%20checked-mypy-blue.svg)](https://mypy-lang.org/)
 [![Checked with pyright](https://microsoft.github.io/pyright/img/pyright_badge.svg)](https://microsoft.github.io/pyright/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![DOI](https://zenodo.org/badge/828979817.svg)](https://doi.org/10.5281/zenodo.18634055)
+
+## How to cite
+
+```latex
+@misc{stellarnumerics2026,
+  author={Garnier, Maxime and Martinez, Thierry and Chabaud, Ulysse},
+  title={stellar-rank-numerics},
+  year={2026},
+  publisher={GitHub},
+  journal={GitHub repository},
+  howpublished = {\url{https://github.com/qat-inria/stellar-numerics}},
+  doi={10.5281/zenodo.18634055},
+  url={https://doi.org/10.5281/zenodo.18634055},
+}
+```
 
 ## Objective
 
