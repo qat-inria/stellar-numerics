@@ -7,21 +7,6 @@
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![DOI](https://zenodo.org/badge/828979817.svg)](https://doi.org/10.5281/zenodo.18634055)
 
-## How to cite
-
-```latex
-@misc{stellarnumerics2026,
-  author={Garnier, Maxime and Martinez, Thierry and Chabaud, Ulysse},
-  title={stellar-rank-numerics},
-  year={2026},
-  publisher={GitHub},
-  journal={GitHub repository},
-  howpublished = {\url{https://github.com/qat-inria/stellar-numerics}},
-  doi={10.5281/zenodo.18634055},
-  url={https://doi.org/10.5281/zenodo.18634055},
-}
-```
-
 ## Objective
 
 Solve for fidelity/stellar profiles
@@ -48,12 +33,29 @@ For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k
 
 ## To do
 
-- software
-  - [ ] Automatic documentation generation
+Software task
 
-## Contributions
+- [ ] Automatic documentation generation
+- [ ] parallelise profile computation since it is embarassingly parallel
+
+## Authors
 
 Maxime Garnier, Thierry Martinez and Ulysse Chabaud
+
+## How to cite
+
+```latex
+@misc{stellarnumerics2026,
+  author={Garnier, Maxime and Martinez, Thierry and Chabaud, Ulysse},
+  title={stellar-rank-numerics},
+  year={2026},
+  publisher={GitHub},
+  journal={GitHub repository},
+  howpublished = {\url{https://github.com/qat-inria/stellar-numerics}},
+  doi={10.5281/zenodo.18634055},
+  url={https://doi.org/10.5281/zenodo.18634055},
+}
+```
 
 ## References
 
