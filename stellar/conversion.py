@@ -121,7 +121,7 @@ def max_trace_distance_precision_mixed_pure_std(
     for n in range(0, max_n + 1):
         distance_list.append((1 - to_profile.profile[nb_copies * n] - nb_copies * (1 - from_profile.profile[n])) ** 2)
     print(f"{distance_list=}")
-    # return max(distance_list)
+    return max(distance_list)
 
 
 def max_trace_distance_precision_pure_pure_post(
@@ -140,4 +140,3 @@ def max_trace_distance_precision_mixed_pure_post(
     The actual profile of the target state is not required (only the stellar rank) since it is a looser bound see Eq. (39) [HFFC25]."""
 
     return (1 - to_profile.profile[nb_copies * from_rank]) ** 2
-
