@@ -9,11 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- approximate conversion bounds for mixed state with standard protocol.
+- [#6] added approximate Gaussian conversion bounds for mixed state with standard protocol (stellar rank <= 1>).
 
 ### Fixed
 
 - [#4](https://github.com/qat-inria/stellar-numerics/pull/4) fixed typing issues by making `StellarProfile` covariant with the type of their state.
+
+### Changed
+
+- [#6] modified the logic of `max_trace_distance` in `conversion.py` to use pattern matching (`match`/`case` syntax) instead of `if`/`else`.
 
 ## [0.1] - 2026-02-11
 
