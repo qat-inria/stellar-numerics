@@ -20,9 +20,9 @@ For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k
 ### Conventions
 
 - Gaussian operators (displacement, squeezing)
-  - single mode convention [1, 4, draft] ${\hat G}(\gamma, \xi) \coloneqq {\hat D}(\gamma){\hat S}(\xi)$ (oppo to [CMG20, C+20])
+  - single mode convention [FQ21, MJD96] ${\hat G}(\gamma, \xi) \coloneqq {\hat D}(\gamma){\hat S}(\xi)$ (opposite to [CMG20, C+20])
   - ${\hat D}(\gamma) \coloneqq e^{\gamma {\hat a}^\dagger - \gamma^* {\hat a}}$
-  - ${\hat S}(\xi) \coloneqq e^{\frac12 (\xi^*{\hat a}^2 - \xi ({\hat a}^\dagger)^2)}$ (related by conjugation to UCDraft and - sign to [MJD96])
+  - ${\hat S}(\xi) \coloneqq e^{\frac12 (\xi^*{\hat a}^2 - \xi ({\hat a}^\dagger)^2)}$ (related by minus sign to [MJD96])
 - Gaussian states
   - $\vert \gamma , \xi \rangle = {\hat G}(\gamma, \xi) \, \vert 0 \rangle$
 - Fock cutoffs and ranks: highest Fock number *not* dimension
