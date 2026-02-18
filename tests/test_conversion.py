@@ -1,14 +1,14 @@
 """test conversion module"""
 
 from math import isclose
-import time
 from stellar.conversion import (
     max_trace_distance_precision,
+    max_trace_distance_precision_mixed_pure_std,
     max_trace_distance_precision_pure_pure_post,
     max_trace_distance_precision_pure_pure_std,
     Protocol,
 )
-from stellar.cvstates import CatState, CoherentState, FockState, GKPState, HermitianCVOp, PureDecompositionData
+from stellar.cvstates import CatState, CoherentState, FockState, HermitianCVOp, PureDecompositionData
 from stellar.params import Method, OptimisationParameters
 from stellar.profile import compute_profile
 import pytest
@@ -66,7 +66,8 @@ def test_det_conversion_fail_mixed() -> None:
         )
 
 
-def test_det_conversion() -> None:
+def test_pure_det_conversion() -> None:
+    """coherent state has rank 0 so the trace distance is decreasing in n, . Max is reached for k.n = 0."""
     from_state = CoherentState(amplitude=3)
     to_state = CatState(amplitude=1, parity=False)
 
@@ -77,7 +78,7 @@ def test_det_conversion() -> None:
     from_profile = compute_profile(ranks=list(range(max_rank)), target_state=from_state, optim_params=pars)
     to_profile = compute_profile(ranks=list(range(max_rank)), target_state=to_state, optim_params=pars)
     max_dist = max_trace_distance_precision_pure_pure_std(from_profile=from_profile, to_profile=to_profile, nb_copies=2)
-    print(f"{max_dist=} and {1 - to_profile.profile[0]}")  # need 1 - f_0(cat)
+    print(f"{max_dist=} and {1 - to_profile.profile[0]}")
 
     assert isclose(max_dist, 1 - to_profile.profile[0], abs_tol=1e-8)
 
@@ -89,42 +90,11 @@ def test_det_conversion() -> None:
     # assert False
 
 
-@pytest.mark.skip
-def test_det_conversion_paper() -> None:
-    from_state = CatState(amplitude=1, parity=False)  # 6
-    to_state = GKPState(delta=0.3, kappa=0.3)  # more terms (11 vs 4) than Δ = κ = 0.3
-
-    max_rank = 1
-    # same parameters for both states
-    pars = OptimisationParameters(method=Method.gaussian, niter=350)
-    init = time.time()
-    from_profile = compute_profile(ranks=list(range(max_rank)), target_state=from_state, optim_params=pars)
-    from_time = time.time()
-    print(f"from profile time {from_time - init}")
-    to_profile = compute_profile(ranks=list(range(max_rank)), target_state=to_state, optim_params=pars)
-    print(f"to_profile {to_profile.profile}")
-    to_time = time.time()
-    print(f"to profile time {to_time - from_time}")
-
-    from_profile.save_to_file("test")
-    to_profile.save_to_file("gkp33350")
-    # with open("gkp33350" + ".json", "w") as f:
-    #     json.dump(to_profile.profile, f)
-    dist_time = time.time()
-    max_dist = max_trace_distance_precision_pure_pure_std(from_profile=from_profile, to_profile=to_profile, nb_copies=1)
-    print(f"{max_dist=}")  # expect something around 0.23
-    print(f"dist time {dist_time - to_time}")
-    assert False
-
-
-def test_det_conversion_post() -> None:
+def test_pure_conversion_post() -> None:
     """test conversion from rank 1 to even cat state amp"""
     # check for 3 copies with Rui's value: 1-f_3(cat) = 1-0.896384 ≅ 0.103616
-    # from_state = CoherentState(amplitude=3)
     true_value = 1 - 0.896384
-    to_state = CatState(
-        amplitude=3, parity=False
-    )  # sqrt(4) = √4 gives 0.021810 kind of ok conversion paper [HFFC25] Fig. 4.
+    to_state = CatState(amplitude=3, parity=False)
 
     max_rank = 5
     # same parameters for both states
@@ -153,3 +123,43 @@ def test_det_conversion_post() -> None:
     assert isclose(max_dist, true_value, abs_tol=1e-5)
     assert isclose(max_dist, max_dist_2, abs_tol=1e-8)
     # assert False
+
+
+@pytest.mark.parametrize("prob", [0, 0.0032, 0.249, 0.33337, 0.491, 0.5601, 0.6662, 0.7831, 0.91673645, 1])
+def test_mixed_det_conversion(prob: float) -> None:
+    """Test if it works. For those parameters, it seems the n = 0 case yields the max distance.
+
+    Parameters
+    ----------
+    prob : float
+        probability parameter in input state
+    """
+
+    decomp: PureDecompositionData = (
+        (prob, FockState(n=0)),
+        (1 - prob, FockState(n=1)),
+    )
+
+    from_state = HermitianCVOp(data=decomp)
+    from_pars = OptimisationParameters(method=Method.fock, target_cutoff=6)
+    to_state = CatState(amplitude=1, parity=False)
+    to_pars = OptimisationParameters(method=Method.gaussian)
+
+    max_rank = 10
+
+    from_profile = compute_profile(ranks=list(range(max_rank)), target_state=from_state, optim_params=from_pars)
+    to_profile = compute_profile(ranks=list(range(max_rank)), target_state=to_state, optim_params=to_pars)
+
+    max_dist = max_trace_distance_precision_mixed_pure_std(
+        from_profile=from_profile, to_profile=to_profile, nb_copies=2
+    )
+
+    # print(f"{max_dist=} and {1 - to_profile.profile[0]}")
+
+    assert isclose(max_dist, (1 - to_profile.profile[0] - 2 * (1 - from_profile.profile[0])) ** 2, abs_tol=1e-8)
+
+    max_dist_2 = max_trace_distance_precision(
+        protocol=Protocol.standard, nb_copies=2, to_profile=to_profile, from_profile=from_profile
+    )
+    # print(f"{max_dist=} and {max_dist_2}")
+    assert isclose(max_dist, max_dist_2)
