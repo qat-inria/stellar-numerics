@@ -126,7 +126,7 @@ def test_pure_conversion_post() -> None:
 
 
 # TODO add a check for the values if possible?
-@pytest.mark.parametrize("prob", [[0, 0.0032, 0.249, 0.33337, 0.491, 0.5601, 0.6662, 0.7831, 0.91673645, 1]])
+@pytest.mark.parametrize("prob", [0, 0.0032, 0.249, 0.33337, 0.491, 0.5601, 0.6662, 0.7831, 0.91673645, 1])
 def test_mixed_det_conversion(prob: float) -> None:
     """Test if max_distance dispatches correctly to the standard mixed case.
 
