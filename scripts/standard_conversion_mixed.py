@@ -97,7 +97,7 @@ if __name__ == "__main__":
         from_profile.save_to_file(filename=str(from_fname), path=dir)
 
     # computing the profiles
-    tot_data = []
+    tot_data: list[list[float]] = []
     for amp in amp_values:
         data = []
 
@@ -137,36 +137,36 @@ if __name__ == "__main__":
     logger.info("Finished!")
     print(tot_data, len(tot_data))
 
-#### plotting
+    #### plotting
 
-fig, ax = plt.subplots(figsize=(6.5, 4))  #
-y = range(1, max_copies + 1)
-colors = ["C0", "C1", "C2", "C3", "C6"]
-for i in range(0, len(tot_data)):
-    x = tot_data[i]
+    fig, ax = plt.subplots(figsize=(6.5, 4))  #
+    y = range(1, max_copies + 1)
+    colors = ["C0", "C1", "C2", "C3", "C6"]
+    for i in range(0, len(tot_data)):
+        x = tot_data[i]
 
-    ax.step(x, y, where="pre", label=rf"$\alpha=\sqrt{{{2 * (i + 1)}}}$", c=colors[i])
+        ax.step(x, y, where="pre", label=rf"$\alpha=\sqrt{{{2 * (i + 1)}}}$", c=colors[i])
 
-# Labels with LaTeX
-ax.set_xlabel("Trace distance precision ")  # $\epsilon$
-ax.set_ylabel("Number of copies ")  # $N$
+    # Labels with LaTeX
+    ax.set_xlabel("Trace distance precision ")  # $\epsilon$
+    ax.set_ylabel("Number of copies ")  # $N$
 
-# Axis limits
-ax.set_xlim(0, 0.2)
-ax.set_ylim(0.5, 8)  # max(y) + 1
+    # Axis limits
+    ax.set_xlim(0, 0.2)
+    ax.set_ylim(0.5, 8)  # max(y) + 1
 
-# Ticks styling
-ax.tick_params(direction="in", length=5, width=1.0)
-# ax.tick_params(which="minor", direction="in", length=3)
+    # Ticks styling
+    ax.tick_params(direction="in", length=5, width=1.0)
+    # ax.tick_params(which="minor", direction="in", length=3)
 
-# Remove top/right spines (journal style)
-# ax.spines["top"].set_visible(False)
-# ax.spines["right"].set_visible(False)
-plt.legend()
-plt.tight_layout()
+    # Remove top/right spines (journal style)
+    # ax.spines["top"].set_visible(False)
+    # ax.spines["right"].set_visible(False)
+    plt.legend()
+    plt.tight_layout()
 
-# Save for paper
-# plt.savefig("trace_distance_standard_mixed_cat.pdf", bbox_inches="tight")
-# plt.savefig("trace_distance_step_plot.png", dpi=300, bbox_inches="tight")
+    # Save for paper
+    # plt.savefig("trace_distance_standard_mixed_cat.pdf", bbox_inches="tight")
+    # plt.savefig("trace_distance_step_plot.png", dpi=300, bbox_inches="tight")
 
-plt.show()
+    plt.show()

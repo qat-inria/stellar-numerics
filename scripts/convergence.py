@@ -59,11 +59,11 @@ if __name__ == "__main__":
     print("Finished!")
     print(f"The results are: {tot_res=}.")
 
-fig, ax = plt.subplots(figsize=(6.5, 4))
-## plotting
-ax.tick_params(direction="in", length=5, width=1.0)
-for i, s in enumerate(seeds):
-    ax.plot(iter_vals, tot_res[i], label=f"seed = {s}")
-plt.legend()
-plt.tight_layout()
-plt.show()
+    fig, ax = plt.subplots(figsize=(6.5, 4))
+    ## plotting
+    ax.tick_params(direction="in", length=5, width=1.0)
+    for i, s in enumerate(seeds):
+        ax.plot(iter_vals, tot_res[i], label=f"seed = {s}")
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
