@@ -119,7 +119,8 @@ def max_trace_distance_precision_mixed_pure_std(
 
     print(f"{max_n=}")
     sqrt_distance_list: list[float] = []
-    print("we are here")
+    # print("we are here")
+    # TODO add logic here to deal when there are not large negative numbers?
     for n in range(0, max_n + 1):
         print(1 - to_profile.profile[nb_copies * n] - nb_copies * (1 - from_profile.profile[n]))
         sqrt_distance_list.append(1 - to_profile.profile[nb_copies * n] - nb_copies * (1 - from_profile.profile[n]))
