@@ -36,6 +36,10 @@ from stellar.params import Method, OptimisationParameters  # noqa: F401
 # Todo add draw( function)
 S_co = TypeVar("S_co", bound=PureCVState | HermitianCVOp, covariant=True)
 S = TypeVar("S", bound=PureCVState | HermitianCVOp)
+# covariance on variables for classes that are parametrised by them
+# comparison on S allows to deduce comparaison on  StellarProfile[S]]
+
+# can return covariant type
 
 
 @dataclass(frozen=True, init=False)

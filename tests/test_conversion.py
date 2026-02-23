@@ -75,8 +75,8 @@ def test_pure_det_conversion() -> None:
     # same parameters for both states
     pars = OptimisationParameters(method=Method.gaussian)
 
-    from_profile = compute_profile(ranks=list(range(max_rank)), target_state=from_state, optim_params=pars)
-    to_profile = compute_profile(ranks=list(range(max_rank)), target_state=to_state, optim_params=pars)
+    from_profile = compute_profile(ranks=list(range(max_rank + 1)), target_state=from_state, optim_params=pars)
+    to_profile = compute_profile(ranks=list(range(max_rank + 1)), target_state=to_state, optim_params=pars)
     max_dist = max_trace_distance_precision_pure_pure_std(from_profile=from_profile, to_profile=to_profile, nb_copies=2)
     print(f"{max_dist=} and {1 - to_profile.profile[0]}")
 

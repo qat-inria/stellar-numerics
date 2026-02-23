@@ -364,6 +364,29 @@ def analytical_stellar_fidelity_mixed_01(prob: float) -> float:
     return prob
 
 
+def test_profile_mixed_values_0() -> None:
+    """Check of the correctness of the optimization for the state
+    p |0><0| + (1-p) |1><1| with p = 0 wrt the n=1 Fock state"""
+
+    prob = 0
+    decomp: PureDecompositionData = (
+        (prob, FockState(n=0)),
+        (1 - prob, FockState(n=1)),
+    )
+
+    ranks = range(0, 5)
+    tgt_state = HermitianCVOp(data=decomp)
+
+    pars = OptimisationParameters(method=Method.fock, target_cutoff=6)
+
+    mixed_profile = compute_profile(ranks=list(ranks), target_state=tgt_state, optim_params=pars)
+
+    fock_profile = compute_profile(ranks=list(ranks), target_state=FockState(n=1), optim_params=pars)
+    print(f"{mixed_profile.profile=} and {fock_profile.profile=}")
+    # assert False
+    assert all(isclose(mixed_profile.profile[i], fock_profile.profile[i], abs_tol=1e-8) for i in ranks)
+
+
 @pytest.mark.parametrize("prob", [0, 0.0032, 0.249, 0.33337, 0.491, 0.5601, 0.6662, 0.7831, 0.91673645, 1])
 def test_profile_mixed_values(prob: float) -> None:
     """Check of the correctness of the optimization for the state

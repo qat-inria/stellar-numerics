@@ -53,7 +53,7 @@ def max_trace_distance_precision(
                     from_profile=from_profile.replace(from_profile.state), to_profile=to_profile, nb_copies=nb_copies
                 )
             # mixed -> pure case
-            print(("state is mixed"))
+            # print(("target state is mixed"))
             assert isinstance(from_profile.state, HermitianCVOp)
             return max_trace_distance_precision_mixed_pure_std(
                 from_profile=from_profile.replace(from_profile.state), to_profile=to_profile, nb_copies=nb_copies
@@ -101,8 +101,10 @@ def max_trace_distance_precision_pure_pure_std(
 
     for n in range(0, max_n + 1):
         distance_list.append(1 - to_profile.profile[nb_copies * n] - nb_copies * (1 - from_profile.profile[n]))
-    print(f"{distance_list=}")
-    return max(distance_list)
+    # print(f"{distance_list=}")
+    max_dist = max(distance_list)
+    print(f"index of maximum is {distance_list.index(max_dist)}")
+    return max_dist
 
 
 def max_trace_distance_precision_mixed_pure_std(
@@ -115,13 +117,14 @@ def max_trace_distance_precision_mixed_pure_std(
 
     max_n = min([max_rank_from, max_rank_to // nb_copies])  # floor taken by integer division
 
-    # print(f"{max_n=}")
-    distance_list: list[float] = []
-
+    print(f"{max_n=}")
+    sqrt_distance_list: list[float] = []
+    print("we are here")
     for n in range(0, max_n + 1):
-        distance_list.append((1 - to_profile.profile[nb_copies * n] - nb_copies * (1 - from_profile.profile[n])) ** 2)
-    print(f"{distance_list=}")
-    return max(distance_list)
+        print(1 - to_profile.profile[nb_copies * n] - nb_copies * (1 - from_profile.profile[n]))
+        sqrt_distance_list.append(1 - to_profile.profile[nb_copies * n] - nb_copies * (1 - from_profile.profile[n]))
+    print(f"{sqrt_distance_list=} and {max(sqrt_distance_list)}")
+    return (max(sqrt_distance_list)) ** 2
 
 
 def max_trace_distance_precision_pure_pure_post(

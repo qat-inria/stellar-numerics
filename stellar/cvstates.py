@@ -806,7 +806,7 @@ class GKPState(LCGaussianState):  # type: ignore[misc]
         smax = ceil(sqrt(-log(tol) / (π * kappa**2 * dimension)))
         # without `tuple` this is a generator. More efficient? Don't think so the states carries it always.
         # log is natural log, no phase needed since 0 < delta < 1 => - ln delta > 0
-        # print(f"{smax=}")
+        print(f"{smax=}")
         # TODO refactor for more efficiency
 
         coeffs = np.array(
