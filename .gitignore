@@ -13,3 +13,4 @@ excludesfile = ~/.gitignore
 class.pdf
 *.prof
 *.json
+*.pdf
