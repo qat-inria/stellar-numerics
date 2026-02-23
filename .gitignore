@@ -12,5 +12,5 @@ excludesfile = ~/.gitignore
 *.mmd
 class.pdf
 *.prof
-*.json
+tmp/
 *.pdf
