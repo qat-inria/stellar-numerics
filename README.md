@@ -9,13 +9,15 @@
 
 ## Objective
 
-Solve for fidelity/stellar profiles
-
-$$\sup_{\rho \in \mathcal S_k} F(\rho, \ket{\psi}) = \sup_{\Phi \in \mathcal S_k^{\text{pure}}} F(\Phi, \psi) =
+This library is a toolbox for computing stellar single-moden fidelities and stellar profiles [C+20]. Mathematically, it performs the optimisation
+$$
+f_n^\star(\psi) =
 \sup_{\hat{G}} {\rm Tr}[\underbrace{\hat{\Pi}_k}_{=\sum_{n=0}^k |n\times n|} \hat G^\dagger\ket\psi\bra\psi G]
 $$
 
-For other witnesses replace $\ket\psi \bra\psi \to {\hat W} := \sum w_{kl}\ket k \bra l$ with ${\hat W}$ Hermitian.
+On top of this, a toolbox for Gaussian conversion analysis is provided [HFFC25]
+
+For more details see [HFFC25] and the [GitHub issues page](https://github.com/qat-inria/stellar-numerics/issues)
 
 ### Conventions
 
@@ -56,6 +58,9 @@ Maxime Garnier, Thierry Martinez and Ulysse Chabaud
   url={https://doi.org/10.5281/zenodo.18634055},
 }
 ```
+## How to cite
+
+Citing papers
 
 ## References
 
@@ -65,4 +70,5 @@ Maxime Garnier, Thierry Martinez and Ulysse Chabaud
 ‌or [preprint](https://arxiv.org/abs/1907.11009).
 - [4, MJD96] [K. B. Møller *et al.*, Displaced Squeezed Number States: Position Space Representation, Inner Product, and Some Applications, *Physical Review A* **54**, 5378 (1996)](https://doi.org/10.1103/PhysRevA.54.5378).
 - [5, TAFZ20] [D. Martínez-Tibaduiza *et al.*, New BCH-like relations of the su(1,1), su(2) and so(2,1) Lie algebras, *Physics Letters A* **384**, 36, 126937 (2020)](https://doi.org/10.1016/j.physleta.2020.126937)
+- [HFFC25] O. Hahn *et al.*, Assessing non-Gaussian quantum state conversion with the stellar rank. [Preprint](https://arxiv.org/abs/2410.23721).
 ‌
