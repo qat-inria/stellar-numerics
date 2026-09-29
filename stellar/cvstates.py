@@ -566,7 +566,7 @@ class LCGaussianState(PureCVState):
         # TODO tune so that FockState(0) is ok. Or use GaussianState with (0,) * 4 params
         # but ill defined statevec-wise I guess. Deal with that case.
         if not all(
-            [isinstance(state, GaussianState) for _, state in self.data]
+            isinstance(state, GaussianState) for _, state in self.data
         ):  # Fock 0 should be included (both Gaussian and Fock)
             raise TypeError("All states in a LCGaussianState have to be GaussianState objects.")
 
@@ -723,7 +723,7 @@ class BinomialState(PureCVState):
         N_parity = (self.N + 1) % 2
         intrinsic_cutoff = self.N + 1
 
-        if not (N_parity == self.parity):
+        if N_parity != self.parity:
             intrinsic_cutoff = self.N
 
         if not cutoff >= intrinsic_cutoff * (self.S + 1):

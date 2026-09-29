@@ -137,8 +137,8 @@ class StellarProfile(Generic[S_co]):
         # TODO `eval` is not safe! Do something better.
         return StellarProfile(
             eval(d["state"]),
-            ranks=list(int(k) for k in d["profile"].keys()),
-            fidelities=list(float(v) for v in d["profile"].values()),
+            ranks=[int(k) for k in d["profile"]],
+            fidelities=[float(v) for v in d["profile"].values()],
             optim_params=eval(d["optim_params"]),
         )
 

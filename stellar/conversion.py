@@ -35,7 +35,7 @@ def max_trace_distance_precision(
         raise ValueError("Both `from_profile`and `from_rank` cannot be None.")
 
     if isinstance(to_profile.state, HermitianCVOp):
-        raise ValueError("Cannot assess Gaussian conversion to a mixed state.")
+        raise TypeError("Cannot assess Gaussian conversion to a mixed state.")
 
     match protocol:
         # standard protocol

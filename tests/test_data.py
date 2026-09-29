@@ -74,7 +74,7 @@ def test_draw() -> None:
     prof = StellarProfile(
         state=st,
         ranks=list(range(15)),
-        fidelities=sorted(list(rng.random(15))),
+        fidelities=sorted(rng.random(15)),
         optim_params=OptimisationParameters(method=Method.gaussian),
     )
 
