@@ -70,5 +70,5 @@ Citing papers
 ‌or [preprint](https://arxiv.org/abs/1907.11009).
 - [4, MJD96] [K. B. Møller *et al.*, Displaced Squeezed Number States: Position Space Representation, Inner Product, and Some Applications, *Physical Review A* **54**, 5378 (1996)](https://doi.org/10.1103/PhysRevA.54.5378).
 - [5, TAFZ20] [D. Martínez-Tibaduiza *et al.*, New BCH-like relations of the su(1,1), su(2) and so(2,1) Lie algebras, *Physics Letters A* **384**, 36, 126937 (2020)](https://doi.org/10.1016/j.physleta.2020.126937)
-- [HFFC25] O. Hahn *et al.*, Assessing non-Gaussian quantum state conversion with the stellar rank. [Preprint](https://arxiv.org/abs/2410.23721).
+- [HFFC25] [O. Hahn *et al.*, Assessing non-Gaussian quantum state conversion with the stellar rank, *Quantum* **10**, 2095 (2026)](https://doi.org/10.22331/q-2026-05-05-2095). Or [preprint](https://arxiv.org/abs/2410.23721).
 ‌
