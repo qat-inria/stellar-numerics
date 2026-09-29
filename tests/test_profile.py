@@ -9,8 +9,8 @@ from stellar.cvstates import (
     CatState,
     CoherentState,
     FockState,
-    GKPState,
     GaussianState,
+    GKPState,
     HermitianCVOp,
     PureCVState,
     PureDecompositionData,
@@ -97,9 +97,9 @@ def test_fock_states() -> None:
     cutoff = 7  # min is 6 for Fock state |5>
     pars = OptimisationParameters(method=Method.fock, target_cutoff=cutoff)
     # TODO rewrite using itertools.product as done in `test_fock_state_mixed` below
-    for n in range(0, 6):
+    for n in range(6):
         tgt_state = FockState(n=n)
-        for r in range(0, 6):
+        for r in range(6):
             results = compute_sup_fidelity(max_rank=r, target_state=tgt_state, optim_params=pars)
             # assert results.success?
             assert isclose(results.fun, -check_results[n, r], abs_tol=1e-3)
@@ -116,7 +116,7 @@ def test_fock_states() -> None:
 # BUG for alpha = 8 the squeezing in gauss matrix product overflows the atanh fct
 # @given(st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=0, max_magnitude=5))
 # @given(st.complex_numbers(allow_nan=False, allow_infinity=False, min_magnitude=0, max_magnitude=5))
-@pytest.mark.parametrize(("method", "rank"), product([Method.fock, Method.gaussian], range(0, 5)))
+@pytest.mark.parametrize(("method", "rank"), product([Method.fock, Method.gaussian], range(5)))
 def test_coh_state(method: Method, rank: int) -> None:
     """Check coherent state has indeed rank 0 via both gaussian and fock methods."""
 
@@ -161,7 +161,7 @@ def test_values_cat_state() -> None:  # amp: complex
 
     values = [0.5, 0.615383, 0.848799, 0.896384]
 
-    for rank in range(0, 4):
+    for rank in range(4):
         results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, optim_params=pars)
         assert isclose(results.fun, -values[rank], abs_tol=1e-6)
 
@@ -172,7 +172,7 @@ def test_values_bin_e21_state() -> None:  # amp: complex
     tgt_state = BinomialState(N=2, S=1)
     pars = OptimisationParameters(method=Method.fock, target_cutoff=6)
 
-    for rank in range(0, 5):
+    for rank in range(5):
         results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, optim_params=pars)
         print(f"results for {rank=}: {-results.fun}")
 
@@ -201,7 +201,7 @@ def test_values_gkp_state_default() -> None:  # amp: complex
     tgt_state = GKPState(tol=1e-3)
     pars = OptimisationParameters(method=Method.gaussian, seed=421, niter=350)
 
-    for rank in range(0, 6):
+    for rank in range(6):
         # seed for test reproducibility
         results = compute_sup_fidelity(max_rank=rank, target_state=tgt_state, optim_params=pars)
         print(f"results for {rank=}: {-results.fun}")
@@ -211,7 +211,7 @@ def test_values_gkp_state_default() -> None:  # amp: complex
     # assert False
 
 
-@pytest.mark.parametrize(("n", "rank"), product(range(0, 5), range(0, 5)))
+@pytest.mark.parametrize(("n", "rank"), product(range(5), range(5)))
 def test_fock_state_mixed(n: int, rank: int) -> None:
     # target |1> Fock state approximated using only Gaussian states
     tgt_state = FockState(n=n)
@@ -236,7 +236,7 @@ def test_fock_state_mixed(n: int, rank: int) -> None:
 @pytest.mark.parametrize(
     ("tgt_state", "rank"),
     product(
-        [CoherentState(amplitude=-3.19 + 0.12j), CatState(amplitude=6.5 - 0.529j, parity=True), GKPState()], range(0, 5)
+        [CoherentState(amplitude=-3.19 + 0.12j), CatState(amplitude=6.5 - 0.529j, parity=True), GKPState()], range(5)
     ),
 )
 def test_optim_gauss_state_mixed(tgt_state: PureCVState, rank: int) -> None:
@@ -265,7 +265,7 @@ def test_optim_gauss_state_mixed(tgt_state: PureCVState, rank: int) -> None:
 
 @pytest.mark.parametrize(
     ("tgt_state", "rank"),
-    product([BinomialState(N=2, S=1)], range(0, 5)),
+    product([BinomialState(N=2, S=1)], range(5)),
 )
 def test_optim_ngauss_state_mixed(tgt_state: PureCVState, rank: int) -> None:
     decomp: PureDecompositionData = ((1.0, tgt_state),)  # don't forget the comma!
@@ -309,7 +309,7 @@ def test_warning_mixed() -> None:
 def test_compute_profile_pure() -> None:
     """correctness of the optimization has been checked above"""
 
-    ranks = range(0, 5)
+    ranks = range(5)
     tgt_state = CatState(amplitude=3.47 - 1.7j, parity=True)
 
     pars = OptimisationParameters(method=Method.gaussian)
@@ -333,7 +333,7 @@ def test_compute_profile_mixed() -> None:
         (0.5, GaussianState(GaussianParameters(x=-1.3, y=0.7, r=1.2, theta=-0.477))),
     )
 
-    ranks = range(0, 5)
+    ranks = range(5)
     tgt_state = HermitianCVOp(data=decomp)
 
     pars = OptimisationParameters(method=Method.fock, target_cutoff=6)
@@ -374,7 +374,7 @@ def test_profile_mixed_values_0() -> None:
         (1 - prob, FockState(n=1)),
     )
 
-    ranks = range(0, 5)
+    ranks = range(5)
     tgt_state = HermitianCVOp(data=decomp)
 
     pars = OptimisationParameters(method=Method.fock, target_cutoff=6)
@@ -397,7 +397,7 @@ def test_profile_mixed_values(prob: float) -> None:
         (1 - prob, FockState(n=1)),
     )
 
-    ranks = range(0, 2)
+    ranks = range(2)
     tgt_state = HermitianCVOp(data=decomp)
 
     pars = OptimisationParameters(method=Method.fock, target_cutoff=6)

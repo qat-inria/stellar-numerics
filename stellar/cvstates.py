@@ -4,10 +4,11 @@ from __future__ import annotations
 
 import cmath
 import warnings
+from collections.abc import Iterator
 from dataclasses import dataclass
 from math import ceil, comb, cosh, exp, factorial, isclose, log, sqrt, tanh
 from math import pi as π
-from typing import Generic, Iterator, TypeAlias, TypeVar
+from typing import Generic, TypeAlias, TypeVar
 
 import numpy as np
 import numpy.typing as npt
@@ -302,7 +303,7 @@ class GaussianState(PureCVState):
                     / 2
                 )
                 * hermite_values[k]
-                for k in range(0, cutoff + 1)
+                for k in range(cutoff + 1)
             ],
             dtype=np.complex128,
         )
@@ -730,7 +731,7 @@ class BinomialState(PureCVState):
                 f"The Fock space cutoff has to be greater than the maximal Fock number reached by the state, here {intrinsic_cutoff * (self.S + 1)}."
             )
 
-        indices = [(2 * k + self.parity) * (self.S + 1) for k in range(0, (self.N + 1 - self.parity) // 2 + 1)]
+        indices = [(2 * k + self.parity) * (self.S + 1) for k in range((self.N + 1 - self.parity) // 2 + 1)]
 
         data = np.zeros(cutoff + 1, dtype=np.complex128)
         values = [sqrt(comb(self.N + 1, j // (self.S + 1))) for j in indices]
@@ -858,7 +859,7 @@ class TruncatedParityOp(HermitianCVOp):
         if cutoff is None:
             raise ValueError("cutoff cannot be None.")
 
-        decomp: PureDecompositionData = tuple(((-1) ** k, FockState(n=k)) for k in range(0, cutoff + 1))
+        decomp: PureDecompositionData = tuple(((-1) ** k, FockState(n=k)) for k in range(cutoff + 1))
         super().__init__(data=decomp)
         object.__setattr__(self, "cutoff", cutoff)
 

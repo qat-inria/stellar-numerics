@@ -5,8 +5,9 @@ import numpy as np
 import pytest
 from hypothesis import given
 from hypothesis import strategies as st
-from stellar.params import GaussianParameters
+
 from stellar.gaussian import GaussianOp, check_gaussian_displacement
+from stellar.params import GaussianParameters
 
 # logger = logging.getLogger(__name__)
 

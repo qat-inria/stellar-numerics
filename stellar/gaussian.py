@@ -5,7 +5,6 @@ References
 
 from cmath import exp, phase
 from math import atanh, cosh, sinh, sqrt, tanh
-
 from typing import overload
 
 import numpy as np
@@ -163,7 +162,7 @@ class GaussianOp:
         # column loop, start from second column
         for n in range(1, ket_cutoff + 1):
             # row loop
-            for m in range(0, bra_cutoff + 1):
+            for m in range(bra_cutoff + 1):
                 if n == 1:
                     if m == 0:  # n = 1, m = 0 only first term
                         self.matrix_fock_basis[m, n] = self.matrix_fock_basis[m, n - 1] * self.mean_vector[1]
@@ -185,7 +184,6 @@ class GaussianOp:
                             - sqrt(m) * self.matrix_fock_basis[m - 1, n - 1] * self.covariance_matrix[1, 0]
                             - sqrt(n - 1) * self.matrix_fock_basis[m, n - 2] * self.covariance_matrix[1, 1]
                         ) / sqrt(n)
-        return
 
     # choose specific attributes to compute depending on how the computation will be performed
     # find a way to do it condionally

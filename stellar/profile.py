@@ -5,13 +5,14 @@ References:
 """
 
 import warnings
+from collections.abc import Callable
 from math import pi as π
-from typing import Any, Callable, TypeVar
+from typing import Any, TypeVar
 
 # for 3.13 from typing import assert_never works
 import numpy as np
 from scipy.optimize import (
-    Bounds,  # noqa: F401
+    Bounds,
     OptimizeResult,
     basinhopping,
     direct,  # noqa: F401

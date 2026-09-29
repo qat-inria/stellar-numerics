@@ -1,17 +1,19 @@
 """test conversion module"""
 
 from math import isclose
+
+import pytest
+
 from stellar.conversion import (
+    Protocol,
     max_trace_distance_precision,
     max_trace_distance_precision_mixed_pure_std,
     max_trace_distance_precision_pure_pure_post,
     max_trace_distance_precision_pure_pure_std,
-    Protocol,
 )
 from stellar.cvstates import CatState, CoherentState, FockState, HermitianCVOp, PureDecompositionData
 from stellar.params import Method, OptimisationParameters
 from stellar.profile import compute_profile
-import pytest
 
 # TODO add pytest fixtures for commonly used profiles
 

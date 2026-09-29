@@ -10,14 +10,14 @@ from stellar.cvstates import (
     BinomialState,
     CatState,
     CoherentState,
-    PureDecompositionData,
-    HermitianCVOp,
-    PureCVState,
-    Matrix,
     FockState,
-    GKPState,
     GaussianState,
+    GKPState,
+    HermitianCVOp,
     LCGaussianState,
+    Matrix,
+    PureCVState,
+    PureDecompositionData,
     SqueezedVacuumState,
     Statevector,
     StatevectorData,
@@ -292,7 +292,7 @@ def test_cat_plus_state_statevec(amp: complex, parity: bool, cutoff: int) -> Non
     target = (
         exp(-(abs(amp) ** 2) / 2)
         * np.array(
-            [2 * amp**k / sqrt(factorial(k)) if k % 2 == int(parity) else 0 for k in range(0, cutoff + 1)],
+            [2 * amp**k / sqrt(factorial(k)) if k % 2 == int(parity) else 0 for k in range(cutoff + 1)],
             dtype=np.complex128,
         )
         / sqrt(2 * (1 + +((-1) ** parity) * exp(-2 * abs(amp) ** 2)))
@@ -352,7 +352,6 @@ def test_single_state_decomp() -> None:
 
 
 def test_get_dm_mixed_vac_decomp_state() -> None:
-    #
     """test getting density matrix for mixture of fock states
     with (1/4) |0><0| + (1/6) |2><2| + (7/12) |3><3| using the pure decomposition
     """
@@ -378,7 +377,6 @@ def test_get_dm_mixed_vac_decomp_state() -> None:
 
 
 def test_get_dm_mixed_vac_mat_state() -> None:
-    #
     """test getting density matrix for mixture of fock states
     with (1/4) |0><0| + (1/6) |2><2| + (7/12) |3><3|
     input the matrix directly. Check identity.
@@ -410,7 +408,7 @@ def test_trunc_parity(cutoff: int) -> None:
     dm = par_op.get_densitymatrix(cutoff=cutoff).matrix
 
     # diag = np.array([(-1)**k for k in range(0, cutoff+1)], dtype=np.complex128)
-    expected_dm = np.diag(np.array([(-1) ** k for k in range(0, cutoff + 1)], dtype=np.complex128))
+    expected_dm = np.diag(np.array([(-1) ** k for k in range(cutoff + 1)], dtype=np.complex128))
 
     assert dm.shape == (cutoff + 1,) * 2
     np.testing.assert_array_almost_equal(dm, expected_dm)
