@@ -206,7 +206,7 @@ class GaussianOp:
 
 
 # To be used both in tests/ and benchmarks/
-def check_gaussian_displacement(x: float, y: float) -> None:
+def _check_gaussian_displacement(x: float, y: float) -> None:
     """Eqs. 53 -> 55 of Quesada"""
     gauss_params = GaussianParameters(
         x=x,

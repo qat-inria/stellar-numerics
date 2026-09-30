@@ -76,7 +76,7 @@ class StellarProfile(Generic[S_co]):
     def __iter__(self) -> Iterator[tuple[int, float]]:  # TODO return type annotate this
         return iter(self.profile.items())
 
-    def to_dict(self):  # TODO return type annotate this
+    def _to_dict(self):  # TODO return type annotate this
         return {
             "state": repr(self.state),
             "profile": self.profile,
@@ -106,7 +106,7 @@ class StellarProfile(Generic[S_co]):
         path.mkdir(parents=True, exist_ok=True)
 
         with open(path / (filename + ".json"), "w") as f:
-            json.dump(self.to_dict(), f, indent=4)
+            json.dump(self._to_dict(), f, indent=4)
 
     # NOTE: how to avoid all possibilities in States?
     @staticmethod
