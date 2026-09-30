@@ -29,7 +29,21 @@ StatevectorData: TypeAlias = npt.NDArray[np.complex128] | npt.NDArray[np.float64
 # make it inherit from numpy arrays to void redefining everything
 # (like conj and so on...) but makes things fail (np.ndarray) ...
 class Statevector:
-    """Class for statevectors in the Fock basis"""
+    """A single-mode statevector represented in the Fock basis.
+
+    Parameters
+    ----------
+    data : numpy.ndarray
+        One-dimensional array of Fock-basis amplitudes. The array is retained
+        by reference.
+
+    Raises
+    ------
+    TypeError
+        If ``data`` is not a NumPy array.
+    ValueError
+        If ``data`` is not one-dimensional.
+    """
 
     statevector: StatevectorData
 
@@ -47,13 +61,29 @@ class Statevector:
 
     @property
     def norm(self) -> float:
+        """float: Euclidean norm of the statevector."""
         return np.sqrt(np.sum(np.abs(self.statevector) ** 2))
 
     # default tolerance is 1e-9. Try 1e-5.
     def is_normalized(self) -> bool:
+        """Return whether the statevector has unit norm.
+
+        Returns
+        -------
+        bool
+            ``True`` when the norm is within an absolute tolerance of ``1e-5``
+            of one.
+        """
         return isclose(self.norm, 1, abs_tol=1e-5)
 
     def normalize(self) -> None:
+        """Normalize this statevector in place.
+
+        Raises
+        ------
+        ValueError
+            If the statevector is the zero vector.
+        """
         # i n place or not?
         if isclose(self.norm, 0):
             raise ValueError("Cannot normalize the zero vector.")
@@ -61,7 +91,20 @@ class Statevector:
 
 
 class Matrix:
-    """Class for matrices (density matrices or more genral operators) in the Fock basis"""
+    """A square matrix, such as a density matrix or operator, in the Fock basis.
+
+    Parameters
+    ----------
+    data : numpy.ndarray
+        Two-dimensional square array. The array is retained by reference.
+
+    Raises
+    ------
+    TypeError
+        If ``data`` is not a NumPy array.
+    ValueError
+        If ``data`` is not a square, two-dimensional array.
+    """
 
     # same type as statevector since no way to type annotate number of dimensions
     matrix: StatevectorData
@@ -84,21 +127,49 @@ class Matrix:
 
     @property
     def norm(self) -> float | complex:
+        """float or complex: Trace of the matrix."""
         return np.trace(self.matrix)
 
     @property
     def purity(self) -> float:
+        """float: Trace of the squared, unit-trace matrix.
+
+        Notes
+        -----
+        If the matrix is not normalized, this property normalizes it in place
+        before computing the purity.
+        """
         if not self.is_normalized():
             self.normalize()
         return np.trace(self.matrix @ self.matrix)
 
     # default tolerance is 1e-9. Try 1e-5.
     def is_normalized(self) -> bool:
+        """Return whether the matrix has unit trace.
+
+        Returns
+        -------
+        bool
+            ``True`` when the real trace is within an absolute tolerance of
+            ``1e-5`` of one.
+
+        Raises
+        ------
+        ValueError
+            If the trace has a nonzero imaginary part.
+        """
         if not isclose(self.norm.imag, 0):
             raise ValueError("Norm cannot be cast to real so the density matrix is probably not hermitian.")
         return isclose(np.real_if_close(self.norm), 1, abs_tol=1e-5)
 
     def normalize(self) -> None:
+        """Normalize this matrix to unit trace in place.
+
+        Raises
+        ------
+        ValueError
+            If the matrix has zero trace.
+        """
         if np.isclose(self.norm, 0):
             raise ValueError("Cannot normalize the zero matrix.")
         self.matrix = (self.matrix / self.norm).astype(
@@ -109,6 +180,16 @@ class Matrix:
 # CVState abstrait puis concret?
 @dataclass(frozen=True)
 class PureCVState:
+    """Base representation of a pure, single-mode continuous-variable state.
+
+    Parameters
+    ----------
+    statevector : Statevector or None, optional
+        Explicit Fock-basis representation, when already available.
+    is_gaussian : bool or None, optional
+        Whether the state is Gaussian, if known.
+    """
+
     statevector: Statevector | None = None
     is_gaussian: bool | None = None
 
@@ -118,6 +199,24 @@ class PureCVState:
     # child classes that require a cutoff have to raise a ValueError to keep signature matching
     # inheritance: all method called from A have to be called from B, derived from B
     def get_statevector(self, cutoff: int | None = None) -> Statevector:
+        """Return the stored statevector.
+
+        Parameters
+        ----------
+        cutoff : int or None, optional
+            Accepted for compatibility with state subclasses; unused by this
+            base implementation.
+
+        Returns
+        -------
+        Statevector
+            Stored Fock-basis representation.
+
+        Raises
+        ------
+        ValueError
+            If this instance does not contain a statevector.
+        """
         if self.statevector is None:
             raise ValueError("No statevector provided.")
         # self.is_gaussian = cast(bool, 42) # clairement faux mais existe cas où l'inferrence ne marche pas. Eviter types trop généraux, réduire et mettre cast où on peut prouver le type.
@@ -126,6 +225,18 @@ class PureCVState:
     # since all states have get_statevector method
     # this should be fine
     def get_densitymatrix(self, cutoff: int | None = None) -> Matrix:
+        """Construct the density matrix ``|psi><psi|`` for this state.
+
+        Parameters
+        ----------
+        cutoff : int or None, optional
+            Cutoff passed to :meth:`get_statevector`.
+
+        Returns
+        -------
+        Matrix
+            Outer product of the statevector with its complex conjugate.
+        """
         # NOTE this should work?
         # if self.statevector is None:
         #     raise ValueError("No statevector provided.")
@@ -160,14 +271,19 @@ T = TypeVar("T", Matrix, PureDecompositionData)
 
 @dataclass(frozen=True)
 class HermitianCVOp(Generic[T]):
-    """a class for composite states ie Hermitian operators. Initialised either by providing a `DensityMatrix` (OperatorMatrix instead TODO) object or a `CompositeStateData` (pure state decomposition)
-    For now this represents ANY ``composite'' state (i.e. mixture of pure states) so not necessarily a state.
-    Only real number allowed in the decomposition since Hermitian.
+    """A Hermitian operator represented by a matrix or pure-state decomposition.
 
-    Raises
-    ------
-    ValueError
-        _description_
+    Parameters
+    ----------
+    data : Matrix or tuple of (float, PureCVState)
+        Either a Fock-basis matrix or a sequence of real-weighted pure-state
+        terms. The decomposition may represent an operator that is not a
+        normalized density matrix.
+
+    Warns
+    -----
+    UserWarning
+        If the decomposition contains a single pure state.
     """
 
     data: T  # Matrix | PureDecompositionData
@@ -180,6 +296,19 @@ class HermitianCVOp(Generic[T]):
             warnings.warn("A composite state with a single pure state in its decomposition is just a pure state.")
 
     def get_densitymatrix(self, cutoff: int | None = None) -> Matrix:
+        """Return the matrix representation of this operator.
+
+        Parameters
+        ----------
+        cutoff : int or None, optional
+            Fock cutoff passed to component states when ``data`` is a
+            decomposition.
+
+        Returns
+        -------
+        Matrix
+            The stored matrix or the matrix assembled from the decomposition.
+        """
         if not isinstance(self.data, Matrix):
             # compute from decomposition
             # apparently need explicit list conversion for sum to work
@@ -202,6 +331,18 @@ class HermitianCVOp(Generic[T]):
 
     # TODO think about it since not sure to have a decomposition
     def __iter__(self) -> Iterator[tuple[float | int, PureCVState]]:
+        """Iterate over decomposition terms.
+
+        Yields
+        ------
+        tuple of (float or int, PureCVState)
+            A real coefficient and its pure state.
+
+        Raises
+        ------
+        TypeError
+            If this operator is stored as a matrix rather than a decomposition.
+        """
         if not isinstance(self.data, Matrix):
             return iter(self.data)
         else:
@@ -236,6 +377,16 @@ class HermitianCVOp(Generic[T]):
 # puisque GaussianState est gelé, il faut utiliser object.__setattr__ pour initialiser params.
 @dataclass(frozen=True, init=False)  # manually define __init__ for order parameter order reasons
 class GaussianState(PureCVState):
+    """A pure single-mode Gaussian state.
+
+    Parameters
+    ----------
+    params : GaussianParameters
+        Displacement and squeezing parameters.
+    statevector : Statevector or None, optional
+        An optional explicit Fock-basis representation.
+    """
+
     # one un type pour un champ au niveau de la classe
     # dataclass fait le init en plus
     # mypy voit pas init = False
@@ -324,9 +475,34 @@ class GaussianState(PureCVState):
 
 @dataclass(frozen=True, init=False)  # manually define __init__ for order parameter order reasons
 class FockState(PureCVState):
+    """A number state ``|n>`` in the Fock basis.
+
+    Parameters
+    ----------
+    n : int
+        Non-negative Fock number.
+
+    Raises
+    ------
+    TypeError
+        If ``n`` is not an integer.
+    """
+
     n: int  # type: ignore
 
     def __init__(self, n: int):
+        """Initialize a Fock number state.
+
+        Parameters
+        ----------
+        n : int
+            Non-negative Fock number.
+
+        Raises
+        ------
+        TypeError
+            If ``n`` is not an integer.
+        """
         if not isinstance(n, int):
             raise TypeError("The Fock number has to be an integer.")
         if n == 0:
@@ -378,9 +554,35 @@ class FockState(PureCVState):
 
 @dataclass(frozen=True, init=False)  # manually define __init__ to avoid many __init__ calls for differet objects
 class CoherentState(GaussianState):  # type: ignore[misc]
+    """A single-mode coherent state.
+
+    Parameters
+    ----------
+    amplitude : complex
+        Coherent-state amplitude. Real values are interpreted as amplitudes
+        with zero imaginary part.
+
+    Raises
+    ------
+    TypeError
+        If ``amplitude`` is not a real or complex number.
+    """
+
     amplitude: complex  # type: ignore[misc]
 
     def __init__(self, amplitude: complex):
+        """Initialize a coherent state from its complex amplitude.
+
+        Parameters
+        ----------
+        amplitude : complex
+            Displacement amplitude; a real number is also accepted.
+
+        Raises
+        ------
+        TypeError
+            If ``amplitude`` is not a real or complex number.
+        """
         if isinstance(amplitude, (float, int)):  # type float int are subtypes but not instances
             super().__init__(params=GaussianParameters(float(amplitude), 0, 0, 0))
         elif isinstance(amplitude, complex):
@@ -437,10 +639,36 @@ class CoherentState(GaussianState):  # type: ignore[misc]
 
 @dataclass(frozen=True, init=False)
 class SqueezedVacuumState(GaussianState):  # type: ignore[misc]
+    """A single-mode squeezed vacuum state.
+
+    Parameters
+    ----------
+    amplitude : complex
+        Complex squeezing parameter. Its magnitude is the squeezing strength
+        and its phase is the squeezing angle.
+
+    Raises
+    ------
+    TypeError
+        If ``amplitude`` is not a real or complex number.
+    """
+
     # amplitude = r exp(iθ)
     amplitude: complex  # type: ignore[misc]
 
     def __init__(self, amplitude: complex):
+        """Initialize a squeezed vacuum from its complex squeezing parameter.
+
+        Parameters
+        ----------
+        amplitude : complex
+            Squeezing parameter; a real number is also accepted.
+
+        Raises
+        ------
+        TypeError
+            If ``amplitude`` is not a real or complex number.
+        """
         if isinstance(amplitude, (complex, float, int)):  # type float int are subtypes but not instances
             super().__init__(params=GaussianParameters(0, 0, abs(amplitude), cmath.phase(amplitude)))
         else:
@@ -534,17 +762,40 @@ LCGaussianData: TypeAlias = tuple[tuple[complex, GaussianState], ...]  # need im
 
 @dataclass(frozen=True, init=False)
 class LCGaussianState(PureCVState):
-    """ "A class for handling superpositions of Gaussian states like cat states"
+    """A finite linear combination of single-mode Gaussian states.
 
     Parameters
     ----------
-    GaussianState : _type_
-        _description_
+    data : tuple of (complex, GaussianState)
+        Coefficient-state pairs defining the superposition. A one-term input is
+        rejected; the coefficients are not automatically normalized.
+
+    Raises
+    ------
+    ValueError
+        If ``data`` contains exactly one term.
+    TypeError
+        If any term is not a :class:`GaussianState`.
     """
 
     data: LCGaussianData  # type: ignore
 
     def __init__(self, data: LCGaussianData) -> None:
+        """Initialize a Gaussian-state linear combination.
+
+        Parameters
+        ----------
+        data : tuple of (complex, GaussianState)
+            Coefficient-state pairs. The tuple must contain at least two
+            Gaussian states.
+
+        Raises
+        ------
+        ValueError
+            If ``data`` has exactly one term.
+        TypeError
+            If a term's state is not a :class:`GaussianState`.
+        """
         # default to non Gaussian
         # it is not if two states are the same in a length 2 sequence
         # redifine equality for GaussianStates == equality of GaussianParameters
@@ -576,6 +827,13 @@ class LCGaussianState(PureCVState):
         #     raise ValueError("The provided coefficients are not normalised.")
 
     def __iter__(self) -> Iterator[tuple[complex, GaussianState]]:
+        """Iterate over the coefficient-state pairs.
+
+        Yields
+        ------
+        tuple of (complex, GaussianState)
+            Each coefficient and its associated Gaussian state.
+        """
         return iter(self.data)
 
     # @functools.cache
@@ -631,16 +889,20 @@ class LCGaussianState(PureCVState):
 # linter doesn't see init = False
 @dataclass(frozen=True, init=False)
 class CatState(LCGaussianState):  # type: ignore[misc]
-    """ "A class for handling cat states"
+    """A normalized superposition of two opposite coherent states.
 
     Parameters
     ----------
-    amplitude: complex amplitude of the state
-    parity: sign
+    amplitude : complex
+        Coherent-state amplitude.
+    parity : bool, default=False
+        Selects the superposition sign: ``False`` gives even parity and
+        ``True`` gives odd parity.
 
-    Note
-    ----
-    .. math:: \\vert {\\rm cat}_\\alpha^\\pm \\rangle = \\frac{1}{\\sqrt{2(1 \\pm e^{-2\\vert\\alpha\\vert^2})}}
+    Notes
+    -----
+    The two coherent components are normalized together, including their
+    nonzero overlap.
 
     """
 
@@ -649,6 +911,16 @@ class CatState(LCGaussianState):  # type: ignore[misc]
     # TODO: allow for an angle instead of just bool?
 
     def __init__(self, amplitude: complex, parity: bool = False) -> None:
+        """Construct an even- or odd-parity cat state.
+
+        Parameters
+        ----------
+        amplitude : complex
+            Coherent-state amplitude.
+        parity : bool, default=False
+            ``False`` constructs the even superposition; ``True`` constructs
+            the odd superposition.
+        """
         # defaults to even parity
         norm = sqrt(2 * (1 + (-1) ** parity * exp(-2 * abs(amplitude) ** 2)))
         super().__init__(
@@ -667,10 +939,17 @@ class CatState(LCGaussianState):  # type: ignore[misc]
 
 @dataclass(frozen=True, init=False)  # manually define __init__ for parameter order reasons
 class BinomialState(PureCVState):
-    """After [CDraft] Eq. (F1)) and Michael et al. PHYSICAL REVIEW X 6, 031006 (2016)
+    """A single-mode binomial state in the Fock basis.
 
     Parameters
     ----------
+    N : int
+        Order controlling the number of populated Fock levels.
+    S : int
+        Spacing parameter between populated Fock levels.
+    parity : bool, default=False
+        Selects even (``False``) or odd (``True``) indices in the binomial
+        superposition.
     """
 
     # todo name those parameters
@@ -681,6 +960,22 @@ class BinomialState(PureCVState):
     parity: bool  # type: ignore
 
     def __init__(self, N: int, S: int, parity: bool = False):
+        """Initialize a binomial state.
+
+        Parameters
+        ----------
+        N : int
+            Order parameter.
+        S : int
+            Spacing parameter.
+        parity : bool, default=False
+            Parity of the populated Fock levels.
+
+        Raises
+        ------
+        TypeError
+            If ``N`` or ``S`` is not an integer.
+        """
         if not isinstance(N, int):
             raise TypeError("The maximal order has to be an integer.")
         if not isinstance(S, int):
@@ -747,32 +1042,39 @@ class BinomialState(PureCVState):
 
 @dataclass(frozen=True, init=False)
 class GKPState(LCGaussianState):  # type: ignore[misc]
-    """A class for handling approximate square Gottesman-Kitaev-Preskil states
+    """An approximate square Gottesman-Kitaev-Preskil (GKP) state.
 
-    Standard approx: replace position eigenstates by their finitely-squeezed versions
-    and add a Gaussian filter enveloppe
+    The approximate comb replaces position eigenstates with finitely squeezed
+    states and applies a Gaussian envelope.
 
     Parameters
     ----------
-    dimension (int): logical space dimension
-        default: 2
+    dimension : int, default=2
+        Logical-space dimension, at least two.
+    index : int, default=0
+        Logical-state index, conventionally in the range
+        ``0 <= index < dimension``.
+    kappa : float, default=0.3
+        Gaussian envelope parameter.
+    delta : float, default=0.3
+        Width parameter for the squeezed states; must be strictly between zero
+        and one.
+    tol : float, default=1e-3
+        Positive tolerance below one controlling the finite Gaussian expansion.
 
-    index (int): index of the logical state to construct
-        default: 0. Must be between 0 and dimension - 1 (inclusive)
+    Notes
+    -----
+    ``tol`` controls the state expansion itself and is distinct from the
+    Fock-space cutoff passed to :meth:`get_statevector`.
 
-    kappa (float): Gaussian enveloppe parameter
-        default: 0.3
-
-    delta (float): variance of the squeezed state
-        default: 0.3. Must be positive (ideal GKP) and smaller than 1 (position squeezing)
-
-    tol (float): tolerance on the coefficient of the Gaussian expansion
-        default: 10^-3. Must be positive and smaller than one.
-        This is intrinsic to the state definition NOT like a cutoff for statevectors.
-
-    Note
-    ----
-    .. math::
+    Raises
+    ------
+    TypeError
+        If ``dimension`` is not an integer or a floating-point parameter is
+        not a float.
+    ValueError
+        If ``dimension`` is less than two or ``delta`` or ``tol`` is outside
+        its required open interval.
 
     """
 
@@ -786,6 +1088,58 @@ class GKPState(LCGaussianState):  # type: ignore[misc]
     def __init__(
         self, dimension: int = 2, index: int = 0, kappa: float = 0.3, delta: float = 0.3, tol: float = 1e-3
     ) -> None:
+        """Construct an approximate square GKP state.
+
+        Parameters
+        ----------
+        dimension : int, default=2
+            Logical-space dimension.
+        index : int, default=0
+            Logical-state index.
+        kappa : float, default=0.3
+            Gaussian envelope parameter.
+        delta : float, default=0.3
+            Width parameter for the squeezed states, strictly between zero and
+            one.
+        tol : float, default=1e-3
+            Tolerance controlling the finite Gaussian expansion, strictly
+            between zero and one.
+
+        Raises
+        ------
+        TypeError
+            If ``dimension`` is not an integer or one of the floating-point
+            parameters is not a float.
+        ValueError
+            If ``dimension`` is below two, ``delta`` or ``tol`` is outside its
+            required range.
+        """
+        """Construct an approximate square GKP state.
+
+        Parameters
+        ----------
+        dimension : int, default=2
+            Logical-space dimension.
+        index : int, default=0
+            Logical-state index.
+        kappa : float, default=0.3
+            Gaussian envelope parameter.
+        delta : float, default=0.3
+            Width parameter for the squeezed states, strictly between zero and
+            one.
+        tol : float, default=1e-3
+            Tolerance controlling the finite Gaussian expansion, strictly
+            between zero and one.
+
+        Raises
+        ------
+        TypeError
+            If ``dimension`` is not an integer or one of the floating-point
+            parameters is not a float.
+        ValueError
+            If ``dimension`` is below two, ``delta`` or ``tol`` is outside its
+            required range.
+        """
         if not isinstance(dimension, int):
             raise TypeError(f"Logical space dimension has to be an integer, not {type(dimension)}.")
         if not dimension >= 2:
@@ -841,21 +1195,33 @@ class GKPState(LCGaussianState):  # type: ignore[misc]
 
 @dataclass(frozen=True, init=False)
 class TruncatedParityOp(HermitianCVOp):
-    r"""Class for truncated parity operator
-
-    :math: \Pi_n = \sum_{k=0}^n (-1)^k \vert k \rangle\langle k\vert
-
-    As usual convention is cutoff = highest Fock state reached.
-
+    r"""Parity operator truncated in the Fock basis.
 
     Parameters
     ----------
-    cutoff (int): highest Fock number reached in the decomposition
+    cutoff : int
+        Highest Fock number included in the operator.
+
+    Notes
+    -----
+    The operator is :math:`\Pi_n = \sum_{k=0}^n (-1)^k |k\rangle\langle k|`.
     """
 
     cutoff: int  # type: ignore
 
     def __init__(self, cutoff: int) -> None:
+        """Construct parity truncated at the specified Fock number.
+
+        Parameters
+        ----------
+        cutoff : int
+            Highest Fock number included.
+
+        Raises
+        ------
+        ValueError
+            If ``cutoff`` is ``None``.
+        """
         if cutoff is None:
             raise ValueError("cutoff cannot be None.")
 

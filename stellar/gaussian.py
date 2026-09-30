@@ -19,10 +19,14 @@ from stellar.params import GaussianParameters
 
 
 class GaussianOp:
-    """Parameterisation of single-mode Gaussians
-    we use as in https://arxiv.org/abs/2004.11002 Eq. (43) with no rotation (their phi = 0, their squeezing phase is delta)
-    kwargs for left (bra) and right (ket) cutoffs or just optional??
-    see also README.MD
+    r"""A single-mode Gaussian unitary parameterized by displacement and squeezing.
+
+    Parameters
+    ----------
+    gauss_param : GaussianParameters
+        Parameters of the Gaussian unitary. The convention is
+        :math:`G(\alpha,\xi)=D(\alpha)S(\xi)` with no additional phase-space
+        rotation.
     """
 
     # reuse dataclasse to avoid the init
@@ -40,6 +44,13 @@ class GaussianOp:
     # TODO rework param and method here here.
 
     def __init__(self, gauss_param: GaussianParameters) -> None:
+        """Initialize the Gaussian operation.
+
+        Parameters
+        ----------
+        gauss_param : GaussianParameters
+            Displacement and squeezing parameters.
+        """
         self.params = gauss_param
 
         # make all of these properties to compute them on the fly hen needed
@@ -59,6 +70,19 @@ class GaussianOp:
     def __matmul__(
         self, other: GaussianState | LCGaussianState
     ) -> GaussianState | LCGaussianState:  # typing issue None to make mypy happy?
+        """Apply this Gaussian operation to a Gaussian state or superposition.
+
+        Parameters
+        ----------
+        other : GaussianState or LCGaussianState
+            State on which to act.
+
+        Returns
+        -------
+        GaussianState or LCGaussianState
+            Transformed state. A Gaussian input remains Gaussian; a linear
+            combination is transformed term by term.
+        """
         # or add type in return
         # how to test that? What is the returned error?
 
@@ -110,6 +134,21 @@ class GaussianOp:
     def build_matrix_fock_basis(
         self, bra_cutoff: int, ket_cutoff: int
     ) -> None:  # or return the matrix and not as attribute?
+        """Build the operation's Fock-basis matrix and store it on this object.
+
+        Parameters
+        ----------
+        bra_cutoff : int
+            Highest Fock number represented on the output (row) axis.
+        ket_cutoff : int
+            Highest Fock number represented on the input (column) axis.
+
+        Notes
+        -----
+        The resulting ``(bra_cutoff + 1, ket_cutoff + 1)`` array is stored in
+        ``matrix_fock_basis``. The normalization, mean vector, and covariance
+        matrix used during the recurrence are also stored as attributes.
+        """
         # G_{mn} = <m|G|n> Eq 10 Quesada [1]
         # cutoffs are positional arguments so they have to be provided in this order!
 
@@ -207,7 +246,20 @@ class GaussianOp:
 
 # To be used both in tests/ and benchmarks/
 def check_gaussian_displacement(x: float, y: float) -> None:
-    """Eqs. 53 -> 55 of Quesada"""
+    """Assert the Fock-basis parameters for a displacement operation.
+
+    Parameters
+    ----------
+    x : float
+        Real part of the displacement.
+    y : float
+        Imaginary part of the displacement.
+
+    Notes
+    -----
+    This helper is intended for tests and benchmarks; it raises
+    :class:`AssertionError` if the displacement identities do not hold.
+    """
     gauss_params = GaussianParameters(
         x=x,
         y=y,
