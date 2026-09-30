@@ -1,5 +1,6 @@
 site_name: stellar-numerics
 site_description: Documentation for stellar-numerics
+site_url: https://qat-inria.github.io/stellar-numerics/
 
 theme:
   name: material
