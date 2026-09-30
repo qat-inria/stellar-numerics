@@ -8,12 +8,20 @@ from enum import Enum, auto
 ### Gaussian parameters
 @dataclass(frozen=True)  # need frozen to implement __hash__ method for cacheing
 class GaussianParameters:
-    """Dataclass containing single-mode Gaussian parameters to be used with both `GaussianStates`and `GaussianOp`.
-    NOTE r has to be positive? Or deal separately
-        Returns
-        -------
-        _type_
-            _description_
+    """Parameters describing a single-mode Gaussian state or operation.
+
+    Parameters
+    ----------
+    x, y : float
+        Real and imaginary parts of the displacement, respectively.
+    r : float
+        Non-negative squeezing magnitude.
+    theta : float
+        Squeezing phase in radians.
+
+    Notes
+    -----
+    Instances are immutable and hashable.
     """
 
     x: float  # real part of displacement
@@ -36,10 +44,12 @@ class GaussianParameters:
 
     @property
     def displacement(self) -> complex:
+        """complex: Displacement amplitude ``x + 1j*y``."""
         return self.x + 1j * self.y
 
     @property
     def squeezing(self) -> complex:
+        """complex: Complex squeezing parameter ``r * exp(1j*theta)``."""
         return self.r * exp(1j * self.theta)
 
 
@@ -57,7 +67,35 @@ class Method(Enum):
 
 @dataclass(frozen=True)
 class OptimisationParameters:
-    """A dataclass for recording and serializing optimization parameters"""
+    """Configuration for computing stellar fidelities and profiles.
+
+    Parameters
+    ----------
+    method : Method
+        Representation used for the optimization objective: Fock-basis or
+        Gaussian-state evaluation.
+    target_cutoff : int or None, optional
+        Highest Fock number used to represent the target in the Fock basis.
+        Required when ``method`` is :attr:`Method.fock`; ignored for
+        :attr:`Method.gaussian`.
+    niter : int, default=250
+        Number of basin-hopping iterations.
+    x0 : tuple of float, default=(0.1, 0.1, 0.1, 0.1)
+        Initial values for displacement components, squeezing magnitude, and
+        squeezing phase.
+    seed : int or None, optional
+        Random seed passed to the optimizer.
+
+    Raises
+    ------
+    ValueError
+        If Fock-basis optimization is selected without ``target_cutoff``.
+
+    Warns
+    -----
+    UserWarning
+        If ``target_cutoff`` is supplied for Gaussian-state optimization.
+    """
 
     # want: method (gaussian or Fock), niter, starting point, rng (seed) other kwargs?
     # feed that to the compute_profile fct (to write)
