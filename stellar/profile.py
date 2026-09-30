@@ -206,6 +206,32 @@ def compute_sup_fidelity(
     # niter: int = 250,
     # **kwargs, ## TODO re add kwargs later in OptimizationParameters
 ) -> OptimizeResult:
+    """Optimize the Gaussian transformation objective up to a stellar rank.
+
+    Parameters
+    ----------
+    max_rank : int
+        Highest stellar rank included in the optimization.
+    target_state : PureCVState or HermitianCVOp
+        State whose stellar fidelity is optimized. Mixed operators must be
+        supplied as a pure-state decomposition.
+    optim_params : OptimisationParameters
+        Optimization method, target cutoff, starting point, iteration count,
+        and random seed.
+
+    Returns
+    -------
+    scipy.optimize.OptimizeResult
+        Result returned by SciPy's basin-hopping optimizer. Its ``fun`` value
+        is the minimized negative fidelity; the corresponding optimized
+        fidelity is ``-result.fun``.
+
+    Raises
+    ------
+    NotImplementedError
+        If ``target_state`` is a matrix-backed mixed operator, which is not
+        currently supported.
+    """
     # opt
 
     # gradient-less? Otherwise numerical gradients? or parameter-shift rule?
@@ -334,6 +360,23 @@ S = TypeVar("S", bound=PureCVState | HermitianCVOp)
 
 
 def compute_profile(ranks: list[int], target_state: S, optim_params: OptimisationParameters) -> StellarProfile[S]:
+    """Compute stellar fidelities for a sequence of ranks.
+
+    Parameters
+    ----------
+    ranks : list of int
+        Stellar ranks at which to optimize the fidelity.
+    target_state : PureCVState or HermitianCVOp
+        State for which the profile is computed.
+    optim_params : OptimisationParameters
+        Parameters controlling each optimization.
+
+    Returns
+    -------
+    StellarProfile
+        Profile associating each requested rank with its optimized fidelity
+        and retaining the target state and optimization parameters.
+    """
     fidelities: list[float] = []
 
     # logger.info("Starting computing profile...")

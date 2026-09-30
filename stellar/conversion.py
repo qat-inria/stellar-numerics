@@ -27,6 +27,39 @@ def max_trace_distance_precision(
     from_profile: StellarProfile[PureCVState | HermitianCVOp] | None = None,
     from_rank: int | None = None,
 ) -> float:  # or None? TODO don't understand this typing issue
+    """Bound conversion error using stellar profiles and a protocol.
+
+    Parameters
+    ----------
+    protocol : Protocol
+        Deterministic (``standard``) or postselected conversion protocol.
+    nb_copies : int
+        Number of input copies used in the conversion.
+    to_profile : StellarProfile
+        Profile of the pure target state.
+    from_profile : StellarProfile or None, optional
+        Profile of the input state. Required for the standard protocol and
+        ignored for the postselected protocol.
+    from_rank : int or None, optional
+        Input stellar rank. Required for the postselected protocol.
+
+    Returns
+    -------
+    float
+        Maximum trace-distance precision bound for the selected protocol.
+
+    Raises
+    ------
+    ValueError
+        If the required input profile or rank is missing.
+    TypeError
+        If the target profile represents a mixed state.
+
+    Warns
+    -----
+    UserWarning
+        If an input profile is supplied for the postselected protocol.
+    """
     # assume contiguous ranks from 0 to max in all cases
 
     # flow: will only assess convergence from pure to pure or mixed to pure
@@ -87,8 +120,28 @@ W = TypeVar("W", bound=HermitianCVOp)
 def max_trace_distance_precision_pure_pure_std(
     from_profile: StellarProfile[U], to_profile: StellarProfile[V], nb_copies: int
 ) -> float:
-    """finding max trace distance for deterministic conversion between pure states with a fixed number of copies.
-    Eq. (36) [HGFFC25]"""
+    """Compute the deterministic conversion bound for pure states.
+
+    Parameters
+    ----------
+    from_profile : StellarProfile
+        Stellar profile of the pure input state.
+    to_profile : StellarProfile
+        Stellar profile of the pure target state.
+    nb_copies : int
+        Number of input copies used in the conversion.
+
+    Returns
+    -------
+    float
+        Maximum trace-distance bound evaluated over the ranks available in
+        both profiles.
+
+    Notes
+    -----
+    Implements Eq. (36) of [HGFFC25]. The profiles are expected to contain
+    contiguous ranks from zero through their maximum rank.
+    """
     # logger.info("Starting deterministicGaussian conversion analysis...")
     # avoid recomputing this
     max_rank_from = max(from_profile.profile.keys())
@@ -110,8 +163,28 @@ def max_trace_distance_precision_pure_pure_std(
 def max_trace_distance_precision_mixed_pure_std(
     from_profile: StellarProfile[W], to_profile: StellarProfile[V], nb_copies: int
 ) -> float:
-    """finding max trace distance for deterministic conversion from a mixed state to a pure state with a fixed number of copies.
-    Eq. (38) [HGFFC25]"""
+    """Compute the deterministic conversion bound from a mixed to pure state.
+
+    Parameters
+    ----------
+    from_profile : StellarProfile
+        Stellar profile of the mixed input state.
+    to_profile : StellarProfile
+        Stellar profile of the pure target state.
+    nb_copies : int
+        Number of input copies used in the conversion.
+
+    Returns
+    -------
+    float
+        Squared maximum bound evaluated over the ranks available in both
+        profiles.
+
+    Notes
+    -----
+    Implements Eq. (38) of [HGFFC25]. The profiles are expected to contain
+    contiguous ranks from zero through their maximum rank.
+    """
     max_rank_from = max(from_profile.profile.keys())
     max_rank_to = max(to_profile.profile.keys())
 
@@ -131,8 +204,28 @@ def max_trace_distance_precision_mixed_pure_std(
 def max_trace_distance_precision_pure_pure_post(
     to_profile: StellarProfile[V], from_rank: int, nb_copies: int
 ) -> float:  # or None, error
-    """finding max trace distance for postselected conversion between pure states with a fixed number of copies.
-    The actual profile of the target state is not required (only the stellar rank) since it is a looser bound see Eq. (37) [HFFC25]."""
+    """Compute the postselected conversion bound for pure states.
+
+    Parameters
+    ----------
+    to_profile : StellarProfile
+        Stellar profile of the pure target state.
+    from_rank : int
+        Stellar rank of the input state.
+    nb_copies : int
+        Number of input copies used in the conversion.
+
+    Returns
+    -------
+    float
+        Trace-distance bound evaluated at target rank
+        ``nb_copies * from_rank``.
+
+    Notes
+    -----
+    Implements the looser bound in Eq. (37) of [HFFC25]; the input state's
+    profile is not needed.
+    """
 
     return 1 - to_profile.profile[nb_copies * from_rank]
 
@@ -140,7 +233,26 @@ def max_trace_distance_precision_pure_pure_post(
 def max_trace_distance_precision_mixed_pure_post(
     to_profile: StellarProfile[W], from_rank: int, nb_copies: int
 ) -> float:  # or None, error
-    """finding max trace distance for postselected conversion from a mixed state to a pure state with a fixed number of copies.
-    The actual profile of the target state is not required (only the stellar rank) since it is a looser bound see Eq. (39) [HFFC25]."""
+    """Compute the postselected conversion bound for a mixed input.
+
+    Parameters
+    ----------
+    to_profile : StellarProfile
+        Profile used to evaluate the bound at the target rank.
+    from_rank : int
+        Stellar rank of the input state.
+    nb_copies : int
+        Number of input copies used in the conversion.
+
+    Returns
+    -------
+    float
+        Squared trace-distance bound evaluated at target rank
+        ``nb_copies * from_rank``.
+
+    Notes
+    -----
+    Implements the looser bound in Eq. (39) of [HFFC25].
+    """
 
     return (1 - to_profile.profile[nb_copies * from_rank]) ** 2

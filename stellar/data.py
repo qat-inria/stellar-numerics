@@ -44,7 +44,24 @@ S = TypeVar("S", bound=PureCVState | HermitianCVOp)
 
 @dataclass(frozen=True, init=False)
 class StellarProfile(Generic[S_co]):
-    """A dataclass for stellar profiles allowing manipulation and serialization to json."""
+    """A stellar-fidelity profile with its state and optimization metadata.
+
+    Parameters
+    ----------
+    state : PureCVState or HermitianCVOp
+        State for which the profile was computed.
+    ranks : iterable of int
+        Stellar ranks corresponding to the fidelity values.
+    fidelities : iterable of float
+        Fidelity at each corresponding rank.
+    optim_params : OptimisationParameters or None, optional
+        Parameters used to compute the profile, if available.
+
+    Raises
+    ------
+    ValueError
+        If ``ranks`` and ``fidelities`` have different lengths.
+    """
 
     # single rank returns a StellarProfile?
     # Combine them by concatenation if different ranks but same state and params.
@@ -74,6 +91,13 @@ class StellarProfile(Generic[S_co]):
         object.__setattr__(self, "profile", profile)
 
     def __iter__(self) -> Iterator[tuple[int, float]]:  # TODO return type annotate this
+        """Iterate over ``(rank, fidelity)`` pairs in profile order.
+
+        Yields
+        ------
+        tuple of (int, float)
+            Stellar rank and its fidelity.
+        """
         return iter(self.profile.items())
 
     def _to_dict(self):  # TODO return type annotate this
@@ -84,20 +108,31 @@ class StellarProfile(Generic[S_co]):
         }
 
     def replace(self, state: S) -> StellarProfile[S]:
+        """Return a profile with a different associated state.
+
+        Parameters
+        ----------
+        state : PureCVState or HermitianCVOp
+            State to associate with the existing ranks and fidelities.
+
+        Returns
+        -------
+        StellarProfile
+            New profile retaining this profile's ranks, fidelities, and
+            optimization parameters.
+        """
         return StellarProfile(state, self.ranks, self.fidelities, self.optim_params)
 
     def save_to_file(self, filename: str, path: Path | None = None) -> None:
-        """
-        save to file a given stellar profile by specifying a filename and a path.
+        """Serialize this profile as an indented JSON file.
 
         Parameters
         ----------
         filename : str
-            title of the file
-
-        path : pathlib.Path | None, optional
-            path to the folder to save in. If not created, the whole hierarchy will be created.
-            default: None i.e. tmp/profiles/
+            File name without the ``.json`` extension.
+        path : pathlib.Path or None, optional
+            Directory in which to save the file. Parent directories are created
+            as needed. Defaults to ``tmp/profiles/``.
         """
 
         if path is None:
@@ -113,17 +148,24 @@ class StellarProfile(Generic[S_co]):
     def from_file(
         filename: str, path: Path | None = None
     ):  # -> StellarProfile TODO how to type with generics without knowing?
-        """
-        save to file a given stellar profile by specifying a filename and a path.
+        """Load a profile from a JSON file.
 
         Parameters
         ----------
         filename : str
-            title of the file
+            File name without the ``.json`` extension.
+        path : pathlib.Path or None, optional
+            Directory containing the file. Defaults to ``tmp/profiles/``.
 
-        path : pathlib.Path | None, optional
-            path to the folder to save in. If not created, the whole hierarchy will be created.
-            default: None i.e. tmp/profiles/
+        Returns
+        -------
+        StellarProfile
+            Deserialized profile.
+
+        Notes
+        -----
+        The current deserializer evaluates representations stored in the JSON.
+        Only load profile files from trusted sources.
         """
 
         if path is None:
@@ -143,9 +185,23 @@ class StellarProfile(Generic[S_co]):
         )
 
     def draw(self, filename: str, path: Path | None = None, text: bool = True, show: bool = False):
-        """Method to generate a profile graph from the StellarProfile object
-        show bool to show in addirion to saving
-        text whether to add the value on top of the bar
+        """Plot the profile and save it as a PDF.
+
+        Parameters
+        ----------
+        filename : str
+            Output file name without the ``.pdf`` extension.
+        path : pathlib.Path or None, optional
+            Output directory. Defaults to ``tmp/profiles/``.
+        text : bool, default=True
+            Whether to annotate each fidelity value above its plotted line.
+        show : bool, default=False
+            Whether to display the plot after saving it.
+
+        Notes
+        -----
+        The method writes ``<path>/<filename>.pdf``. The output directory must
+        already exist.
         """
 
         if path is None:
