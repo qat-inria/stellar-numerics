@@ -100,7 +100,15 @@ class StellarProfile(Generic[S_co]):
         """
         return iter(self.profile.items())
 
-    def _to_dict(self):  # TODO return type annotate this
+    def _to_dict(self) -> dict:  # TODO return type annotate this
+        """Return a JSON-serializable representation of the profile.
+
+        Returns
+        -------
+        dict
+            Mapping containing the state representation, rank-to-fidelity
+            mapping, and optimization-parameter representation.
+        """
         return {
             "state": repr(self.state),
             "profile": self.profile,

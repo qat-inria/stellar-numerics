@@ -246,7 +246,21 @@ class GaussianOp:
 
 # To be used both in tests/ and benchmarks/
 def _check_gaussian_displacement(x: float, y: float) -> None:
-    """Eqs. 53 -> 55 of Quesada"""
+    """Assert the Fock-basis parameters for a displacement operation.
+
+    Parameters
+    ----------
+    x : float
+        Real part of the displacement.
+    y : float
+        Imaginary part of the displacement.
+
+    Notes
+    -----
+    This helper is intended for tests and benchmarks; it raises
+    :class:`AssertionError` if the displacement identities do not hold.
+    Eqs. 53 -> 55 of Quesada
+    """
     gauss_params = GaussianParameters(
         x=x,
         y=y,
