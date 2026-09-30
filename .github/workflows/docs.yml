@@ -1,0 +1,34 @@
+name: Deploy documentation
+
+on:
+  push:
+    branches:
+        - main
+    paths:
+        - "docs/**"
+        - "mkdocs.yml"
+        - "pyproject.toml"
+        - "stellar_numerics/**"
+        - ".github/workflows/docs.yml"
+
+permissions:
+    contents: write
+
+jobs:
+    deploy:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
+        - name: Set up Python
+          uses: actions/setup-python@v5
+          with:
+              python-version: "3.x"
+
+        - name: Install package and documentation dependencies
+          run: pip install -e ".[docs]"
+
+        - name: Deploy documentation
+          run: mkdocs gh-deploy --force
