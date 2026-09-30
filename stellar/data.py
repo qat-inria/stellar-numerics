@@ -100,15 +100,7 @@ class StellarProfile(Generic[S_co]):
         """
         return iter(self.profile.items())
 
-    def to_dict(self):  # TODO return type annotate this
-        """Return a JSON-serializable representation of the profile.
-
-        Returns
-        -------
-        dict
-            Mapping containing the state representation, rank-to-fidelity
-            mapping, and optimization-parameter representation.
-        """
+    def _to_dict(self):  # TODO return type annotate this
         return {
             "state": repr(self.state),
             "profile": self.profile,
@@ -149,7 +141,7 @@ class StellarProfile(Generic[S_co]):
         path.mkdir(parents=True, exist_ok=True)
 
         with open(path / (filename + ".json"), "w") as f:
-            json.dump(self.to_dict(), f, indent=4)
+            json.dump(self._to_dict(), f, indent=4)
 
     # NOTE: how to avoid all possibilities in States?
     @staticmethod

@@ -31,7 +31,7 @@ from stellar.params import GaussianParameters, Method, OptimisationParameters
 # logger = logging.getLogger(__name__)
 
 
-def compute_obj_func_pure(
+def _compute_obj_func_pure(
     x: float,
     y: float,
     r: float,
@@ -112,7 +112,7 @@ def compute_obj_func_pure(
         assert_never(method)
 
 
-def compute_obj_func_mixed(
+def _compute_obj_func_mixed(
     x: float,
     y: float,
     r: float,
@@ -178,7 +178,7 @@ def compute_obj_func_mixed(
     # NOTE no minus sign here since included in the pure state case
     return sum(
         coeff
-        * compute_obj_func_pure(
+        * _compute_obj_func_pure(
             x=gauss_params.x,
             y=gauss_params.y,
             r=gauss_params.r,
@@ -310,12 +310,12 @@ def compute_sup_fidelity(
             warnings.warn(
                 "A `GaussianState` or `LCGaussianState` was detected in the pure-state decomposition. Overriding your `method` choice for this state if it wasn't `gaussian`."
             )
-        return caller(target_state, compute_obj_func_mixed)
+        return caller(target_state, _compute_obj_func_mixed)
 
     # can always duplicate the call directly but looks bad...
 
     else:
-        return caller(target_state, compute_obj_func_pure)
+        return caller(target_state, _compute_obj_func_pure)
     # TODO: directly use a `GaussParam` object?
     # return basinhopping(
     #     lambda params: -func(

@@ -6,7 +6,7 @@ import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 
-from stellar.gaussian import GaussianOp, check_gaussian_displacement
+from stellar.gaussian import GaussianOp, _check_gaussian_displacement
 from stellar.params import GaussianParameters
 
 # logger = logging.getLogger(__name__)
@@ -21,7 +21,7 @@ def test_gaussian_init_fail_sqz() -> None:
 
 @given(st.floats(min_value=-5, max_value=5), st.floats(min_value=-5, max_value=5))
 def test_gaussian_displacement(x: float, y: float) -> None:
-    check_gaussian_displacement(x, y)
+    _check_gaussian_displacement(x, y)
 
 
 @given(st.floats(min_value=0, max_value=5), st.floats(min_value=0, max_value=2 * pi))
