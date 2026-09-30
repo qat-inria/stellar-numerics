@@ -35,6 +35,13 @@ dependencies = { file = ["requirements.txt"] }
 [tool.setuptools.packages.find]
 include = ["stellar"]
 
+[project.optional-dependencies]
+docs = [
+  "mkdocs",
+  "mkdocs-material",
+  "mkdocstrings[python]",
+]
+
 [tool.ruff]
 line-length = 120
 extend-exclude = ["docs"]
