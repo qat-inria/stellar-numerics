@@ -13,11 +13,8 @@
 ## Objective
 
 This library is a toolbox for computing single-mode stellar fidelities and stellar profiles [C+20]. Mathematically, it
-performs the optimisation
-$$
-f_n^\star(\psi) =
-\sup_{\hat{G}} {\rm Tr}[\underbrace{\hat{\Pi}_k}_{=\sum_{n=0}^k |n\times n|} \hat G^\dagger\ket\psi\bra\psi G]
-$$
+performs the optimisation $$f_n^\star(\psi) =
+\sup_{\hat{G}} {\rm Tr}[\underbrace{\hat{\Pi}_k}_{=\sum_{n=0}^k |n\times n|} \hat G^\dagger\ket\psi\bra\psi G] $$
 
 On top of this, a toolbox for Gaussian conversion analysis is provided in relation with the paper [HGFFC25].
 
