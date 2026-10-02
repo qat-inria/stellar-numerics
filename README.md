@@ -12,15 +12,14 @@
 
 ## Objective
 
-This library is a toolbox for computing stellar single-moden fidelities and stellar profiles [C+20]. Mathematically, it performs the optimisation
+This library is a toolbox for computing single-mode stellar fidelities and stellar profiles [C+20]. Mathematically, it
+performs the optimisation
 $$
 f_n^\star(\psi) =
 \sup_{\hat{G}} {\rm Tr}[\underbrace{\hat{\Pi}_k}_{=\sum_{n=0}^k |n\times n|} \hat G^\dagger\ket\psi\bra\psi G]
 $$
 
-On top of this, a toolbox for Gaussian conversion analysis is provided [HFFC25]
-
-For more details see [HFFC25] and the [GitHub issues page](https://github.com/qat-inria/stellar-numerics/issues)
+On top of this, a toolbox for Gaussian conversion analysis is provided in relation with the paper [HGFFC25].
 
 ### Conventions
 
@@ -36,11 +35,20 @@ For more details see [HFFC25] and the [GitHub issues page](https://github.com/qa
 
 ## How to/Tutorial
 
+Coming soon
+
+## Doumentation
+
+You can read the documentation [here](https://qat-inria.github.io/stellar-numerics/).
+
+## Issues
+
+Issues are tracked on the [GitHub issues page](https://github.com/qat-inria/stellar-numerics/issues).
+
 ## To do
 
 Software task
 
-- [ ] Automatic documentation generation
 - [ ] parallelise profile computation since it is embarassingly parallel
 
 ## Authors
@@ -72,5 +80,5 @@ Citing papers
 ‌or [preprint](https://arxiv.org/abs/1907.11009).
 - [4, MJD96] [K. B. Møller *et al.*, Displaced Squeezed Number States: Position Space Representation, Inner Product, and Some Applications, *Physical Review A* **54**, 5378 (1996)](https://doi.org/10.1103/PhysRevA.54.5378).
 - [5, TAFZ20] [D. Martínez-Tibaduiza *et al.*, New BCH-like relations of the su(1,1), su(2) and so(2,1) Lie algebras, *Physics Letters A* **384**, 36, 126937 (2020)](https://doi.org/10.1016/j.physleta.2020.126937)
-- [HFFC25] [O. Hahn *et al.*, Assessing non-Gaussian quantum state conversion with the stellar rank, *Quantum* **10**, 2095 (2026)](https://doi.org/10.22331/q-2026-05-05-2095). Or [preprint](https://arxiv.org/abs/2410.23721).
+- [HGFFC25] [O. Hahn *et al.*, Assessing non-Gaussian quantum state conversion with the stellar rank, *Quantum* **10**, 2095 (2026)](https://doi.org/10.22331/q-2026-05-05-2095). Or [preprint](https://arxiv.org/abs/2410.23721).
 ‌
