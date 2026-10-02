@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="docs/assets/stellar-numerics-logo.svg" alt="stellar-numerics logo" width="120">
+</p>
 
 # stellar-rank-numerics
 
@@ -58,7 +61,6 @@ Maxime Garnier, Thierry Martinez and Ulysse Chabaud
   url={https://doi.org/10.5281/zenodo.18634055},
 }
 ```
-## How to cite
 
 Citing papers
 

@@ -4,6 +4,8 @@ site_url: https://qat-inria.github.io/stellar-numerics/
 
 theme:
   name: material
+  logo: assets/stellar-numerics-logo.svg
+  favicon: assets/stellar-numerics-logo.svg
   features:
     - navigation.sections
     - navigation.expand
